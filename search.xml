@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
+    <title><![CDATA[iOS DES总结]]></title>
     <url>%2F2018%2F01%2F15%2FiOS-DES%E6%80%BB%E7%BB%93%2F</url>
-    <content type="text"><![CDATA[iOS中使用DES加密总结常见的对称加密有:DES、3DES、RC4、AES等；加密算法都有几个共同的特点：1.秘钥长度；2.加密模式；3.块加密算法里的填充区分；以下是我对做项目时遇到的问题所做的小结ccStatus = CCCrypt(encryptOperation,kCCAlgorithmDES,kCCOptionPKCS7Padding|kCCOptionECBMode,vkey,kCCKeySizeDES,iv,dataIn,dataInLength,(void *)dataOut,dataOutAvailable,&amp;dataOutMoved);第一个参数encryptOperation：告诉函数加密还是解密第二个参数kCCAlgorithmDES：使用DES加密第三个参数 kCCOptionPKCS7Padding|kCCOptionECBMode使用ECB加密模式和PKCS7Padding填充模式，如果使用kCCOptionPKCS7Padding就代表使用CBC加密模式并且使用PKCS7Padding的填充模式。在DES中加密数据包单位长度是8字节，在8自己的情况下PKCS7Padding等价于PKCS5Padding。后台大哥给了一个线上加密的地址让我对[这个就是那个线上加密的地址][1]调试了半天原来是我自己的加密模式不对，使用了CBC模式，而后台用的是ECB。 [参考文章][2]]]></content>
+    <content type="text"><![CDATA[iOS中使用DES加密总结 常见的对称加密有:DES、3DES、RC4、AES等；加密算法都有几个共同的特点：1.秘钥长度；2.加密模式；3.块加密算法里的填充区分；以下是我对做项目时遇到的问题所做的小结 1234567891011ccStatus = CCCrypt(encryptOperation, kCCAlgorithmDES, kCCOptionPKCS7Padding|kCCOptionECBMode, vkey, kCCKeySizeDES, iv, dataIn, dataInLength, (void *)dataOut, dataOutAvailable, &amp;dataOutMoved); 第一个参数encryptOperation：告诉函数加密还是解密 第二个参数kCCAlgorithmDES：使用DES加密 第三个参数 kCCOptionPKCS7Padding|kCCOptionECBMode使用ECB加密模式和PKCS7Padding填充模式，如果使用kCCOptionPKCS7Padding就代表使用CBC加密模式并且使用PKCS7Padding的填充模式。 在DES中加密数据包单位长度是8字节，在8自己的情况下PKCS7Padding等价于PKCS5Padding。 后台大哥给了一个线上加密的地址让我对。 http://tool.chacuo.net/cryptdes 调试了半天原来是我自己的加密模式不对，使用了CBC模式，而后台用的是ECB。 参考资料： http://blog.csdn.net/u010184533/article/details/38975871]]></content>
   </entry>
 </search>
