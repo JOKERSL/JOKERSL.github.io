@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+<meta name="description" content="title: iOS DES总结date: 2018-01-15 11:54:15cateories: 技术 tags:##iOS中使用DES加密总结常见的对称加密有:DES、3DES、RC4、AES等；加密算法都有几个共同的特点：1.秘钥长度；2.加密模式；3.块加密算法里的填充区分； ###以下是我对做项目时遇到的问题所做的小结ccStatus = CCCrypt(encryptOperat">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS DES总结">
+<meta property="og:title" content="Man Tou Pu&#39;s Blog">
 <meta property="og:url" content="http://yoursite.com/2018/01/15/iOS-DES总结/index.html">
 <meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
-<meta property="og:description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+<meta property="og:description" content="title: iOS DES总结date: 2018-01-15 11:54:15cateories: 技术 tags:##iOS中使用DES加密总结常见的对称加密有:DES、3DES、RC4、AES等；加密算法都有几个共同的特点：1.秘钥长度；2.加密模式；3.块加密算法里的填充区分； ###以下是我对做项目时遇到的问题所做的小结ccStatus = CCCrypt(encryptOperat">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-15T07:08:03.233Z">
+<meta property="og:updated_time" content="2018-01-15T10:12:48.272Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS DES总结">
-<meta name="twitter:description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+<meta name="twitter:title" content="Man Tou Pu&#39;s Blog">
+<meta name="twitter:description" content="title: iOS DES总结date: 2018-01-15 11:54:15cateories: 技术 tags:##iOS中使用DES加密总结常见的对称加密有:DES、3DES、RC4、AES等；加密算法都有几个共同的特点：1.秘钥长度；2.加密模式；3.块加密算法里的填充区分； ###以下是我对做项目时遇到的问题所做的小结ccStatus = CCCrypt(encryptOperat">
 
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <title>iOS DES总结 | Man Tou Pu's Blog</title>
+  <title> | Man Tou Pu's Blog</title>
   
 
 
@@ -283,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">iOS DES总结</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -295,7 +295,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-15T11:54:15+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-15T15:08:03+08:00">
                 2018-01-15
               </time>
             
@@ -333,7 +333,18 @@
       
 
       
-        
+        <hr>
+<p>title: iOS DES总结<br>date: 2018-01-15 11:54:15<br>cateories: 技术</p>
+<h2 id="tags"><a href="#tags" class="headerlink" title="tags:"></a>tags:</h2><p>##iOS中使用DES加密总结<br>常见的对称加密有:DES、3DES、RC4、AES等；<br>加密算法都有几个共同的特点：<br>1.秘钥长度；<br>2.加密模式；<br>3.块加密算法里的填充区分；</p>
+<p>###以下是我对做项目时遇到的问题所做的小结<br>ccStatus = CCCrypt(encryptOperation,<br>kCCAlgorithmDES,<br>kCCOptionPKCS7Padding|kCCOptionECBMode,<br>vkey,<br>kCCKeySizeDES,<br>iv,<br>dataIn,<br>dataInLength,<br>(void *)dataOut,<br>dataOutAvailable,<br>&amp;dataOutMoved);<br>第一个参数encryptOperation：告诉函数加密还是解密<br>第二个参数kCCAlgorithmDES：使用DES加密<br>第三个参数 kCCOptionPKCS7Padding|kCCOptionECBMode使用ECB加密模式和PKCS7Padding填充模式，<br>如果使用kCCOptionPKCS7Padding就代表使用CBC加密模式并且使用PKCS7Padding的填充模式。<br>在DES中加密数据包单位长度是8字节，在8自己的情况下PKCS7Padding等价于PKCS5Padding。<br>后台大哥给了一个线上加密的地址让我对[这个就是那个线上加密的地址][1]<br>调试了半天原来是我自己的加密模式不对，使用了CBC模式，而后台用的是ECB。</p>
+<p>[参考文章][2]<br>Funnythan     文件    发布</p>
+<p>title: iOS DES总结<br>date: 2018-01-15 11:54:15<br>cateories: 技术</p>
+<p>iOS中使用DES加密总结</p>
+<p>常见的对称加密有:DES、3DES、RC4、AES等；<br>加密算法都有几个共同的特点：<br>1.秘钥长度；<br>2.加密模式；<br>3.块加密算法里的填充区分；<br>以下是我对做项目时遇到的问题所做的小结</p>
+<p>ccStatus = CCCrypt(encryptOperation,<br>kCCAlgorithmDES,<br>kCCOptionPKCS7Padding|kCCOptionECBMode,<br>vkey,<br>kCCKeySizeDES,<br>iv,<br>dataIn,<br>dataInLength,<br>(void *)dataOut,<br>dataOutAvailable,<br>&amp;dataOutMoved);<br>第一个参数encryptOperation：告诉函数加密还是解密<br>第二个参数kCCAlgorithmDES：使用DES加密<br>第三个参数 kCCOptionPKCS7Padding|kCCOptionECBMode使用ECB加密模式和PKCS7Padding填充模式，如果使用kCCOptionPKCS7Padding就代表使用CBC加密模式并且使用PKCS7Padding的填充模式。 在DES中加密数据包单位长度是8字节，在8自己的情况下PKCS7Padding等价于PKCS5Padding。<br>后台大哥给了一个线上加密的地址让我对这个就是那个线上加密的地址</p>
+<p>调试了半天原来是我自己的加密模式不对，使用了CBC模式，而后台用的是ECB。</p>
+<p>[参考文章][2]<br>+<br>@Funnythan 2018-01-15 18:09 字数 阅读 0</p>
+
       
     </div>
     
@@ -401,8 +412,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -448,6 +468,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tags"><span class="nav-number">1.</span> <span class="nav-text">tags:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
