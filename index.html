@@ -266,6 +266,146 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/23/iOS-runtime应用：关联对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/23/iOS-runtime应用：关联对象/" itemprop="url">iOS runtime应用：关联对象</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-23T17:26:23+08:00">
+                2018-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>给已有类添加方法使用Category就可以了，但如果向分类里添加一个或多个属性的话会报错，使用属性不能正确创建实例及存取方法。</p>
+<p>但是我们可以实现runtime的Associated Objects(关联对象)，它可以让对象在运行时关联任何值。</p>
+<h2 id="runtime中提供给我们的方法："><a href="#runtime中提供给我们的方法：" class="headerlink" title="runtime中提供给我们的方法："></a>runtime中提供给我们的方法：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//关联对象</span><br><span class="line">void objc_setAssociatedObject(id object,const void *key,id value,objc_AssociationPolicy policy);</span><br><span class="line">//获取关联的对象</span><br><span class="line">id objc_getAssociatedObject(id object,const void *key);</span><br><span class="line">//移除关联的对象</span><br><span class="line">void objc_removeAssociatedObjects(id object);</span><br></pre></td></tr></table></figure>
+<h2 id="变量说明："><a href="#变量说明：" class="headerlink" title="变量说明："></a>变量说明：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id object:被关联的对象</span><br><span class="line">const void *key:关联的key，要求唯一</span><br><span class="line">id value:关联的对象</span><br><span class="line">Objc_AssociationPolicy poliy:内存管理策略</span><br></pre></td></tr></table></figure>
+<h2 id="Objc-AssociationPolicy-policy的enum值有"><a href="#Objc-AssociationPolicy-policy的enum值有" class="headerlink" title="Objc_AssociationPolicy policy的enum值有:"></a>Objc_AssociationPolicy policy的enum值有:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef OBJC_ENUM(uintptr_t, objc_AssociationPolicy) &#123;</span><br><span class="line">    OBJC_ASSOCIATION_ASSIGN = 0,           /**&lt; Specifies a weak reference to the associated object. */</span><br><span class="line">    OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**&lt; Specifies a strong reference to the associated object. </span><br><span class="line">                                            *   The association is not made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**&lt; Specifies that the associated object is copied. </span><br><span class="line">                                            *   The association is not made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_RETAIN = 01401,       /**&lt; Specifies a strong reference to the associated object.</span><br><span class="line">                                            *   The association is made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_COPY = 01403          /**&lt; Specifies that the associated object is copied.</span><br><span class="line">                                            *   The association is made atomically. */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>不同的objc_AssociationPolicy对应了不同的属性修饰符。</p>
+<h2 id="Objc-AssociationPolicy应用"><a href="#Objc-AssociationPolicy应用" class="headerlink" title="Objc_AssociationPolicy应用:"></a>Objc_AssociationPolicy应用:</h2><h3 id="UIButton扩展之动态添加属性"><a href="#UIButton扩展之动态添加属性" class="headerlink" title="UIButton扩展之动态添加属性"></a>UIButton扩展之动态添加属性</h3><p>.h文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line">typedef void (^block)(void);</span><br><span class="line">@interface UIButton (Block)</span><br><span class="line"></span><br><span class="line">@property(nonatomic,assign) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>.m文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">static const char myKey;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation UIButton (Block)</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name&#123;</span><br><span class="line">    //关联对象</span><br><span class="line">    objc_setAssociatedObject(self, &amp;myKey, name, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line">- (NSString *)name&#123;</span><br><span class="line">    //获取关联对象</span><br><span class="line">    return  objc_getAssociatedObject(self, &amp;myKey);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>Viewcontroller.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">    [self.view addSubview:btn];</span><br><span class="line">    btn.backgroundColor = [UIColor redColor];</span><br><span class="line">    btn.frame = CGRectMake(100, 100, 100, 50);</span><br><span class="line">    btn.name = @&quot;darling&quot;;</span><br><span class="line">    [btn addTarget:self action:@selector(message:) forControlEvents:UIControlEventTouchUpInside</span><br><span class="line">     ];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)message:(UIButton *)btn&#123;</span><br><span class="line">    NSLog(@&quot;name = %@&quot;,btn.name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="UIButton扩展之动态添加方法"><a href="#UIButton扩展之动态添加方法" class="headerlink" title="UIButton扩展之动态添加方法"></a>UIButton扩展之动态添加方法</h3><p>.h文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line">typedef void (^btnBlock)(void);</span><br><span class="line">@interface UIButton (Block)</span><br><span class="line">- (void)handelWithBlock:(btnBlock)block;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>.m文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">static const char myKey;</span><br><span class="line">@implementation UIButton (Block)</span><br><span class="line">- (void)handelWithBlock:(block)block&#123;</span><br><span class="line">    if (block) &#123;</span><br><span class="line">        objc_setAssociatedObject(self, &amp;myKey, block, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    &#125;</span><br><span class="line">    [self addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];</span><br><span class="line">&#125;</span><br><span class="line">- (void)btnAction</span><br><span class="line">&#123;</span><br><span class="line">    block block = objc_getAssociatedObject(self, &amp;myKey);</span><br><span class="line">    block();</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>ViewController.m文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">    [self.view addSubview:btn];</span><br><span class="line">    btn.backgroundColor = [UIColor redColor];</span><br><span class="line">    btn.frame = CGRectMake(100, 100, 100, 50);</span><br><span class="line">    [btn handelWithBlock:^&#123;</span><br><span class="line">        NSLog(@&quot;darling&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考文献</p>
+<p><a href="https://www.jianshu.com/p/35df1ba1f107" target="_blank" rel="noopener">objc_setAssociatedObject与Block的简单使用</a></p>
+<p><a href="http://www.cnblogs.com/sunyanyan/p/5329451.html" target="_blank" rel="noopener"><a href="http://www.cnblogs.com/sunyanyan/p/5329451.html" target="_blank" rel="noopener">objc_setAssociatedObject/objc_getAssociatedObject</a></a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/15/iOS-DES总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -431,7 +571,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
