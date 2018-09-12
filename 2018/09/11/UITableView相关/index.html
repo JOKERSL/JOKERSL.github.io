@@ -108,23 +108,24 @@
 
 
 
-  <meta name="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Man Tou Pu&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/iOS面试/index.html">
+  <meta name="description" content="UITableView性能优化当获取到 API JSON 数据后，我会把每条 Cell 需要的数据都在后台线程计算并封装为一个布局对象 CellLayout。CellLayout 包含所有文本的 CoreText 排版结果、Cell 内部每个控件的高度、Cell 的整体高度。每个 CellLayout 的内存占用并不多，所以当生成后，可以全部缓存到内存，以供稍后使用。这样，TableView 在请">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UITableView相关">
+<meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/11/UITableView相关/index.html">
 <meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
-<meta property="og:description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+<meta property="og:description" content="UITableView性能优化当获取到 API JSON 数据后，我会把每条 Cell 需要的数据都在后台线程计算并封装为一个布局对象 CellLayout。CellLayout 包含所有文本的 CoreText 排版结果、Cell 内部每个控件的高度、Cell 的整体高度。每个 CellLayout 的内存占用并不多，所以当生成后，可以全部缓存到内存，以供稍后使用。这样，TableView 在请">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-12T06:27:29.897Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Man Tou Pu&#39;s Blog">
-<meta name="twitter:description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+<meta name="twitter:title" content="UITableView相关">
+<meta name="twitter:description" content="UITableView性能优化当获取到 API JSON 数据后，我会把每条 Cell 需要的数据都在后台线程计算并封装为一个布局对象 CellLayout。CellLayout 包含所有文本的 CoreText 排版结果、Cell 内部每个控件的高度、Cell 的整体高度。每个 CellLayout 的内存占用并不多，所以当生成后，可以全部缓存到内存，以供稍后使用。这样，TableView 在请">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/iOS面试/"/>
+  <link rel="canonical" href="http://yoursite.com/iOS面试/2018/09/11/UITableView相关/"/>
 
 
 
@@ -134,7 +135,7 @@
   };
 </script>
 
-  <title>Man Tou Pu's Blog</title>
+  <title>UITableView相关 | Man Tou Pu's Blog</title>
   
 
 
@@ -181,8 +182,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -223,7 +223,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
     <a href="/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
   </li>
@@ -275,9 +275,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -309,11 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/11/UITableView相关/" itemprop="url">
-                  UITableView相关
-                </a>
+          <h1 class="post-title" itemprop="name headline">UITableView相关
               
             
           </h1>
@@ -406,9 +402,7 @@
       
 
       
-        
-          
-            <h1 id="UITableView性能优化"><a href="#UITableView性能优化" class="headerlink" title="UITableView性能优化"></a>UITableView性能优化</h1><p>当获取到 API JSON 数据后，我会把每条 Cell 需要的数据都在后台线程计算并封装为一个布局对象 CellLayout。CellLayout 包含所有文本的 CoreText 排版结果、Cell 内部每个控件的高度、Cell 的整体高度。每个 CellLayout 的内存占用并不多，所以当生成后，可以全部缓存到内存，以供稍后使用。这样，TableView 在请求各个高度函数时，不会消耗任何多余计算量；当把 CellLayout 设置到 Cell 内部时，Cell 内部也不用再计算布局了。</p>
+        <h1 id="UITableView性能优化"><a href="#UITableView性能优化" class="headerlink" title="UITableView性能优化"></a>UITableView性能优化</h1><p>当获取到 API JSON 数据后，我会把每条 Cell 需要的数据都在后台线程计算并封装为一个布局对象 CellLayout。CellLayout 包含所有文本的 CoreText 排版结果、Cell 内部每个控件的高度、Cell 的整体高度。每个 CellLayout 的内存占用并不多，所以当生成后，可以全部缓存到内存，以供稍后使用。这样，TableView 在请求各个高度函数时，不会消耗任何多余计算量；当把 CellLayout 设置到 Cell 内部时，Cell 内部也不用再计算布局了。</p>
 <h2 id="缓存高度"><a href="#缓存高度" class="headerlink" title="缓存高度"></a>缓存高度</h2><p>对于通常的 TableView 来说，提前在后台计算好布局结果是非常重要的一个性能优化点。为了达到最高性能，你可能需要牺牲一些开发速度，不要用 Autolayout 等技术，少用 UILabel 等文本控件。但如果你对性能的要求并不那么高，可以尝试用 TableView 的预估高度的功能，并把每个 Cell 高度缓存下来。这里有个来自百度知道团队的开源项目可以很方便的帮你实现这一点：<a href="https://github.com/forkingdog/UITableView-FDTemplateLayoutCell/" target="_blank" rel="noopener">FDTemplateLayoutCell</a>。</p>
 <p><a href="https://www.jianshu.com/p/64f0e1557562" target="_blank" rel="noopener">tableviewcell高度缓存具体实现方式</a></p>
 <h2 id="预渲染"><a href="#预渲染" class="headerlink" title="预渲染"></a>预渲染</h2><p>微博的头像在某次改版中换成了圆形，所以我也跟进了一下。当头像下载下来后，我会在后台线程将头像预先渲染为圆形并单独保存到一个 ImageCache 中去。</p>
@@ -477,8 +471,6 @@
 <p><a href="https://blog.csdn.net/mo_xiao_mo" target="_blank" rel="noopener">mo_xiao_mo</a>UITableView的优化技巧－异步绘制Cell</p>
 <p><a href="https://www.jianshu.com/p/64f0e1557562" target="_blank" rel="noopener">iOS_小松哥</a>UITableView自动计算cell高度并缓存，再也不用管高度啦</p>
 
-          
-        
       
     </div>
 
@@ -498,202 +490,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/01/23/iOS-runtime应用：关联对象/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/23/iOS-runtime应用：关联对象/" itemprop="url">
-                  iOS runtime应用：关联对象
-                </a>
-              
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
+              <a href="/2018/01/23/iOS-runtime应用：关联对象/" rel="next" title="iOS runtime应用：关联对象">
+                <i class="fa fa-chevron-left"></i> iOS runtime应用：关联对象
+              </a>
             
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-01-23 17:26:23" itemprop="dateCreated datePublished" datetime="2018-01-23T17:26:23+08:00">2018-01-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-09-11 17:28:56" itemprop="dateModified" datetime="2018-09-11T17:28:56+08:00">2018-09-11</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/runtime应用/" itemprop="url" rel="index"><span itemprop="name">runtime应用</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>给已有类添加方法使用Category就可以了，但如果向分类里添加一个或多个属性的话会报错，使用属性不能正确创建实例及存取方法。</p>
-<p>但是我们可以实现runtime的Associated Objects(关联对象)，它可以让对象在运行时关联任何值。</p>
-<h2 id="runtime中提供给我们的方法："><a href="#runtime中提供给我们的方法：" class="headerlink" title="runtime中提供给我们的方法："></a>runtime中提供给我们的方法：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//关联对象</span><br><span class="line">void objc_setAssociatedObject(id object,const void *key,id value,objc_AssociationPolicy policy);</span><br><span class="line">//获取关联的对象</span><br><span class="line">id objc_getAssociatedObject(id object,const void *key);</span><br><span class="line">//移除关联的对象</span><br><span class="line">void objc_removeAssociatedObjects(id object);</span><br></pre></td></tr></table></figure>
-<h2 id="变量说明："><a href="#变量说明：" class="headerlink" title="变量说明："></a>变量说明：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id object:被关联的对象</span><br><span class="line">const void *key:关联的key，要求唯一</span><br><span class="line">id value:关联的对象</span><br><span class="line">Objc_AssociationPolicy poliy:内存管理策略</span><br></pre></td></tr></table></figure>
-<h2 id="Objc-AssociationPolicy-policy的enum值有"><a href="#Objc-AssociationPolicy-policy的enum值有" class="headerlink" title="Objc_AssociationPolicy policy的enum值有:"></a>Objc_AssociationPolicy policy的enum值有:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef OBJC_ENUM(uintptr_t, objc_AssociationPolicy) &#123;</span><br><span class="line">    OBJC_ASSOCIATION_ASSIGN = 0,           /**&lt; Specifies a weak reference to the associated object. */</span><br><span class="line">    OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**&lt; Specifies a strong reference to the associated object. </span><br><span class="line">                                            *   The association is not made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**&lt; Specifies that the associated object is copied. </span><br><span class="line">                                            *   The association is not made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_RETAIN = 01401,       /**&lt; Specifies a strong reference to the associated object.</span><br><span class="line">                                            *   The association is made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_COPY = 01403          /**&lt; Specifies that the associated object is copied.</span><br><span class="line">                                            *   The association is made atomically. */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>不同的objc_AssociationPolicy对应了不同的属性修饰符。</p>
-<h2 id="Objc-AssociationPolicy应用"><a href="#Objc-AssociationPolicy应用" class="headerlink" title="Objc_AssociationPolicy应用:"></a>Objc_AssociationPolicy应用:</h2><h3 id="UIButton扩展之动态添加属性"><a href="#UIButton扩展之动态添加属性" class="headerlink" title="UIButton扩展之动态添加属性"></a>UIButton扩展之动态添加属性</h3><p>.h文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line">typedef void (^block)(void);</span><br><span class="line">@interface UIButton (Block)</span><br><span class="line"></span><br><span class="line">@property(nonatomic,assign) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">static const char myKey;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation UIButton (Block)</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name&#123;</span><br><span class="line">    //关联对象</span><br><span class="line">    objc_setAssociatedObject(self, &amp;myKey, name, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line">- (NSString *)name&#123;</span><br><span class="line">    //获取关联对象</span><br><span class="line">    return  objc_getAssociatedObject(self, &amp;myKey);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>Viewcontroller.m</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">    [self.view addSubview:btn];</span><br><span class="line">    btn.backgroundColor = [UIColor redColor];</span><br><span class="line">    btn.frame = CGRectMake(100, 100, 100, 50);</span><br><span class="line">    btn.name = @&quot;darling&quot;;</span><br><span class="line">    [btn addTarget:self action:@selector(message:) forControlEvents:UIControlEventTouchUpInside</span><br><span class="line">     ];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)message:(UIButton *)btn&#123;</span><br><span class="line">    NSLog(@&quot;name = %@&quot;,btn.name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="UIButton扩展之动态添加方法"><a href="#UIButton扩展之动态添加方法" class="headerlink" title="UIButton扩展之动态添加方法"></a>UIButton扩展之动态添加方法</h3><p>.h文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line">typedef void (^btnBlock)(void);</span><br><span class="line">@interface UIButton (Block)</span><br><span class="line">- (void)handelWithBlock:(btnBlock)block;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">static const char myKey;</span><br><span class="line">@implementation UIButton (Block)</span><br><span class="line">- (void)handelWithBlock:(block)block&#123;</span><br><span class="line">    if (block) &#123;</span><br><span class="line">        objc_setAssociatedObject(self, &amp;myKey, block, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    &#125;</span><br><span class="line">    [self addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];</span><br><span class="line">&#125;</span><br><span class="line">- (void)btnAction</span><br><span class="line">&#123;</span><br><span class="line">    block block = objc_getAssociatedObject(self, &amp;myKey);</span><br><span class="line">    block();</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>ViewController.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">    [self.view addSubview:btn];</span><br><span class="line">    btn.backgroundColor = [UIColor redColor];</span><br><span class="line">    btn.frame = CGRectMake(100, 100, 100, 50);</span><br><span class="line">    [btn handelWithBlock:^&#123;</span><br><span class="line">        NSLog(@&quot;darling&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>参考文献</p>
-<p><a href="https://www.jianshu.com/p/35df1ba1f107" target="_blank" rel="noopener">objc_setAssociatedObject与Block的简单使用</a></p>
-<p><a href="http://www.cnblogs.com/sunyanyan/p/5329451.html" target="_blank" rel="noopener"><a href="http://www.cnblogs.com/sunyanyan/p/5329451.html" target="_blank" rel="noopener">objc_setAssociatedObject/objc_getAssociatedObject</a></a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -703,192 +521,15 @@
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/01/15/iOS-DES总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/15/iOS-DES总结/" itemprop="url">
-                  iOS DES总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-01-15 11:54:15" itemprop="dateCreated datePublished" datetime="2018-01-15T11:54:15+08:00">2018-01-15</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-09-11 17:27:23" itemprop="dateModified" datetime="2018-09-11T17:27:23+08:00">2018-09-11</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/加密/" itemprop="url" rel="index"><span itemprop="name">加密</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>iOS中使用DES加密总结</p>
-<p>常见的对称加密有:DES、3DES、RC4、AES等；<br>加密算法都有几个共同的特点：<br>1.秘钥长度；<br>2.加密模式；<br>3.块加密算法里的填充区分；<br>以下是我对做项目时遇到的问题所做的小结</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ccStatus = CCCrypt(encryptOperation,</span><br><span class="line">                       kCCAlgorithmDES,</span><br><span class="line">                       kCCOptionPKCS7Padding|kCCOptionECBMode,</span><br><span class="line">                       vkey, </span><br><span class="line">                       kCCKeySizeDES,</span><br><span class="line">                       iv, </span><br><span class="line">                       dataIn, </span><br><span class="line">                       dataInLength,</span><br><span class="line">                       (void *)dataOut,</span><br><span class="line">                       dataOutAvailable,</span><br><span class="line">                       &amp;dataOutMoved);</span><br></pre></td></tr></table></figure>
-<p>第一个参数encryptOperation：告诉函数加密还是解密 第二个参数kCCAlgorithmDES：使用DES加密 第三个参数 kCCOptionPKCS7Padding|kCCOptionECBMode使用ECB加密模式和PKCS7Padding填充模式，如果使用kCCOptionPKCS7Padding就代表使用CBC加密模式并且使用PKCS7Padding的填充模式。 在DES中加密数据包单位长度是8字节，在8自己的情况下PKCS7Padding等价于PKCS5Padding。</p>
-<p>后台大哥给了一个线上加密的地址让我对。</p>
-<p><a href="http://tool.chacuo.net/cryptdes" target="_blank" rel="noopener">http://tool.chacuo.net/cryptdes</a></p>
-<p>调试了半天原来是我自己的加密模式不对，使用了CBC模式，而后台用的是ECB。</p>
-<p>参考资料：</p>
-<p><a href="http://blog.csdn.net/u010184533/article/details/38975871" target="_blank" rel="noopener">http://blog.csdn.net/u010184533/article/details/38975871</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -909,8 +550,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -972,6 +622,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UITableView性能优化"><span class="nav-number">1.</span> <span class="nav-text">UITableView性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存高度"><span class="nav-number">1.1.</span> <span class="nav-text">缓存高度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预渲染"><span class="nav-number">1.2.</span> <span class="nav-text">预渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#离屏渲染"><span class="nav-number">1.2.1.</span> <span class="nav-text">离屏渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#离屏渲染产生原因"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">离屏渲染产生原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#光栅化"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">光栅化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#遮罩"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">遮罩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shadows-阴影"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">shadows(阴影)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切圆角优化"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">切圆角优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#方法一"><span class="nav-number">1.2.1.5.1.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法二"><span class="nav-number">1.2.1.5.2.</span> <span class="nav-text">方法二</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法三"><span class="nav-number">1.2.1.5.3.</span> <span class="nav-text">方法三</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步绘制"><span class="nav-number">1.3.</span> <span class="nav-text">异步绘制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UITableView优化总结"><span class="nav-number">1.4.</span> <span class="nav-text">UITableView优化总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1102,6 +768,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
 
   
 
