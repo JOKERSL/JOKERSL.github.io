@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="概述Category是Objective-C 2.0之后添加的语言特性，Category又叫分类、类别、类目，能够在不改变原来类内容的基础上，为类增加一些方法。除此之外，Category还有以下功能： （1）将类的实现分开写在几个分类里面。这样做的好处:  可以减少单个文件的体积 可以把不同的功能组织到不同的Category里 可以由多个开发者共同完成一个类 可以按需加载想要的category">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS分类">
+<meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/13/iOS分类/index.html">
+<meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
+<meta property="og:description" content="概述Category是Objective-C 2.0之后添加的语言特性，Category又叫分类、类别、类目，能够在不改变原来类内容的基础上，为类增加一些方法。除此之外，Category还有以下功能： （1）将类的实现分开写在几个分类里面。这样做的好处:  可以减少单个文件的体积 可以把不同的功能组织到不同的Category里 可以由多个开发者共同完成一个类 可以按需加载想要的category">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/1/19/a129eff572b96c5d40342a2491620d07?imageView2/0/w/1280/h/960/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/1/19/1648e30865a84419a4e69e1441d3ae45?imageView2/0/w/1280/h/960/ignore-error/1">
+<meta property="og:updated_time" content="2018-09-13T09:02:26.929Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS分类">
+<meta name="twitter:description" content="概述Category是Objective-C 2.0之后添加的语言特性，Category又叫分类、类别、类目，能够在不改变原来类内容的基础上，为类增加一些方法。除此之外，Category还有以下功能： （1）将类的实现分开写在几个分类里面。这样做的好处:  可以减少单个文件的体积 可以把不同的功能组织到不同的Category里 可以由多个开发者共同完成一个类 可以按需加载想要的category">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2017/1/19/a129eff572b96c5d40342a2491620d07?imageView2/0/w/1280/h/960/ignore-error/1">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/iOS面试/2018/09/13/iOS分类/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS分类 | Man Tou Pu's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Man Tou Pu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">技术、生活个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/13/iOS分类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS分类
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-13 14:39:45 / 修改时间：17:02:26" itemprop="dateCreated datePublished" datetime="2018-09-13T14:39:45+08:00">2018-09-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Objective-C语言特性/" itemprop="url" rel="index"><span itemprop="name">Objective-C语言特性</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Category是Objective-C 2.0之后添加的语言特性，Category又叫分类、类别、类目，能够在不改变原来类内容的基础上，为类增加一些方法。除此之外，Category还有以下功能：</p>
+<p>（1）将类的实现分开写在几个分类里面。<br>这样做的好处:</p>
+<ul>
+<li>可以减少单个文件的体积</li>
+<li>可以把不同的功能组织到不同的Category里</li>
+<li>可以由多个开发者共同完成一个类</li>
+<li>可以按需加载想要的category</li>
+</ul>
+<p>（2）声明私有的方法。</p>
+<p>（3）模拟多继承。</p>
+<h1 id="Category的定义与使用"><a href="#Category的定义与使用" class="headerlink" title="Category的定义与使用"></a>Category的定义与使用</h1><p>为了便于理解，这里直接通过一个小例子去讲解其用法。</p>
+<p>例如，我们创建一个Person类，并为其创建一个Category命名为MyCategory。创建Category很简单，如下图：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/1/19/a129eff572b96c5d40342a2491620d07?imageView2/0/w/1280/h/960/ignore-error/1" alt="snip20170109_5"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/1/19/1648e30865a84419a4e69e1441d3ae45?imageView2/0/w/1280/h/960/ignore-error/1" alt="snip20170109_8"></p>
+<p>为Person创建一个名为MyCategory的Category后，会自动生成Person+MyCategory.h和Person+MyCategory.m文件。我们在MyCategory中声明和实现一个read方法，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//  Person+MyCategory.h</span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Person (MyCategory)</span><br><span class="line"></span><br><span class="line">-(void)read;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//  Person+MyCategory.m</span><br><span class="line">#import &quot;Person+MyCategory.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation Person (MyCategory)</span><br><span class="line"></span><br><span class="line">-(void)read&#123;</span><br><span class="line">    NSLog(@&quot;调用了MyCategory的read方法！&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>之后我们可以在ViewController或其他地方使用分类中添加的方法，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//  ViewController.m</span><br><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;Person+MyCategory.h&quot;</span><br><span class="line"></span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Person *p = [[Person alloc] init];</span><br><span class="line">    [p read];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>打印结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2017-01-09 16:27:39.089 Test[5347:483009] 调用了MyCategory的read方法！</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2017-01-09 16:27:39.089 Test [5347:483009] 调用了MyCategory的 read方法！</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="使"><a href="#使" class="headerlink" title="使"></a>使</h3><h3 id="用注意"><a href="#用注意" class="headerlink" title="用注意"></a>用注意</h3><ol>
+<li>分类只能增加方法，不能增加成员变量。</li>
+<li>分类方法实现中可以访问原来类中声明的成员变量。</li>
+<li>分类可以重新实现原来类中的方法，但是会覆盖掉原来的方法，会导致原来的方法没法再使用（实际上并没有真的替换，而是Category的方法被放到了新方法列表的前面，而原来类的方法被放到了新方法列表的后面，这也就是我们平常所说的Category的方法会“覆盖”掉原来类的同名方法，这是因为运行时在查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应名字的方法，就会罢休，殊不知后面可能还有一样名字的方法）。</li>
+<li>当分类、原来类、原来类的父类中有相同方法时，方法调用的优先级：分类(最后参与编译的分类优先) –&gt; 原来类  –&gt; 父类，即先去调用分类中的方法，分类中没这个方法再去原来类中找，原来类中没有再去父类中找。</li>
+<li>Category是在runtime时候加载，而不是在编译的时候。</li>
+</ol>
+<h2 id="Category与成员变量、属性"><a href="#Category与成员变量、属性" class="headerlink" title="Category与成员变量、属性"></a>Category与成员变量、属性</h2><p>如果你在你Category的.h文件中写如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    NSString *str1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Xcode会报如下错误:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Instance variable may not be placed in categories</span><br></pre></td></tr></table></figure>
+<p>通过这句话我们知道Xcode是不允许我们在Category中添加成员变量的。</p>
+<p>为什么不能添加成员变量呢？</p>
+<p>Objective-C类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针。它的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_class *Class;</span><br></pre></td></tr></table></figure>
+<p>objc_class结构体的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">struct objc_class &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">#if !__OBJC2__</span><br><span class="line">    Class super_class                       OBJC2_UNAVAILABLE;  // 父类</span><br><span class="line">    const char *name                        OBJC2_UNAVAILABLE;  // 类名</span><br><span class="line">    long version                            OBJC2_UNAVAILABLE;  // 类的版本信息，默认为0</span><br><span class="line">    long info                               OBJC2_UNAVAILABLE;  // 类信息，供运行期使用的一些位标识</span><br><span class="line">    long instance_size                      OBJC2_UNAVAILABLE;  // 该类的实例变量大小</span><br><span class="line">    struct objc_ivar_list *ivars            OBJC2_UNAVAILABLE;  // 该类的成员变量链表</span><br><span class="line">    struct objc_method_list **methodLists   OBJC2_UNAVAILABLE;  // 方法定义的链表</span><br><span class="line">    struct objc_cache *cache                OBJC2_UNAVAILABLE;  // 方法缓存</span><br><span class="line">    struct objc_protocol_list *protocols    OBJC2_UNAVAILABLE;  // 协议链表</span><br><span class="line">#endif</span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
+<p>在上面的objc_class结构体中，ivars是objc_ivar_list（成员变量列表）指针；methodLists是指向objc_method_list指针的指针。在Runtime中，objc_class结构体大小是固定的，不可能往这个结构体中添加数据，只能修改。所以ivars指向的是一个固定区域，只能修改成员变量值，不能增加成员变量个数。methodList是一个二维数组，所以可以修改*methodLists的值来增加成员方法，虽没办法扩展methodLists指向的内存区域，却可以改变这个内存区域的值（存储的是指针）。因此，可以动态添加方法，不能添加成员变量。</p>
+<p>Category不能添加成员变量（instance variables），那到底能不能添加属性（property）呢？</p>
+<p>这个我们要从Category的结构体开始分析：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">typedef struct category_t &#123;</span><br><span class="line">    const char *name;  //类的名字</span><br><span class="line">    classref_t cls;  //类</span><br><span class="line">    struct method_list_t *instanceMethods;  //category中所有给类添加的实例方法的列表</span><br><span class="line">    struct method_list_t *classMethods;  //category中所有添加的类方法的列表</span><br><span class="line">    struct protocol_list_t *protocols;  //category实现的所有协议的列表</span><br><span class="line">    struct property_list_t *instanceProperties;  //category中添加的所有属性</span><br><span class="line">&#125; category_t;</span><br></pre></td></tr></table></figure>
+<p>从Category的定义也可以看出Category的可为（可以添加实例方法，类方法，甚至可以实现协议，添加属性）和不可为（无法添加实例变量）。</p>
+<p>但是为什么网上很多人都说Category不能添加属性呢？</p>
+<p>实际上，Category实际上允许添加属性的，同样可以使用@property，但是不会生成_变量（带下划线的成员变量），也不会生成添加属性的getter和setter方法，所以，尽管添加了属性，也无法使用点语法调用getter和setter方法。但实际上可以使用runtime去实现Category为已有的类添加新的属性并生成getter和setter方法。详细内容可以看峰哥之前的文章：《<a href="https://link.juejin.im/?target=http%3A%2F%2Fwww.imlifengfeng.com%2Fblog%2F%3Fp%3D397" target="_blank" rel="noopener"><em>iOS Runtime之四：关联对象</em></a>》</p>
+<p>四、<strong>Category与Extension</strong></p>
+<p>1、Extension的基本用法</p>
+<p>Extension的创建方法与Category一样，只要在原来选择Category选择Extension即可，比如我们为Person创建一个名为MyExtension的Extension，则最终会生成一个Person_MyExtension.h文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//  Person_MyExtension.h</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Person ()</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>但要注意的是和Category不同的是它不会生成Person_MyExtension.m文件。之后我们可以在Person_MyExtension.h中<strong>直接添加成员变量、属性和方法</strong>，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//  Person_MyExtension.h</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Person ()</span><br><span class="line">&#123;</span><br><span class="line">    NSString * _address;</span><br><span class="line">&#125;</span><br><span class="line">@property (nonatomic) NSInteger age;</span><br><span class="line"></span><br><span class="line">-(NSString*)WhereAmI;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>他常用的形式不是创建一个单独的文件，而是在实现文件中添加私有的成员变量、属性和方法。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//  Person.m</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line"></span><br><span class="line">/////////Extension start///////////</span><br><span class="line"></span><br><span class="line">@interface Person ()</span><br><span class="line">&#123;</span><br><span class="line">    NSString * _address;</span><br><span class="line">&#125;</span><br><span class="line">@property (nonatomic) NSInteger age;</span><br><span class="line"></span><br><span class="line">-(NSString*)WhereAmI;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">/////////Extension end///////////</span><br><span class="line"></span><br><span class="line">@implementation Person</span><br><span class="line"></span><br><span class="line">-(NSString*)WhereAmI&#123;</span><br><span class="line">    return @&quot;谁知道你在哪里&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>2、Extension与Category区别</p>
+<ul>
+<li>Extension<ul>
+<li>在编译器决议，是类的一部分，在编译器和头文件的@interface和实现文件里的@implement一起形成了一个完整的类。</li>
+<li>伴随着类的产生而产生，也随着类的消失而消失。</li>
+<li>Extension一般用来隐藏类的私有消息，你必须有一个类的源码才能添加一个类的Extension，所以对于系统一些类，如NSString，就无法添加类扩展</li>
+</ul>
+</li>
+<li>Category<ul>
+<li>是运行期决议的</li>
+<li>类扩展可以添加实例变量，分类不能添加实例变量</li>
+<li>原因：因为在运行期，对象的内存布局已经确定，如果添加实例变量会破坏类的内部布局，这对编译性语言是灾难性的。</li>
+</ul>
+</li>
+</ul>
+<p><strong>原创文章，转载请注明：</strong> 转载自<a href="https://link.juejin.im/?target=http%3A%2F%2Fwww.imlifengfeng.com%2Fblog%2F" target="_blank" rel="noopener">李峰峰博客</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/13/Runtime全方位装逼指南/" rel="next" title="Runtime全方位装逼指南">
+                <i class="fa fa-chevron-left"></i> Runtime全方位装逼指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sun Lei</p>
+              <p class="site-description motion-element" itemprop="description">只有用心才能看清楚·真正重要的东西·用眼睛是看不见的</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Category的定义与使用"><span class="nav-number">2.</span> <span class="nav-text">Category的定义与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使"><span class="nav-number">2.0.1.</span> <span class="nav-text">使</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用注意"><span class="nav-number">2.0.2.</span> <span class="nav-text">用注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Category与成员变量、属性"><span class="nav-number">2.1.</span> <span class="nav-text">Category与成员变量、属性</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sun Lei</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.4.4</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
