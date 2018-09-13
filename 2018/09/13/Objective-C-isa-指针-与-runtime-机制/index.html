@@ -108,24 +108,29 @@
 
 
 
-  <meta name="description" content="iOS中使用DES加密总结 常见的对称加密有:DES、3DES、RC4、AES等；加密算法都有几个共同的特点：1.秘钥长度；2.加密模式；3.块加密算法里的填充区分；以下是我对做项目时遇到的问题所做的小结 1234567891011ccStatus = CCCrypt(encryptOperation,                       kCCAlgorithmDES,">
+  <meta name="description" content="一.isa指针要认识什么是isa指针，我们得先明确一点： 在Objective-C中，任何类的定义都是对象。类和类的实例（对象）没有任何本质上的区别。任何对象都有isa指针。 那么什么是类呢？在xcode中用快捷键Shift＋Cmd＋O 打开文件objc.h 能看到类的定义：  可以看出: Class 是一个 objc_class 结构类型的指针, id是一个 objc_object 结构类型的指">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS DES总结">
-<meta property="og:url" content="http://yoursite.com/iOS面试/2018/01/15/iOS-DES总结/index.html">
+<meta property="og:title" content="Objective-C isa 指针 与 runtime 机制">
+<meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/13/Objective-C-isa-指针-与-runtime-机制/index.html">
 <meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
-<meta property="og:description" content="iOS中使用DES加密总结 常见的对称加密有:DES、3DES、RC4、AES等；加密算法都有几个共同的特点：1.秘钥长度；2.加密模式；3.块加密算法里的填充区分；以下是我对做项目时遇到的问题所做的小结 1234567891011ccStatus = CCCrypt(encryptOperation,                       kCCAlgorithmDES,">
+<meta property="og:description" content="一.isa指针要认识什么是isa指针，我们得先明确一点： 在Objective-C中，任何类的定义都是对象。类和类的实例（对象）没有任何本质上的区别。任何对象都有isa指针。 那么什么是类呢？在xcode中用快捷键Shift＋Cmd＋O 打开文件objc.h 能看到类的定义：  可以看出: Class 是一个 objc_class 结构类型的指针, id是一个 objc_object 结构类型的指">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-11T09:27:23.313Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/449095-4006820f1afc3318.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/449095-02d25b1edb82d5b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/593">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/449095-3e972ec16703c54d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/598">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/449095-aec569427bcb7436.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/690">
+<meta property="og:updated_time" content="2018-09-13T03:52:21.311Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS DES总结">
-<meta name="twitter:description" content="iOS中使用DES加密总结 常见的对称加密有:DES、3DES、RC4、AES等；加密算法都有几个共同的特点：1.秘钥长度；2.加密模式；3.块加密算法里的填充区分；以下是我对做项目时遇到的问题所做的小结 1234567891011ccStatus = CCCrypt(encryptOperation,                       kCCAlgorithmDES,">
+<meta name="twitter:title" content="Objective-C isa 指针 与 runtime 机制">
+<meta name="twitter:description" content="一.isa指针要认识什么是isa指针，我们得先明确一点： 在Objective-C中，任何类的定义都是对象。类和类的实例（对象）没有任何本质上的区别。任何对象都有isa指针。 那么什么是类呢？在xcode中用快捷键Shift＋Cmd＋O 打开文件objc.h 能看到类的定义：  可以看出: Class 是一个 objc_class 结构类型的指针, id是一个 objc_object 结构类型的指">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/449095-4006820f1afc3318.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/iOS面试/2018/01/15/iOS-DES总结/"/>
+  <link rel="canonical" href="http://yoursite.com/iOS面试/2018/09/13/Objective-C-isa-指针-与-runtime-机制/"/>
 
 
 
@@ -135,7 +140,7 @@
   };
 </script>
 
-  <title>iOS DES总结 | Man Tou Pu's Blog</title>
+  <title>Objective-C isa 指针 与 runtime 机制 | Man Tou Pu's Blog</title>
   
 
 
@@ -292,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/01/15/iOS-DES总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/13/Objective-C-isa-指针-与-runtime-机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sun Lei">
@@ -309,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">iOS DES总结
+          <h1 class="post-title" itemprop="name headline">Objective-C isa 指针 与 runtime 机制
               
             
           </h1>
@@ -334,24 +339,12 @@
                 
               
 
-              <time title="创建时间：2018-01-15 11:54:15" itemprop="dateCreated datePublished" datetime="2018-01-15T11:54:15+08:00">2018-01-15</time>
+              <time title="创建时间：2018-09-13 11:49:08 / 修改时间：11:52:21" itemprop="dateCreated datePublished" datetime="2018-09-13T11:49:08+08:00">2018-09-13</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-09-11 17:27:23" itemprop="dateModified" datetime="2018-09-11T17:27:23+08:00">2018-09-11</time>
               
             
           </span>
@@ -368,7 +361,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/加密/" itemprop="url" rel="index"><span itemprop="name">加密</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/runtime/" itemprop="url" rel="index"><span itemprop="name">runtime</span></a></span>
 
                 
                 
@@ -402,15 +395,59 @@
       
 
       
-        <p>iOS中使用DES加密总结</p>
-<p>常见的对称加密有:DES、3DES、RC4、AES等；<br>加密算法都有几个共同的特点：<br>1.秘钥长度；<br>2.加密模式；<br>3.块加密算法里的填充区分；<br>以下是我对做项目时遇到的问题所做的小结</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ccStatus = CCCrypt(encryptOperation,</span><br><span class="line">                       kCCAlgorithmDES,</span><br><span class="line">                       kCCOptionPKCS7Padding|kCCOptionECBMode,</span><br><span class="line">                       vkey, </span><br><span class="line">                       kCCKeySizeDES,</span><br><span class="line">                       iv, </span><br><span class="line">                       dataIn, </span><br><span class="line">                       dataInLength,</span><br><span class="line">                       (void *)dataOut,</span><br><span class="line">                       dataOutAvailable,</span><br><span class="line">                       &amp;dataOutMoved);</span><br></pre></td></tr></table></figure>
-<p>第一个参数encryptOperation：告诉函数加密还是解密 第二个参数kCCAlgorithmDES：使用DES加密 第三个参数 kCCOptionPKCS7Padding|kCCOptionECBMode使用ECB加密模式和PKCS7Padding填充模式，如果使用kCCOptionPKCS7Padding就代表使用CBC加密模式并且使用PKCS7Padding的填充模式。 在DES中加密数据包单位长度是8字节，在8自己的情况下PKCS7Padding等价于PKCS5Padding。</p>
-<p>后台大哥给了一个线上加密的地址让我对。</p>
-<p><a href="http://tool.chacuo.net/cryptdes" target="_blank" rel="noopener">http://tool.chacuo.net/cryptdes</a></p>
-<p>调试了半天原来是我自己的加密模式不对，使用了CBC模式，而后台用的是ECB。</p>
-<p>参考资料：</p>
-<p><a href="http://blog.csdn.net/u010184533/article/details/38975871" target="_blank" rel="noopener">http://blog.csdn.net/u010184533/article/details/38975871</a></p>
+        <h2 id="一-isa指针"><a href="#一-isa指针" class="headerlink" title="一.isa指针"></a>一.isa指针</h2><p>要认识什么是isa指针，我们得先明确一点：</p>
+<p><strong>在Objective-C中，任何类的定义都是对象。类和类的实例（对象）没有任何本质上的区别。任何对象都有isa指针。</strong></p>
+<p>那么什么是类呢？在xcode中用快捷键Shift＋Cmd＋O 打开文件objc.h 能看到类的定义：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/449095-4006820f1afc3318.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728" alt="img"></p>
+<p>可以看出:</p>
+<p><strong>Class 是一个 objc_class 结构类型的指针, id是一个 objc_object 结构类型的指针.</strong></p>
+<p>我们再来看看 objc_class 的定义：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/449095-02d25b1edb82d5b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/593" alt="img"></p>
+<p>稍微解释一下各个参数的意思：</p>
+<p>isa：是一个Class 类型的指针. 每个实例对象有个isa的指针,他指向对象的类，而Class里也有个isa的指针, 指向meteClass(元类)。元类保存了类方法的列表。当类方法被调用时，先会从本身查找类方法的实现，如果没有，元类会向他父类查找该方法。同时注意的是：<strong>元类（meteClass）也是类，它也是对象。</strong>元类也有isa指针,它的isa指针最终指向的是一个根元类(root meteClass).根元类的isa指针指向本身，这样形成了一个封闭的内循环。</p>
+<p>super_class：父类，如果该类已经是最顶层的根类,那么它为NULL。</p>
+<p>version：类的版本信息,默认为0</p>
+<p>info：供运行期使用的一些位标识。</p>
+<p>instance_size：该类的实例变量大小</p>
+<p>ivars：成员变量的数组</p>
+<p>再来看看各个类实例变量的继承关系：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/449095-3e972ec16703c54d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/598" alt="img"></p>
+<p><strong>每一个对象本质上都是一个类的实例。其中类定义了成员变量和成员方法的列表。对象通过对象的isa指针指向类。</strong></p>
+<p><strong>每一个类本质上都是一个对象，类其实是元类（meteClass）的实例。元类定义了类方法的列表。类通过类的isa指针指向元类。</strong></p>
+<p><strong>所有的元类最终继承一个根元类，根元类isa指针指向本身，形成一个封闭的内循环。</strong></p>
+<h2 id="二-runtime-机制"><a href="#二-runtime-机制" class="headerlink" title="二.runtime 机制"></a><strong>二.runtime 机制</strong></h2><p>runtime：指一个程序在运行（或者在被执行）的状态。也就是说，当你打开一个程序使它在电脑上运行的时候，那个程序就是处于运行时刻。在一些编程语言中，把某些可以重用的程序或者实例打包或者重建成为“运行库”。这些实例可以在它们运行的时候被连接或者被任何程序调用。</p>
+<p>objective-c中runtime：是一套比较底层的纯C语言API, 属于1个C语言库, 包含了很多底层的C语言API。 在我们平时编写的OC代码中, 程序运行过程时, 其实最终都是转成了runtime的C语言代码。</p>
+<p><strong>runtime的应用：</strong></p>
+<p>1.动态创建一个类(比如KVO的底层实现)</p>
+<p> 2.动态地为某个类添加属性\方法, 修改属性值\方法</p>
+<p>3.遍历一个类的所有成员变量(属性)\所有方法</p>
+<p><strong>实质上，以上的是通过相关方法来获取对象或者类的isa指针来实现的。</strong></p>
+<p><strong>相关函数</strong></p>
+<ol>
+<li>增加</li>
+</ol>
+<p>增加函数:class_addMethod</p>
+<p>增加实例变量:class_addIvar</p>
+<p>增加属性:@dynamic标签，或者class_addMethod，因为属性其实就是由getter和setter函数组成</p>
+<p>增加Protocol:class<em>addProtocol (说实话我真不知道动态增加一个protocol有什么用,-</em>-!!)</p>
+<ol>
+<li>获取</li>
+</ol>
+<p>获取函数列表及每个函数的信息(函数指针、函数名等等):class_getClassMethod method_getName …</p>
+<p>获取属性列表及每个属性的信息:class_copyPropertyList property_getName</p>
+<p>获取类本身的信息,如类名等：class_getName class_getInstanceSize</p>
+<p>获取变量列表及变量信息：class_copyIvarList</p>
+<p>获取变量的值</p>
+<ol>
+<li>替换</li>
+</ol>
+<p>将实例替换成另一个类：object_setClass</p>
+<p>替换类方法的定义：class_replaceMethod</p>
+<p>4.其他常用方法：</p>
+<p>交换两个方法的实现：method_exchangeImplementations.</p>
+<p>设置一个方法的实现：method_setImplementation.        </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/449095-aec569427bcb7436.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/690" alt="img"></p>
+<p>[转自 <a href="https://www.jianshu.com/p/41735c66dccb" target="_blank" rel="noopener">曲年</a>]</p>
 
       
     </div>
@@ -438,15 +475,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/09/13/Objective-C-消息发送与转发机制原理/" rel="next" title="Objective-C-消息发送与转发机制原理">
+                <i class="fa fa-chevron-left"></i> Objective-C-消息发送与转发机制原理
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/23/iOS-runtime应用：关联对象/" rel="prev" title="iOS runtime应用：关联对象">
-                iOS runtime应用：关联对象 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -491,8 +528,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -554,6 +600,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-isa指针"><span class="nav-number">1.</span> <span class="nav-text">一.isa指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-runtime-机制"><span class="nav-number">2.</span> <span class="nav-text">二.runtime 机制</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
