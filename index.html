@@ -292,6 +292,220 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/13/KVO的底层实现原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/13/KVO的底层实现原理/" itemprop="url">
+                  KVO的底层实现原理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-13 18:07:43 / 修改时间：18:19:54" itemprop="dateCreated datePublished" datetime="2018-09-13T18:07:43+08:00">2018-09-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Objective-C语言特性/" itemprop="url" rel="index"><span itemprop="name">Objective-C语言特性</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="addObserver-forKeyPath-options-context-各个参数的作用分别是什么-observer中需要实现哪个方法才能获得KVO回调？"><a href="#addObserver-forKeyPath-options-context-各个参数的作用分别是什么-observer中需要实现哪个方法才能获得KVO回调？" class="headerlink" title="addObserver:forKeyPath:options:context:各个参数的作用分别是什么, observer中需要实现哪个方法才能获得KVO回调？"></a>addObserver:forKeyPath:options:context:各个参数的作用分别是什么, observer中需要实现哪个方法才能获得KVO回调？</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 1. self.person：要监听的对象</span><br><span class="line"> 2. 参数说明：</span><br><span class="line">    * @param addObserver  观察者，负责处理监听事件的对象</span><br><span class="line">    * @param forKeyPath 要监听的属性</span><br><span class="line">    * @param  options 观察的选项（观察新、旧值，也可以都观察）</span><br><span class="line">    * @param context 上下文，用于传递数据，可以利用上下文区分不同的监听</span><br><span class="line"> */</span><br><span class="line">[self.person addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:@&quot;Person Name&quot;];</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> *  当监控的某个属性的值改变了就会调用</span><br><span class="line"> *</span><br><span class="line"> *  @param keyPath 监听的属性名</span><br><span class="line"> *  @param object  属性所属的对象</span><br><span class="line"> *  @param change  属性的修改情况（属性原来的值`oldValue`、属性最新的值`newValue`）</span><br><span class="line"> *  @param context 传递的上下文数据，与监听的时候传递的一致，可以利用上下文区分不同的监听</span><br><span class="line"> */</span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;%@对象的%@属性改变了：%@&quot;, object, keyPath, change);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="KVO-Key-Value-Observing"><a href="#KVO-Key-Value-Observing" class="headerlink" title="KVO (Key-Value Observing)"></a>KVO (Key-Value Observing)</h2><p>KVO 是 Objective-C 对观察者模式（Observer Pattern）的实现。也是 Cocoa Binding 的基础。当被观察对象的某个属性发生更改时，观察者对象会获得通知。</p>
+<p>有意思的是，你不需要给被观察的对象添加任何额外代码，就能使用 KVO 。这是怎么做到的？</p>
+<h1 id="KVO内部实现原理"><a href="#KVO内部实现原理" class="headerlink" title="KVO内部实现原理"></a>KVO内部实现原理</h1><ul>
+<li><p>KVO是基于runtime机制实现的</p>
+</li>
+<li><p>当某个类的属性对象<code>第一次被观察</code>时，系统就会在运行期<code>动态</code>地创建<code>该类的一个派生类</code>，在这个派生类中重写基类中任何被观察属性的setter 方法。派生类在被重写的setter方法内实现真正的<code>通知机制</code></p>
+</li>
+<li><p>如果原类为Person，那么生成的派生类名为<code>NSKVONotifying_Person</code></p>
+</li>
+<li><p>每个类对象中都有一个isa指针指向当前类，当一个类对象的第一次被观察，那么系统会偷偷将isa指针指向动态生成的派生类，从而在给被监控属性赋值时执行的是派生类的setter方法</p>
+</li>
+<li><p>键值观察通知依赖于NSObject 的两个方法: <code>willChangeValueForKey:</code>和 <code>didChangevlueForKey:</code>；在一个被观察属性发生改变之前， <code>willChangeValueForKey:</code>一定会被调用，这就 会记录旧的值。而当改变发生后，<code>didChangeValueForKey:</code>会被调用，继而 <code>observeValueForKey:ofObject:change:context:</code>也会被调用。</p>
+</li>
+<li><p>补充：KVO的这套实现机制中苹果还偷偷重写了class方法，让我们误认为还是使用的当前类，从而达到隐藏生成的派生类</p>
+<p>​</p>
+<p>​</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429890-b28e010d3a7dbdb8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/953" alt="img"></p>
+<p>KVO内部实现原理.png</p>
+<h1 id="如何手动触发一个value的KVO"><a href="#如何手动触发一个value的KVO" class="headerlink" title="如何手动触发一个value的KVO"></a>如何手动触发一个value的KVO</h1></li>
+</ul>
+<ul>
+<li>自动触发的场景：在注册KVO之前设置一个初始值，注册之后，设置一个不一样的值，就可以触发了</li>
+<li>想知道如何手动触发，必须知道自动触发 KVO 的原理，见上面的描述</li>
+<li>手动触发演示</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSDate *now;</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    // “手动触发self.now的KVO”，必写。</span><br><span class="line">    [self willChangeValueForKey:@&quot;now&quot;];</span><br><span class="line"></span><br><span class="line">    // “手动触发self.now的KVO”，必写。</span><br><span class="line">    [self didChangeValueForKey:@&quot;now&quot;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429890-41421e825e153835.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/521" alt="img"></p>
+<p>手动触发一个value的KVO.png    </p>
+<h1 id="补充：-如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）"><a href="#补充：-如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）" class="headerlink" title="补充： 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）"></a>补充： 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）</h1><ul>
+<li><a href="https://link.jianshu.com/?t=http://tech.glowing.com/cn/implement-kvo/" target="_blank" rel="noopener">如何自己动手实现 KVO</a></li>
+</ul>
+<h1 id="附注-KVC底层实现原理-如下"><a href="#附注-KVC底层实现原理-如下" class="headerlink" title="附注: KVC底层实现原理(如下)"></a>附注: KVC底层实现原理(如下)</h1><p>KVC运用了一个isa-swizzling技术. isa-swizzling就是类型混合指针机制, 将2个对象的isa指针互相调换, 就是俗称的黑魔法.<br>KVC主要通过isa-swizzling, 来实现其内部查找定位的. 默认的实现方法�由NSOject提供isa指针, 如其名称所指,(就是is a kind of的意思), 指向分发表对象的类. 该分发表实际上包含了指向实现类中的方法的指针, 和其它数据。</p>
+<blockquote>
+<ul>
+<li>具体主要分为三大步</li>
+</ul>
+</blockquote>
+<ul>
+<li>第一步：寻找该属性有没有setsetter方法？有，就直接赋值</li>
+<li>第二步：寻找有没有该属性带下划线的成员属性？有，就直接赋值</li>
+<li>第三步：寻找有没有该属性的成员属性？有，就直接赋值</li>
+</ul>
+<blockquote>
+<ul>
+<li>或者这么说</li>
+</ul>
+</blockquote>
+<ul>
+<li>1、首先搜索setKey:方法.(key指成员变量名, 首字母大写)</li>
+<li>2、上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES. 那么按 _key, _isKey，key, iskey的顺序搜索成员名.(NSKeyValueCodingCatogery中实现的类方法, 默认实现为返回YES)</li>
+<li>3、如果没有找到成员变量, 调用setValue:forUnderfinedKey:</li>
+</ul>
+<p>比如说如下的一行KVC的代码：</p>
+<h1 id="举个🌰e-g"><a href="#举个🌰e-g" class="headerlink" title="举个🌰e.g:"></a>举个🌰e.g:</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[object setValue:@&quot;13123&quot; forKey:@&quot;uuid&quot;];</span><br><span class="line"></span><br><span class="line">就会被编译器处理成:</span><br><span class="line">// 首先找到对应sel</span><br><span class="line">SEL sel = sel_get_ uuid(&quot;setValue:forKey:&quot;);</span><br><span class="line">// 根据object-&gt;isa找到sel对应的IMP实现指针</span><br><span class="line">IMP method = objc_msg_lookup (object-&gt;isa,sel);</span><br><span class="line">// 调用指针完成KVC赋值</span><br><span class="line">method(object, sel, @&quot;13123&quot;, @&quot;uuid&quot;);</span><br></pre></td></tr></table></figure>
+<p><a href="https://link.jianshu.com/?t=http://blog.csdn.net/iunion/article/details/46890809" target="_blank" rel="noopener"><strong>可供参考文章</strong></a></p>
+<p>[转自 <a href="https://www.jianshu.com/p/829864680648" target="_blank" rel="noopener">探究KVO的底层实现原理</a>]</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/13/通知/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2440,196 +2654,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/01/23/iOS-runtime应用：关联对象/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/23/iOS-runtime应用：关联对象/" itemprop="url">
-                  iOS runtime应用：关联对象
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-01-23 17:26:23" itemprop="dateCreated datePublished" datetime="2018-01-23T17:26:23+08:00">2018-01-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-09-13 11:08:46" itemprop="dateModified" datetime="2018-09-13T11:08:46+08:00">2018-09-13</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/runtime/" itemprop="url" rel="index"><span itemprop="name">runtime</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>给已有类添加方法使用Category就可以了，但如果向分类里添加一个或多个属性的话会报错，使用属性不能正确创建实例及存取方法。</p>
-<p>但是我们可以实现runtime的Associated Objects(关联对象)，它可以让对象在运行时关联任何值。</p>
-<h2 id="runtime中提供给我们的方法："><a href="#runtime中提供给我们的方法：" class="headerlink" title="runtime中提供给我们的方法："></a>runtime中提供给我们的方法：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//关联对象</span><br><span class="line">void objc_setAssociatedObject(id object,const void *key,id value,objc_AssociationPolicy policy);</span><br><span class="line">//获取关联的对象</span><br><span class="line">id objc_getAssociatedObject(id object,const void *key);</span><br><span class="line">//移除关联的对象</span><br><span class="line">void objc_removeAssociatedObjects(id object);</span><br></pre></td></tr></table></figure>
-<h2 id="变量说明："><a href="#变量说明：" class="headerlink" title="变量说明："></a>变量说明：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id object:被关联的对象</span><br><span class="line">const void *key:关联的key，要求唯一</span><br><span class="line">id value:关联的对象</span><br><span class="line">Objc_AssociationPolicy poliy:内存管理策略</span><br></pre></td></tr></table></figure>
-<h2 id="Objc-AssociationPolicy-policy的enum值有"><a href="#Objc-AssociationPolicy-policy的enum值有" class="headerlink" title="Objc_AssociationPolicy policy的enum值有:"></a>Objc_AssociationPolicy policy的enum值有:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef OBJC_ENUM(uintptr_t, objc_AssociationPolicy) &#123;</span><br><span class="line">    OBJC_ASSOCIATION_ASSIGN = 0,           /**&lt; Specifies a weak reference to the associated object. */</span><br><span class="line">    OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**&lt; Specifies a strong reference to the associated object. </span><br><span class="line">                                            *   The association is not made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**&lt; Specifies that the associated object is copied. </span><br><span class="line">                                            *   The association is not made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_RETAIN = 01401,       /**&lt; Specifies a strong reference to the associated object.</span><br><span class="line">                                            *   The association is made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_COPY = 01403          /**&lt; Specifies that the associated object is copied.</span><br><span class="line">                                            *   The association is made atomically. */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>不同的objc_AssociationPolicy对应了不同的属性修饰符。</p>
-<h2 id="Objc-AssociationPolicy应用"><a href="#Objc-AssociationPolicy应用" class="headerlink" title="Objc_AssociationPolicy应用:"></a>Objc_AssociationPolicy应用:</h2><h3 id="UIButton扩展之动态添加属性"><a href="#UIButton扩展之动态添加属性" class="headerlink" title="UIButton扩展之动态添加属性"></a>UIButton扩展之动态添加属性</h3><p>.h文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line">typedef void (^block)(void);</span><br><span class="line">@interface UIButton (Block)</span><br><span class="line"></span><br><span class="line">@property(nonatomic,assign) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">static const char myKey;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation UIButton (Block)</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name&#123;</span><br><span class="line">    //关联对象</span><br><span class="line">    objc_setAssociatedObject(self, &amp;myKey, name, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line">- (NSString *)name&#123;</span><br><span class="line">    //获取关联对象</span><br><span class="line">    return  objc_getAssociatedObject(self, &amp;myKey);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>Viewcontroller.m</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">    [self.view addSubview:btn];</span><br><span class="line">    btn.backgroundColor = [UIColor redColor];</span><br><span class="line">    btn.frame = CGRectMake(100, 100, 100, 50);</span><br><span class="line">    btn.name = @&quot;darling&quot;;</span><br><span class="line">    [btn addTarget:self action:@selector(message:) forControlEvents:UIControlEventTouchUpInside</span><br><span class="line">     ];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)message:(UIButton *)btn&#123;</span><br><span class="line">    NSLog(@&quot;name = %@&quot;,btn.name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="UIButton扩展之动态添加方法"><a href="#UIButton扩展之动态添加方法" class="headerlink" title="UIButton扩展之动态添加方法"></a>UIButton扩展之动态添加方法</h3><p>.h文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line">typedef void (^btnBlock)(void);</span><br><span class="line">@interface UIButton (Block)</span><br><span class="line">- (void)handelWithBlock:(btnBlock)block;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">static const char myKey;</span><br><span class="line">@implementation UIButton (Block)</span><br><span class="line">- (void)handelWithBlock:(block)block&#123;</span><br><span class="line">    if (block) &#123;</span><br><span class="line">        objc_setAssociatedObject(self, &amp;myKey, block, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    &#125;</span><br><span class="line">    [self addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];</span><br><span class="line">&#125;</span><br><span class="line">- (void)btnAction</span><br><span class="line">&#123;</span><br><span class="line">    block block = objc_getAssociatedObject(self, &amp;myKey);</span><br><span class="line">    block();</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>ViewController.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">    [self.view addSubview:btn];</span><br><span class="line">    btn.backgroundColor = [UIColor redColor];</span><br><span class="line">    btn.frame = CGRectMake(100, 100, 100, 50);</span><br><span class="line">    [btn handelWithBlock:^&#123;</span><br><span class="line">        NSLog(@&quot;darling&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>参考文献</p>
-<p><a href="https://www.jianshu.com/p/35df1ba1f107" target="_blank" rel="noopener">objc_setAssociatedObject与Block的简单使用</a></p>
-<p><a href="http://www.cnblogs.com/sunyanyan/p/5329451.html" target="_blank" rel="noopener"><a href="http://www.cnblogs.com/sunyanyan/p/5329451.html" target="_blank" rel="noopener">objc_setAssociatedObject/objc_getAssociatedObject</a></a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2677,7 +2701,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
