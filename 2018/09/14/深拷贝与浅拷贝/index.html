@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="概念对象拷贝有两种方式：浅复制和深复制。顾名思义，浅复制，并不拷贝对象本身，仅仅是拷贝指向对象的指针；深复制是直接拷贝整个对象内存到另一块内存中。 一图以蔽之  再简单些说：浅复制就是指针拷贝；深复制就是内容拷贝。  集合的浅复制 (shallow copy)集合的浅复制有非常多种方法。当你进行浅复制时，会向原始的集合发送retain消息，引用计数加1，同时指针被拷贝到新的集合。 现在让我们看一些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深拷贝与浅拷贝">
+<meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/14/深拷贝与浅拷贝/index.html">
+<meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
+<meta property="og:description" content="概念对象拷贝有两种方式：浅复制和深复制。顾名思义，浅复制，并不拷贝对象本身，仅仅是拷贝指向对象的指针；深复制是直接拷贝整个对象内存到另一块内存中。 一图以蔽之  再简单些说：浅复制就是指针拷贝；深复制就是内容拷贝。  集合的浅复制 (shallow copy)集合的浅复制有非常多种方法。当你进行浅复制时，会向原始的集合发送retain消息，引用计数加1，同时指针被拷贝到新的集合。 现在让我们看一些">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://7s1ssm.com1.z0.glb.clouddn.com/image_note50592_1.png">
+<meta property="og:updated_time" content="2018-09-14T03:41:05.051Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深拷贝与浅拷贝">
+<meta name="twitter:description" content="概念对象拷贝有两种方式：浅复制和深复制。顾名思义，浅复制，并不拷贝对象本身，仅仅是拷贝指向对象的指针；深复制是直接拷贝整个对象内存到另一块内存中。 一图以蔽之  再简单些说：浅复制就是指针拷贝；深复制就是内容拷贝。  集合的浅复制 (shallow copy)集合的浅复制有非常多种方法。当你进行浅复制时，会向原始的集合发送retain消息，引用计数加1，同时指针被拷贝到新的集合。 现在让我们看一些">
+<meta name="twitter:image" content="http://7s1ssm.com1.z0.glb.clouddn.com/image_note50592_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/iOS面试/2018/09/14/深拷贝与浅拷贝/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>深拷贝与浅拷贝 | Man Tou Pu's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Man Tou Pu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">技术、生活个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/14/深拷贝与浅拷贝/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深拷贝与浅拷贝
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-14 11:33:49 / 修改时间：11:41:05" itemprop="dateCreated datePublished" datetime="2018-09-14T11:33:49+08:00">2018-09-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Objective-C语言特性/" itemprop="url" rel="index"><span itemprop="name">Objective-C语言特性</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>对象拷贝有两种方式：浅复制和深复制。顾名思义，浅复制，并不拷贝对象本身，仅仅是拷贝指向对象的指针；深复制是直接拷贝整个对象内存到另一块内存中。</p>
+<p>一图以蔽之</p>
+<p><img src="http://7s1ssm.com1.z0.glb.clouddn.com/image_note50592_1.png" alt="图片"></p>
+<p>再简单些说：<strong>浅复制就是指针拷贝；深复制就是内容拷贝。</strong></p>
+<hr>
+<h2 id="集合的浅复制-shallow-copy"><a href="#集合的浅复制-shallow-copy" class="headerlink" title="集合的浅复制 (shallow copy)"></a>集合的浅复制 (shallow copy)</h2><p>集合的浅复制有非常多种方法。当你进行浅复制时，会向原始的集合发送retain消息，引用计数加1，同时指针被拷贝到新的集合。</p>
+<p>现在让我们看一些浅复制的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSArray *shallowCopyArray = [someArray copyWithZone:nil];NSSet *shallowCopySet = [NSSet mutableCopyWithZone:nil];NSDictionary *shallowCopyDict = [[NSDictionary alloc] initWithDictionary:someDictionary copyItems:NO];</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="集合的深复制-deep-copy"><a href="#集合的深复制-deep-copy" class="headerlink" title="集合的深复制 (deep copy)"></a>集合的深复制 (deep copy)</h2><p>集合的深复制有两种方法。可以用 initWithArray:copyItems: 将第二个参数设置为YES即可深复制，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSDictionary shallowCopyDict = [[NSDictionary alloc] initWithDictionary:someDictionary copyItems:YES];</span><br></pre></td></tr></table></figure>
+<p>如果你用这种方法深复制，集合里的每个对象都会收到 copyWithZone: 消息。如果集合里的对象遵循 NSCopying 协议，那么对象就会被深复制到新的集合。如果对象没有遵循 NSCopying 协议，而尝试用这种方法进行深复制，会在运行时出错。copyWithZone: 这种拷贝方式只能够提供一层内存拷贝(one-level-deep copy)，而非真正的深复制。</p>
+<p>第二个方法是将集合进行归档(archive)，然后解档(unarchive)，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSArray *trueDeepCopyArray = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:oldArray]];</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="集合的单层深复制-one-level-deep-copy"><a href="#集合的单层深复制-one-level-deep-copy" class="headerlink" title="集合的单层深复制 (one-level-deep copy)"></a>集合的单层深复制 (one-level-deep copy)</h2><p>看到这里，有同学会问：如果在多层数组中，对第一层进行内容拷贝，其它层进行指针拷贝，这种情况是属于深复制，还是浅复制？对此，<a href="https://developer.apple.com/library/mac/documentation/cocoa/conceptual/Collections/Articles/Copying.html#//apple_ref/doc/uid/TP40010162-SW3" target="_blank" rel="noopener">苹果官网文档</a>有这样一句话描述</p>
+<blockquote>
+<p>This kind of copy is only capable of producing a one-level-deep copy. If you only need a one-level-deep copy…</p>
+<p>If you need a true deep copy, such as when you have an array of arrays…</p>
+</blockquote>
+<p>从文中可以看出，苹果认为这种复制不是真正的深复制，而是将其称为<strong>单层深复制(one-level-deep copy)</strong>。因此，网上有人对浅复制、深复制、单层深复制做了概念区分。</p>
+<blockquote>
+<ul>
+<li>浅复制(shallow copy)：在浅复制操作时，对于被复制对象的每一层都是指针复制。</li>
+<li>深复制(one-level-deep copy)：在深复制操作时，对于被复制对象，至少有一层是深复制。</li>
+<li>完全复制(real-deep copy)：在完全复制操作时，对于被复制对象的每一层都是对象复制。</li>
+</ul>
+</blockquote>
+<p>当然，这些都是概念性的东西，没有必要纠结于此。只要知道进行拷贝操作时，被拷贝的是指针还是内容即可。</p>
+<hr>
+<h2 id="系统对象的copy与mutableCopy方法"><a href="#系统对象的copy与mutableCopy方法" class="headerlink" title="系统对象的copy与mutableCopy方法"></a>系统对象的copy与mutableCopy方法</h2><p>不管是集合类对象，还是非集合类对象，接收到copy和mutableCopy消息时，都遵循以下准则：</p>
+<ul>
+<li>copy返回imutable对象；所以，如果对copy返回值使用mutable对象接口就会crash；</li>
+<li>mutableCopy返回mutable对象；</li>
+</ul>
+<p>下面将针对非集合类对象和集合类对象的copy和mutableCopy方法进行具体的阐述</p>
+<h3 id="1、非集合类对象的copy与mutableCopy"><a href="#1、非集合类对象的copy与mutableCopy" class="headerlink" title="1、非集合类对象的copy与mutableCopy"></a>1、非集合类对象的copy与mutableCopy</h3><p>系统非集合类对象指的是 NSString, NSNumber … 之类的对象。下面先看个非集合类immutable对象拷贝的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSString *string = @&quot;origin&quot;;NSString *stringCopy = [string copy];NSMutableString *stringMCopy = [string mutableCopy];</span><br></pre></td></tr></table></figure>
+<p>通过查看内存，可以看到 stringCopy 和 string 的地址是一样，进行了指针拷贝；而 stringMCopy 的地址和 string 不一样，进行了内容拷贝；</p>
+<p>再看mutable对象拷贝例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *string = [NSMutableString stringWithString: @&quot;origin&quot;];//copyNSString *stringCopy = [string copy];NSMutableString *mStringCopy = [string copy];NSMutableString *stringMCopy = [string mutableCopy];//change value[mStringCopy appendString:@&quot;mm&quot;]; //crash[string appendString:@&quot; origion!&quot;];[stringMCopy appendString:@&quot;!!&quot;];</span><br></pre></td></tr></table></figure>
+<p>运行以上代码，会在第7行crash，原因就是 copy 返回的对象是 immutable 对象。注释第7行后再运行，查看内存，发现 string、stringCopy、mStringCopy、stringMCopy 四个对象的内存地址都不一样，说明此时都是做内容拷贝。</p>
+<p><strong>综上两个例子，我们可以得出结论：</strong></p>
+<blockquote>
+<p>在非集合类对象中：对immutable对象进行copy操作，是指针复制，mutableCopy操作时内容复制；对mutable对象进行copy和mutableCopy都是内容复制。用代码简单表示如下：</p>
+<ul>
+<li>[immutableObject copy] // 浅复制</li>
+<li>[immutableObject mutableCopy] //深复制</li>
+<li>[mutableObject copy] //深复制</li>
+<li>[mutableObject mutableCopy] //深复制</li>
+</ul>
+</blockquote>
+<h3 id="2、集合类对象的copy与mutableCopy"><a href="#2、集合类对象的copy与mutableCopy" class="headerlink" title="2、集合类对象的copy与mutableCopy"></a>2、集合类对象的copy与mutableCopy</h3><p>集合类对象是指NSArray、NSDictionary、NSSet … 之类的对象。下面先看集合类immutable对象使用copy和mutableCopy的一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSArray *array = @[@[@&quot;a&quot;, @&quot;b&quot;], @[@&quot;c&quot;, @&quot;d&quot;];NSArray *copyArray = [array copy];NSMutableArray *mCopyArray = [array mutableCopy];</span><br></pre></td></tr></table></figure>
+<p>查看内容，可以看到copyArray和array的地址是一样的，而mCopyArray和array的地址是不同的。说明copy操作进行了指针拷贝，mutableCopy进行了内容拷贝。但需要强调的是：此处的内容拷贝，仅仅是拷贝array这个对象，array集合内部的元素仍然是指针拷贝。这和上面的非集合immutable对象的拷贝还是挺相似的，那么mutable对象的拷贝会不会类似呢？我们继续往下，看mutable对象拷贝的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSMutableArray *array = [NSMutableArray arrayWithObjects:[NSMutableString stringWithString:@&quot;a&quot;],@&quot;b&quot;,@&quot;c&quot;,nil];NSArray *copyArray = [array copy];NSMutableArray *mCopyArray = [array mutableCopy];</span><br></pre></td></tr></table></figure>
+<p>查看内存，如我们所料，copyArray、mCopyArray和array的内存地址都不一样，说明copyArray、mCopyArray都对array进行了内容拷贝。同样，我们可以得出结论：</p>
+<blockquote>
+<p>在集合类对象中，对immutable对象进行copy，是指针复制，mutableCopy是内容复制；对mutable对象进行copy和mutableCopy都是内容复制。但是：集合对象的内容复制仅限于对象本身，对象元素仍然是指针复制。用代码简单表示如下：</p>
+<ul>
+<li>[immutableObject copy] // 浅复制</li>
+<li>[immutableObject mutableCopy] //单层深复制</li>
+<li>[mutableObject copy] //单层深复制</li>
+<li>[mutableObject mutableCopy] //单层深复制</li>
+</ul>
+</blockquote>
+<p>这个代码结论和非集合类的非常相似。</p>
+<p>这时候，是不是有人要问了，如果要对集合对象复制元素怎么办？有这疑问的同学不妨回头看看<strong>集合的深复制</strong>。</p>
+<p>好了，深复制与浅复制就讲到这里。</p>
+<hr>
+<p>最后说个题外的东西，在搜集资料的过程中，发现一个有可能犯错的点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSString *str = @&quot;string&quot;;str = @&quot;newString&quot;;</span><br></pre></td></tr></table></figure>
+<p>上面这段代码，在执行第二行代码后，内存地址发生了变化。乍一看，有点意外。按照 C 语言的经验，初始化一个字符串之后，字符串的首地址就被确定下来，不管之后如何修改字符串内容，这个地址都不会改变。但此处第二行并不是对 str 指向的内存地址重新赋值，因为赋值操作符左边的 str 是一个指针，也就是说此处修改的是内存地址。</p>
+<p>所以第二行应该这样理解：将@”newStirng”当做一个新的对象，将这段对象的内存地址赋值给str。</p>
+<p>我有如下的两个方法查看内存地址</p>
+<ul>
+<li><code>p str</code> 会打印对象本身的内存地址和对象内容</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lldb) p str(NSString *) $0 = 0x000000010c913680 @&quot;a&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>po &amp;str</code> 则打印的是引用对象的指针所在的地址</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lldb) po &amp;str0x00007fff532fb6c0</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.zybuluo.com/MicroCai/note/50592" target="_blank" rel="noopener">转自</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/13/KVO的底层实现原理/" rel="next" title="KVO的底层实现原理">
+                <i class="fa fa-chevron-left"></i> KVO的底层实现原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sun Lei</p>
+              <p class="site-description motion-element" itemprop="description">只有用心才能看清楚·真正重要的东西·用眼睛是看不见的</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的浅复制-shallow-copy"><span class="nav-number">2.</span> <span class="nav-text">集合的浅复制 (shallow copy)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的深复制-deep-copy"><span class="nav-number">3.</span> <span class="nav-text">集合的深复制 (deep copy)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的单层深复制-one-level-deep-copy"><span class="nav-number">4.</span> <span class="nav-text">集合的单层深复制 (one-level-deep copy)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统对象的copy与mutableCopy方法"><span class="nav-number">5.</span> <span class="nav-text">系统对象的copy与mutableCopy方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、非集合类对象的copy与mutableCopy"><span class="nav-number">5.1.</span> <span class="nav-text">1、非集合类对象的copy与mutableCopy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、集合类对象的copy与mutableCopy"><span class="nav-number">5.2.</span> <span class="nav-text">2、集合类对象的copy与mutableCopy</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sun Lei</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.4.4</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
