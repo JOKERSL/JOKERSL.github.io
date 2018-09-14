@@ -338,7 +338,7 @@
                 
               
 
-              <time title="创建时间：2018-09-14 14:43:42 / 修改时间：14:44:16" itemprop="dateCreated datePublished" datetime="2018-09-14T14:43:42+08:00">2018-09-14</time>
+              <time title="创建时间：2018-09-14 14:43:42 / 修改时间：14:48:47" itemprop="dateCreated datePublished" datetime="2018-09-14T14:43:42+08:00">2018-09-14</time>
             
 
             
@@ -412,7 +412,7 @@
 <p>变量名=a1，类型=<strong>NSArrayI， 地址=0x608000029400，值=(1,2)，引用计数=1<br>变量名=a2，类型=</strong>NSArray0， 地址=0x618000012490，值=()，引用计数=-1<br>变量名=a3，类型=<strong>NSSingleObjectArrayI， 地址=0x608000012890，值=(1)，引用计数=1<br>变量名=a4，类型=</strong>NSArrayI， 地址=0x608000029440，值=(a,b)，引用计数=1<br>变量名=a5，类型=<strong>NSArrayI， 地址=0x608000029460，值=(m,n)，引用计数=1<br>变量名=a6，类型=</strong>NSArray0， 地址=0x618000012490，值=()，引用计数=-1<br>变量名=a7，类型=__NSArray0， 地址=0x618000012490，值=()，引用计数=-1<br>从结果看出，只有a2 a6 a7这三个的引用计数为-1，其他变量的引用计数为1，显示正常。我们仔细发现，这三个的地址相同，这就是说三个变量指向了同一块内存，说明a2 a6 a7三个创建方式创建的空实例是一个特殊值的存在，其应该存储在常量静态区。我们可以猜测，OC为了优化内存，在常量静态区创建一个空值的特殊存在，应该是静态常量对象，无论什么方式创建的空实例，其都指向静态区这个空值的。</p>
 <p>不仅是NSArray，Foundation中如NSString, NSDictionary, NSSet等区分可变和不可变版本的类，空实例都是静态对象（NSString的空实例对象是常量区的@””）,对象的内存管理策略对其无效。<br>参考</p>
 <p>深入理解Tagged Pointer<br>NSString内存管理<br>从NSArray看类簇</p>
-<p>作者：懒癌重症者<br>链接：<a href="https://www.jianshu.com/p/462adf281fde" target="_blank" rel="noopener">https://www.jianshu.com/p/462adf281fde</a><br>來源：简书<br>简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</p>
+<p><a href="https://www.jianshu.com/p/462adf281fde" target="_blank" rel="noopener">转自 简书<a href="https://www.jianshu.com/u/292ed4eda0e2" target="_blank" rel="noopener">懒癌重症者</a></a></p>
 
           
         
