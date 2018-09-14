@@ -338,7 +338,7 @@
                 
               
 
-              <time title="创建时间：2018-09-14 11:43:02 / 修改时间：11:45:28" itemprop="dateCreated datePublished" datetime="2018-09-14T11:43:02+08:00">2018-09-14</time>
+              <time title="创建时间：2018-09-14 11:43:02 / 修改时间：11:46:27" itemprop="dateCreated datePublished" datetime="2018-09-14T11:43:02+08:00">2018-09-14</time>
             
 
             
@@ -457,7 +457,7 @@
 <h4 id="补充：delegate为什么要用weak或者assign而不用strong"><a href="#补充：delegate为什么要用weak或者assign而不用strong" class="headerlink" title="补充：delegate为什么要用weak或者assign而不用strong"></a>补充：delegate为什么要用weak或者assign而不用strong</h4><p>a创建对象b,b中有C类对象c，所以a对b有一个引用,b对c有一个引用，a.b引用计数分别为1，1。当c.delegate = b的时候，实则是对b有了一个引用，如果此时c的delegate用strong修饰则会对b的值内存引用计数+1，b引用计数为2。当a的生命周期结束，随之释放对b的引用，b的引用计数变为1，导致b不能释放，b不能释放又导致b对c的引用不能释放，c引用计数还是为1，这样就造成了b和c一直留在了内存中。</p>
 <p>而要解决这个问题就是使用weak或者assign修饰delegate，这样虽然会有c仍然会对b有一个引用，但是引用是弱引用，当a生命周期结束的时候，b的引用计数变为0，b释放后随之c的引用消失，c引用计数变为0，释放。</p>
 <h2 id="不可变常量的特殊性"><a href="#不可变常量的特殊性" class="headerlink" title="不可变常量的特殊性"></a>不可变常量的特殊性</h2><p>在2.2的讨论中如果你<br>1.字符串改成小于10长度的字符串<br>2.NSString*strOrigin = @”strOrigin0123456”;<br>初始化NSString，你都会发现strOrigin值内存引用计数将发生异常，通常表现为引用计数特别大，具体可以看下<a href="https://www.jianshu.com/p/f26e1fb64f7f" target="_blank" rel="noopener">iOS中NSString的特别之处</a>这篇文章</p>
-<p>项目地址<a href="https://link.jianshu.com/?t=https://github.com/ai966669/copy" target="_blank" rel="noopener">https://github.com/ai966669/copy</a></p>
+<p>项目地址<a href="https://link.jianshu.com/?t=https://github.com/ai966669/copy" target="_blank" rel="noopener">https://github.com/ai966669/copy</a><br><a href="https://www.jianshu.com/p/a29a0bdd5da8" target="_blank" rel="noopener">转自</a></p>
 
           
         
