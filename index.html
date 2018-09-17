@@ -292,6 +292,247 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/SDWebImage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/17/SDWebImage/" itemprop="url">
+                  SDWebImage
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-17 16:21:42 / 修改时间：16:23:08" itemprop="dateCreated datePublished" datetime="2018-09-17T16:21:42+08:00">2018-09-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/第三方源码/" itemprop="url" rel="index"><span itemprop="name">第三方源码</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://www.jianshu.com/p/be9a0a088feb" target="_blank" rel="noopener">转自 <a href="https://www.jianshu.com/u/cea4fc286dd3" target="_blank" rel="noopener">要上班的斌哥</a></a></p>
+<p>在 iOS 的图片加载框架中，<strong>SDWebImage</strong>可谓是占据大半壁江山。它支持从网络中下载且缓存图片，并设置图片到对应的 UIImageView 控件或者 UIButton 控件。在项目中使用 SDWebImage 来管理图片加载相关操作可以极大地提高开发效率，让我们更加专注于业务逻辑实现。</p>
+<h2 id="SDWebImage-概论"><a href="#SDWebImage-概论" class="headerlink" title="SDWebImage 概论"></a>SDWebImage 概论</h2><p>1.提供了一个 UIImageView 的 category 用来加载网络图片并且对网络图片的缓存进行管理<br>2.采用异步方式来下载网络图片<br>3.采用异步方式，使用 memory＋disk 来缓存网络图片，自动管理缓存。<br>4.支持 GIF 动画<br>5.支持 WebP 格式<br>6.同一个 URL 的网络图片不会被重复下载<br>7.失效的 URL 不会被无限重试<br>8.耗时操作都在子线程，确保不会阻塞主线程<br>9.使用 GCD 和 ARC<br>10.支持 Arm64</p>
+<h2 id="SDWebImage-使用"><a href="#SDWebImage-使用" class="headerlink" title="SDWebImage 使用"></a>SDWebImage 使用</h2><p>1.使用 ImageView+WebCache category 来加载 UITableView 中 cell 的图片</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[cell.imageView sd_setImageWithURL:[NSURL URLWithString:@&quot;http://www.domain.com/path/to/image.jpg&quot;] placeholderImage:[UIImage imageNamed:@&quot;placeholder.png&quot;]];</span><br></pre></td></tr></table></figure>
+<p>2.使用 block,采用这个方案可以在网络图片加载过程中得知图片的下载进度和图片加载成功与否</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[cell.imageView sd_setImageWithURL:[NSURL URLWithString:@&quot;http://www.domain.com/path/to/image.jpg&quot;] placeholderImage:[UIImage imageNamed:@&quot;placeholder.png&quot;] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) &#123;</span><br><span class="line">    //... completion code here ... </span><br><span class="line"> &#125;];</span><br></pre></td></tr></table></figure>
+<p>3.使用 SDWebImageManager,SDWebImageManager 为UIImageView+WebCache category 的实现提供接口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SDWebImageManager *manager = [SDWebImageManager sharedManager] ;</span><br><span class="line">[manager downloadImageWithURL:imageURL options:0 progress:^(NSInteger   receivedSize, NSInteger expectedSize) &#123; </span><br><span class="line">      // progression tracking code</span><br><span class="line"> &#125;  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType,   BOOL finished, NSURL *imageURL) &#123; </span><br><span class="line">   if (image) &#123; </span><br><span class="line">    // do something with image</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;];</span><br></pre></td></tr></table></figure>
+<p>4.加载图片还有使用 SDWebImageDownloader 和 SDImageCache 方式，但那个并不是我们经常用到的。基本上面所讲的3个方法都能满足需求。</p>
+<h2 id="SDWebImage-流程"><a href="#SDWebImage-流程" class="headerlink" title="SDWebImage 流程"></a>SDWebImage 流程</h2><p><img src="http://upload-images.jianshu.io/upload_images/656644-7dfe370a86e157e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/559" alt="img"></p>
+<p>UIImageView的图片加载流程</p>
+<h2 id="SDWebImage-接口"><a href="#SDWebImage-接口" class="headerlink" title="SDWebImage 接口"></a>SDWebImage 接口</h2><p>SDWebImage 是一个成熟而且比较庞大的框架，但是在使用过程中并不需要太多的接口,这算是一种代码封装程度的体现。这里就介绍比较常用的几个接口。</p>
+<ol>
+<li><p>给 UIImageView 设置图片的接口，SDWebImage 有提供多个给UIImageView 设置图片的接口，最终所有的接口都会调用下图的这个接口，这是大多数框架的做法。</p>
+<p>​</p>
+<p>​</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-0ba1638e8a0a7286.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>给UIImageView设置图片的接口</p>
+</li>
+<li><p>获取 SDWebImage 的磁盘缓存大小,在项目中有时候会需要统计应用的磁盘缓存内容大小，那么获取图片的缓存大小就是使用这个接口来实现</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[SDImageCache sharedImageCache] getSize];</span><br></pre></td></tr></table></figure>
+<ol>
+<li>清理内存缓存，清理内存中缓存的图片资源，释放内存资源。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[SDImageCache sharedImageCache] clearMemory];</span><br></pre></td></tr></table></figure>
+<ol>
+<li>有了清理内存缓存，自然也有清理磁盘缓存的接口</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[SDImageCache sharedImageCache] clearDisk];</span><br></pre></td></tr></table></figure>
+<h2 id="SDWebImage-解析"><a href="#SDWebImage-解析" class="headerlink" title="SDWebImage 解析"></a>SDWebImage 解析</h2><p>解析主要围绕着 SDWebImage 的图片加载流程来分析，介绍SDWebImage 这个框架加载图片过程中的一些处理方法和设计思路。</p>
+<ol>
+<li><p>给 UIImageView 设置图片，然后 SDWebImage 调用这个最终的图片加载方法。</p>
+<p>​</p>
+<p>​</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-2d901e0dff51aa2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>1 给UIImageView设置图片</p>
+</li>
+<li><p>开始加载之前图片先取消对应的 UIImageView 先前的图片下载操作。试想，如果我们给 UIImageView 设置了一张新的图片，那么我们还会在意该 UIImageVIew 先前是要加载哪一张图片么？应该是不在意的吧！那是不是应该尝试把该 UIImageView 先前的加载图片相关操作给取消掉呢?</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self sd_cancelCurrentImageLoad]</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-11f5f798d3eea349.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>2 取消对应的UIImageView先前的图片下载操作</p>
+<p>该方法经过周转，最后调用了以下方法，框架将图片对应的下载操作放到 UIView 的一个自定义字典属性 (operationDictionary) 中，取消下载操作第一步也是从这个 UIView 的自定义字典属性 (operationDictionary)中取出所有的下载操作，然后依次调用取消方法，最后将取消的操作从(operationDictionary) 字典属性中移除。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-40612c8707dadb6b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>最终的取消下载方法</p>
+<p>3.移除之前没用的图片下载操作之后就创建一个新的图片下载操作，然后设置到 UIView 的一个自定义字典属性 (operationDictionary) 中。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-2f571ad0bca60941.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>3 创建一个新的图片下载操作</p>
+<p>4.看看如何创建一个新的图片下载操作,框架保存了一个失效的 url 列表，如果 url 失效了就会被加入这个列表，保证不会重复多次请求失效的 url。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-6716a3ce4a660db1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>4 图片下载操作</p>
+<p>根据给定的 url 生成一个唯一的 key ,之后利用这个 key 到缓存中查找对应的图片缓存。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-e48fccf6e177fe15.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>查找图片缓存</p>
+<p>5.读取图片缓存,根据 key 先从内存中读取图片缓存，若没有命中内存缓存则读取磁盘缓存，如果磁盘缓存命中，那么将磁盘缓存读到内存中成为内存缓存。如果都没有命中缓存的话，那么就在执行的 doneBlock中开始下载图片。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-68973ac3182fb40d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>5 读取图片缓存</p>
+<p>6.图片下载操作完成后会将图片对应的数据通过 completedBlock 进行回调</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-47cc23ae80d5d2fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>6 图片下载操作</p>
+<p>在图片下载方法中，调用了一个方法用于添加创建和下载过程中的各类block 回调。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-e191252d338aafb5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>图片下载方法</p>
+<p>添加该 url 加载过程的状态回调 block</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-7920b864207377fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>状态回调Block</p>
+<p>如果该 url 是第一次加载的话，那么就会执行 createCallback 这个回调block ,然后在 createCallback 里面开始构建网络请求，在下载过程中执行各类进度 block 回调。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-0f04efcf3ac46f8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>构建网络请求</p>
+<p>7.当图片下载完成之后会回到 done 的 block 回调中做图片转换处理和缓存操作</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-18294fe3db2ed79a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>7 图片转换处理和缓存操作</p>
+<p>回到 UIImageView 控件的设置图片方法 block 回调中，给对应的UIImageView 设置图片，操作流程到此完成。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-c570c9791bb857d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>Block中设置图片</p>
+<p>8.304 的处理<br>SDWebImage在加载图片网络请求的 NSURLConnection 的代理中对httpCode 做了判断，当 httpCode 为 304 的时候放弃下载，读取缓存。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/656644-6a8e47b73f5f0137.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>304处理</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>SDWebImage 作为一个优秀的图片加载框架，提供的使用方法和接口对开发者来说非常友好。其内部实现多是采用 block 的方式来实现回调，代码阅读起来可能没有那么直观。此文章旨在给大家讲解 SDWebImage 这个框架的图片大概加载流程，其中具体细节限于篇幅无法详细深究。能力有限，文章中难免有错误，若大家在阅读过程中有发现不合理或者错误的地方恳请在评论中指出，我会在第一时间进行修正,不胜感激。</p>
+<p>## </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/AFNetworking（终）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3340,235 +3581,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/线程安全/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/17/线程安全/" itemprop="url">
-                  线程安全
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-09-17 12:01:40 / 修改时间：12:07:13" itemprop="dateCreated datePublished" datetime="2018-09-17T12:01:40+08:00">2018-09-17</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/多线程/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>前段时间看了几个开源项目，发现他们保持线程同步的方式各不相同，有@synchronized、NSLock、dispatch_semaphore、NSCondition、pthread_mutex、OSSpinLock。后来网上查了一下，发现他们的实现机制各不相同，性能也各不一样。不好意思，我们平常使用最多的@synchronized是性能最差的。下面我们先分别介绍每个加锁方式的使用，在使用一个案例来对他们进行性能对比。</p>
-<h2 id="二、介绍与使用"><a href="#二、介绍与使用" class="headerlink" title="二、介绍与使用"></a>二、介绍与使用</h2><h3 id="2-1、-synchronized"><a href="#2-1、-synchronized" class="headerlink" title="2.1、@synchronized"></a>2.1、@synchronized</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">NSObject *obj = [[NSObject alloc] init];</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    @synchronized(obj) &#123;</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作1 开始&quot;);</span><br><span class="line">        sleep(3);</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作1 结束&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    sleep(1);</span><br><span class="line">    @synchronized(obj) &#123;</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作2&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>@synchronized(obj)指令使用的obj为该锁的唯一标识，只有当标识相同时，才为满足互斥，如果线程2中的@synchronized(obj)改为@synchronized(self),刚线程2就不会被阻塞，@synchronized指令实现锁的优点就是我们不需要在代码中显式的创建锁对象，便可以实现锁的机制，但作为一种预防措施，@synchronized块会隐式的添加一个异常处理例程来保护代码，该处理例程会在异常抛出的时候自动的释放互斥锁。所以如果不想让隐式的异常处理例程带来额外的开销，你可以考虑使用锁对象。</p>
-<p>上面结果的执行结果为：</p>
-<p>2016-06-29 20:48:35.747 SafeMultiThread[35945:580107] 需要线程同步的操作1 开始<br>2016-06-29 20:48:38.748 SafeMultiThread[35945:580107] 需要线程同步的操作1 结束<br>2016-06-29 20:48:38.749 SafeMultiThread[35945:580118] 需要线程同步的操作2</p>
-<h3 id="2-2、dispatch-semaphore"><a href="#2-2、dispatch-semaphore" class="headerlink" title="2.2、dispatch_semaphore"></a>2.2、dispatch_semaphore</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">dispatch_semaphore_t signal = dispatch_semaphore_create(1);</span><br><span class="line">dispatch_time_t overTime = dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    dispatch_semaphore_wait(signal, overTime);</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作1 开始&quot;);</span><br><span class="line">        sleep(2);</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作1 结束&quot;);</span><br><span class="line">    dispatch_semaphore_signal(signal);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    sleep(1);</span><br><span class="line">    dispatch_semaphore_wait(signal, overTime);</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作2&quot;);</span><br><span class="line">    dispatch_semaphore_signal(signal);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>dispatch_semaphore是GCD用来同步的一种方式，与他相关的共有三个函数，分别是dispatch_semaphore_create，dispatch_semaphore_signal，dispatch_semaphore_wait。</p>
-<p>（1）dispatch_semaphore_create的声明为：</p>
-<p>dispatch_semaphore_t dispatch_semaphore_create(long value);</p>
-<p>传入的参数为long，输出一个dispatch_semaphore_t类型且值为value的信号量。</p>
-<p>值得注意的是，这里的传入的参数value必须大于或等于0，否则dispatch_semaphore_create会返回NULL。</p>
-<p>（2）dispatch_semaphore_signal的声明为：</p>
-<p>long dispatch_semaphore_signal(dispatch_semaphore_t dsema)</p>
-<p>这个函数会使传入的信号量dsema的值加1；</p>
-<p>(3) dispatch_semaphore_wait的声明为：</p>
-<p>long dispatch_semaphore_wait(dispatch_semaphore_t dsema, dispatch_time_t timeout)；</p>
-<p>这个函数会使传入的信号量dsema的值减1；这个函数的作用是这样的，如果dsema信号量的值大于0，该函数所处线程就继续执行下面的语句，并且将信号量的值减1；如果desema的值为0，那么这个函数就阻塞当前线程等待timeout（注意timeout的类型为dispatch_time_t，不能直接传入整形或float型数），如果等待的期间desema的值被dispatch_semaphore_signal函数加1了，且该函数（即dispatch_semaphore_wait）所处线程获得了信号量，那么就继续向下执行并将信号量减1。如果等待期间没有获取到信号量或者信号量的值一直为0，那么等到timeout时，其所处线程自动执行其后语句。</p>
-<p>dispatch_semaphore 是信号量，但当信号总量设为 1 时也可以当作锁来。在没有等待情况出现时，它的性能比 pthread_mutex 还要高，但一旦有等待情况出现时，性能就会下降许多。相对于 OSSpinLock 来说，它的优势在于等待时不会消耗 CPU 资源。</p>
-<p>如上的代码，如果超时时间overTime设置成&gt;2，可完成同步操作。如果overTime&lt;2的话，在线程1还没有执行完成的情况下，此时超时了，将自动执行下面的代码。</p>
-<p>上面代码的执行结果为：</p>
-<p>2016-06-29 20:47:52.324 SafeMultiThread[35945:579032] 需要线程同步的操作1 开始<br>2016-06-29 20:47:55.325 SafeMultiThread[35945:579032] 需要线程同步的操作1 结束<br>2016-06-29 20:47:55.326 SafeMultiThread[35945:579033] 需要线程同步的操作2</p>
-<p>如果把超时时间设置为&lt;2s的时候，执行的结果就是：</p>
-<p>2016-06-30 18:53:24.049 SafeMultiThread[30834:434334] 需要线程同步的操作1 开始<br>2016-06-30 18:53:25.554 SafeMultiThread[30834:434332] 需要线程同步的操作2<br>2016-06-30 18:53:26.054 SafeMultiThread[30834:434334] 需要线程同步的操作1 结束</p>
-<h3 id="2-3、NSLock"><a href="#2-3、NSLock" class="headerlink" title="2.3、NSLock"></a>2.3、NSLock</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">NSLock *lock = [[NSLock alloc] init];</span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    //[lock lock];</span><br><span class="line">    [lock lockBeforeDate:[NSDate date]];</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作1 开始&quot;);</span><br><span class="line">        sleep(2);</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作1 结束&quot;);</span><br><span class="line">    [lock unlock];</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    sleep(1);</span><br><span class="line">    if ([lock tryLock]) &#123;//尝试获取锁，如果获取不到返回NO，不会阻塞该线程</span><br><span class="line">        NSLog(@&quot;锁可用的操作&quot;);</span><br><span class="line">        [lock unlock];</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        NSLog(@&quot;锁不可用的操作&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceNow:3];</span><br><span class="line">    if ([lock lockBeforeDate:date]) &#123;//尝试在未来的3s内获取锁，并阻塞该线程，如果3s内获取不到恢复线程, 返回NO,不会阻塞该线程</span><br><span class="line">        NSLog(@&quot;没有超时，获得锁&quot;);</span><br><span class="line">        [lock unlock];</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        NSLog(@&quot;超时，没有获得锁&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>NSLock是Cocoa提供给我们最基本的锁对象，这也是我们经常所使用的，除lock和unlock方法外，NSLock还提供了tryLock和lockBeforeDate:两个方法，前一个方法会尝试加锁，如果锁不可用(已经被锁住)，刚并不会阻塞线程，并返回NO。lockBeforeDate:方法会在所指定Date之前尝试加锁，如果在指定时间之前都不能加锁，则返回NO。</p>
-<p>上面代码的执行结果为：</p>
-<p>2016-06-29 20:45:08.864 SafeMultiThread[35911:575795] 需要线程同步的操作1 开始<br>2016-06-29 20:45:09.869 SafeMultiThread[35911:575781] 锁不可用的操作<br>2016-06-29 20:45:10.869 SafeMultiThread[35911:575795] 需要线程同步的操作1 结束<br>2016-06-29 20:45:10.870 SafeMultiThread[35911:575781] 没有超时，获得锁</p>
-<p>源码定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@protocol NSLocking</span><br><span class="line"></span><br><span class="line">- (void)lock;</span><br><span class="line">- (void)unlock;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface NSLock : NSObject &lt;NSLocking&gt; &#123;</span><br><span class="line">@private</span><br><span class="line">    void *_priv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)tryLock;</span><br><span class="line">- (BOOL)lockBeforeDate:(NSDate *)limit;</span><br><span class="line"></span><br><span class="line">@property (nullable, copy) NSString *name NS_AVAILABLE(10_5, 2_0);</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<h3 id="2-4、NSRecursiveLock递归锁"><a href="#2-4、NSRecursiveLock递归锁" class="headerlink" title="2.4、NSRecursiveLock递归锁"></a>2.4、NSRecursiveLock递归锁</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//NSLock *lock = [[NSLock alloc] init];</span><br><span class="line">NSRecursiveLock *lock = [[NSRecursiveLock alloc] init];</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    </span><br><span class="line">    static void (^RecursiveMethod)(int);</span><br><span class="line">    </span><br><span class="line">    RecursiveMethod = ^(int value) &#123;</span><br><span class="line">        </span><br><span class="line">        [lock lock];</span><br><span class="line">        if (value &gt; 0) &#123;</span><br><span class="line">            </span><br><span class="line">            NSLog(@&quot;value = %d&quot;, value);</span><br><span class="line">            sleep(1);</span><br><span class="line">            RecursiveMethod(value - 1);</span><br><span class="line">        &#125;</span><br><span class="line">        [lock unlock];</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    RecursiveMethod(5);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>NSRecursiveLock实际上定义的是一个递归锁，这个锁可以被同一线程多次请求，而不会引起死锁。这主要是用在循环或递归操作中。</p>
-<p>这段代码是一个典型的死锁情况。在我们的线程中，RecursiveMethod是递归调用的。所以每次进入这个block时，都会去加一次锁，而从第二次开始，由于锁已经被使用了且没有解锁，所以它需要等待锁被解除，这样就导致了死锁，线程被阻塞住了。调试器中会输出如下信息：</p>
-<p>2016-06-30 19:08:06.393 SafeMultiThread[30928:449008] value = 5<br>2016-06-30 19:08:07.399 SafeMultiThread[30928:449008] <strong><em> -[NSLock lock]: deadlock (<nslock: 0x7fd811d28810=""> ‘(null)’)<br>2016-06-30 19:08:07.399 SafeMultiThread[30928:449008] </nslock:></em></strong> Break on _NSLockError() to debug.</p>
-<p>在这种情况下，我们就可以使用NSRecursiveLock。它可以允许同一线程多次加锁，而不会造成死锁。递归锁会跟踪它被lock的次数。每次成功的lock都必须平衡调用unlock操作。只有所有达到这种平衡，锁最后才能被释放，以供其它线程使用。</p>
-<p>如果我们将NSLock代替为NSRecursiveLock，上面代码则会正确执行。</p>
-<p>2016-06-30 19:09:41.414 SafeMultiThread[30949:450684] value = 5<br>2016-06-30 19:09:42.418 SafeMultiThread[30949:450684] value = 4<br>2016-06-30 19:09:43.419 SafeMultiThread[30949:450684] value = 3<br>2016-06-30 19:09:44.424 SafeMultiThread[30949:450684] value = 2<br>2016-06-30 19:09:45.426 SafeMultiThread[30949:450684] value = 1</p>
-<p>如果需要其他功能，源码定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@interface NSRecursiveLock : NSObject &lt;NSLocking&gt; &#123;</span><br><span class="line">@private</span><br><span class="line">    void *_priv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)tryLock;</span><br><span class="line">- (BOOL)lockBeforeDate:(NSDate *)limit;</span><br><span class="line"></span><br><span class="line">@property (nullable, copy) NSString *name NS_AVAILABLE(10_5, 2_0);</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<h3 id="2-5、NSConditionLock条件锁"><a href="#2-5、NSConditionLock条件锁" class="headerlink" title="2.5、NSConditionLock条件锁"></a>2.5、NSConditionLock条件锁</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">NSMutableArray *products = [NSMutableArray array];</span><br><span class="line"></span><br><span class="line">NSInteger HAS_DATA = 1;</span><br><span class="line">NSInteger NO_DATA = 0;</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    while (1) &#123;</span><br><span class="line">        [lock lockWhenCondition:NO_DATA];</span><br><span class="line">        [products addObject:[[NSObject alloc] init]];</span><br><span class="line">        NSLog(@&quot;produce a product,总量:%zi&quot;,products.count);</span><br><span class="line">        [lock unlockWithCondition:HAS_DATA];</span><br><span class="line">        sleep(1);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    while (1) &#123;</span><br><span class="line">        NSLog(@&quot;wait for product&quot;);</span><br><span class="line">        [lock lockWhenCondition:HAS_DATA];</span><br><span class="line">        [products removeObjectAtIndex:0];</span><br><span class="line">        NSLog(@&quot;custome a product&quot;);</span><br><span class="line">        [lock unlockWithCondition:NO_DATA];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>当我们在使用多线程的时候，有时一把只会lock和unlock的锁未必就能完全满足我们的使用。因为普通的锁只能关心锁与不锁，而不在乎用什么钥匙才能开锁，而我们在处理资源共享的时候，多数情况是只有满足一定条件的情况下才能打开这把锁：</p>
-<p>在线程1中的加锁使用了lock，所以是不需要条件的，所以顺利的就锁住了，但在unlock的使用了一个整型的条件，它可以开启其它线程中正在等待这把钥匙的临界地，而线程2则需要一把被标识为2的钥匙，所以当线程1循环到最后一次的时候，才最终打开了线程2中的阻塞。但即便如此，NSConditionLock也跟其它的锁一样，是需要lock与unlock对应的，只是lock,lockWhenCondition:与unlock，unlockWithCondition:是可以随意组合的，当然这是与你的需求相关的。</p>
-<p>上面代码执行结果如下：</p>
-<p>2016-06-30 20:31:58.699 SafeMultiThread[31282:521698] wait for product<br>2016-06-30 20:31:58.699 SafeMultiThread[31282:521708] produce a product,总量:1<br>2016-06-30 20:31:58.700 SafeMultiThread[31282:521698] custome a product<br>2016-06-30 20:31:58.700 SafeMultiThread[31282:521698] wait for product<br>2016-06-30 20:31:59.705 SafeMultiThread[31282:521708] produce a product,总量:1<br>2016-06-30 20:31:59.706 SafeMultiThread[31282:521698] custome a product<br>2016-06-30 20:31:59.706 SafeMultiThread[31282:521698] wait for product<br>2016-06-30 20:32:00.707 SafeMultiThread[31282:521708] produce a product,总量:1<br>2016-06-30 20:32:00.708 SafeMultiThread[31282:521698] custome a product</p>
-<p>如果你需要其他功能，源码定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@interface NSConditionLock : NSObject &lt;NSLocking&gt; &#123;</span><br><span class="line">@private</span><br><span class="line">    void *_priv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithCondition:(NSInteger)condition NS_DESIGNATED_INITIALIZER;</span><br><span class="line"></span><br><span class="line">@property (readonly) NSInteger condition;</span><br><span class="line">- (void)lockWhenCondition:(NSInteger)condition;</span><br><span class="line">- (BOOL)tryLock;</span><br><span class="line">- (BOOL)tryLockWhenCondition:(NSInteger)condition;</span><br><span class="line">- (void)unlockWithCondition:(NSInteger)condition;</span><br><span class="line">- (BOOL)lockBeforeDate:(NSDate *)limit;</span><br><span class="line">- (BOOL)lockWhenCondition:(NSInteger)condition beforeDate:(NSDate *)limit;</span><br><span class="line"></span><br><span class="line">@property (nullable, copy) NSString *name NS_AVAILABLE(10_5, 2_0);</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<h3 id="2-6、NSCondition"><a href="#2-6、NSCondition" class="headerlink" title="2.6、NSCondition"></a>2.6、NSCondition</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">NSCondition *condition = [[NSCondition alloc] init];</span><br><span class="line"></span><br><span class="line">NSMutableArray *products = [NSMutableArray array];</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    while (1) &#123;</span><br><span class="line">        [condition lock];</span><br><span class="line">        if ([products count] == 0) &#123;</span><br><span class="line">            NSLog(@&quot;wait for product&quot;);</span><br><span class="line">            [condition wait];</span><br><span class="line">        &#125;</span><br><span class="line">        [products removeObjectAtIndex:0];</span><br><span class="line">        NSLog(@&quot;custome a product&quot;);</span><br><span class="line">        [condition unlock];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    while (1) &#123;</span><br><span class="line">        [condition lock];</span><br><span class="line">        [products addObject:[[NSObject alloc] init]];</span><br><span class="line">        NSLog(@&quot;produce a product,总量:%zi&quot;,products.count);</span><br><span class="line">        [condition signal];</span><br><span class="line">        [condition unlock];</span><br><span class="line">        sleep(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>一种最基本的条件锁。手动控制线程wait和signal。</p>
-<p>[condition lock];一般用于多线程同时访问、修改同一个数据源，保证在同一时间内数据源只被访问、修改一次，其他线程的命令需要在lock 外等待，只到unlock ，才可访问</p>
-<p>[condition unlock];与lock 同时使用</p>
-<p>[condition wait];让当前线程处于等待状态</p>
-<p>[condition signal];CPU发信号告诉线程不用在等待，可以继续执行</p>
-<p>上面代码执行结果如下：</p>
-<p>2016-06-30 20:21:25.295 SafeMultiThread[31256:513991] wait for product<br>2016-06-30 20:21:25.296 SafeMultiThread[31256:513994] produce a product,总量:1<br>2016-06-30 20:21:25.296 SafeMultiThread[31256:513991] custome a product<br>2016-06-30 20:21:25.297 SafeMultiThread[31256:513991] wait for product<br>2016-06-30 20:21:26.302 SafeMultiThread[31256:513994] produce a product,总量:1<br>2016-06-30 20:21:26.302 SafeMultiThread[31256:513991] custome a product<br>2016-06-30 20:21:26.302 SafeMultiThread[31256:513991] wait for product<br>2016-06-30 20:21:27.307 SafeMultiThread[31256:513994] produce a product,总量:1<br>2016-06-30 20:21:27.308 SafeMultiThread[31256:513991] custome a product</p>
-<h3 id="2-7、pthread-mutex"><a href="#2-7、pthread-mutex" class="headerlink" title="2.7、pthread_mutex"></a>2.7、pthread_mutex</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">__block pthread_mutex_t theLock;</span><br><span class="line">pthread_mutex_init(&amp;theLock, NULL);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">        pthread_mutex_lock(&amp;theLock);</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作1 开始&quot;);</span><br><span class="line">        sleep(3);</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作1 结束&quot;);</span><br><span class="line">        pthread_mutex_unlock(&amp;theLock);</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">        sleep(1);</span><br><span class="line">        pthread_mutex_lock(&amp;theLock);</span><br><span class="line">        NSLog(@&quot;需要线程同步的操作2&quot;);</span><br><span class="line">        pthread_mutex_unlock(&amp;theLock);</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>c语言定义下多线程加锁方式。</p>
-<p>1：pthread_mutex_init(<strong>pthread_mutex_t*</strong> mutex,const pthread_mutexattr_t <em>attr);初始化锁变量mutex。attr为锁属性，NULL值为默认属性。2：pthread_mutex_lock(<strong>pthread_mutex_t</strong> </em>mutex);加锁3：pthread_mutex_tylock(<strong>pthread_mutex_t</strong> <em>mutex);加锁，但是与2不一样的是当锁已经在使用的时候，返回为EBUSY，而不是挂起等待。4：pthread_mutex_unlock(<strong>pthread_mutex_t</strong> </em>mutex);释放锁5：pthread_mutex_destroy(<strong>pthread_mutex_t</strong> *mutex);使用完后释放</p>
-<p>代码执行操作结果如下：</p>
-<p>2016-06-30 21:13:32.440 SafeMultiThread[31429:548869] 需要线程同步的操作1 开始<br>2016-06-30 21:13:35.445 SafeMultiThread[31429:548869] 需要线程同步的操作1 结束<br>2016-06-30 21:13:35.446 SafeMultiThread[31429:548866] 需要线程同步的操作2</p>
-<h3 id="2-8、pthread-mutex-recursive"><a href="#2-8、pthread-mutex-recursive" class="headerlink" title="2.8、pthread_mutex(recursive)"></a>2.8、pthread_mutex(recursive)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">__block pthread_mutex_t theLock;</span><br><span class="line">//pthread_mutex_init(&amp;theLock, NULL);</span><br><span class="line"></span><br><span class="line">pthread_mutexattr_t attr;</span><br><span class="line">pthread_mutexattr_init(&amp;attr);</span><br><span class="line">pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_RECURSIVE);</span><br><span class="line">pthread_mutex_init(&amp;lock, &amp;attr);</span><br><span class="line">pthread_mutexattr_destroy(&amp;attr);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    </span><br><span class="line">    static void (^RecursiveMethod)(int);</span><br><span class="line">    </span><br><span class="line">    RecursiveMethod = ^(int value) &#123;</span><br><span class="line">        </span><br><span class="line">        pthread_mutex_lock(&amp;theLock);</span><br><span class="line">        if (value &gt; 0) &#123;</span><br><span class="line">            </span><br><span class="line">            NSLog(@&quot;value = %d&quot;, value);</span><br><span class="line">            sleep(1);</span><br><span class="line">            RecursiveMethod(value - 1);</span><br><span class="line">        &#125;</span><br><span class="line">        pthread_mutex_unlock(&amp;theLock);</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    RecursiveMethod(5);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>这是pthread_mutex为了防止在递归的情况下出现死锁而出现的递归锁。作用和NSRecursiveLock递归锁类似。</p>
-<p>如果使用pthread_mutex_init(&amp;theLock, NULL);初始化锁的话，上面的代码会出现死锁现象。如果使用递归锁的形式，则没有问题。</p>
-<h3 id="2-9、OSSpinLock"><a href="#2-9、OSSpinLock" class="headerlink" title="2.9、OSSpinLock"></a>2.9、OSSpinLock</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">__block OSSpinLock theLock = OS_SPINLOCK_INIT;</span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    OSSpinLockLock(&amp;theLock);</span><br><span class="line">    NSLog(@&quot;需要线程同步的操作1 开始&quot;);</span><br><span class="line">    sleep(3);</span><br><span class="line">    NSLog(@&quot;需要线程同步的操作1 结束&quot;);</span><br><span class="line">    OSSpinLockUnlock(&amp;theLock);</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    OSSpinLockLock(&amp;theLock);</span><br><span class="line">    sleep(1);</span><br><span class="line">    NSLog(@&quot;需要线程同步的操作2&quot;);</span><br><span class="line">    OSSpinLockUnlock(&amp;theLock);</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>OSSpinLock 自旋锁，性能最高的锁。原理很简单，就是一直 do while 忙等。它的缺点是当等待时会消耗大量 CPU 资源，所以它不适用于较长时间的任务。 不过最近YY大神在自己的博客<a href="https://link.jianshu.com/?t=http://blog.ibireme.com/2016/01/16/spinlock_is_unsafe_in_ios/" target="_blank" rel="noopener">不再安全的 OSSpinLock</a>中说明了OSSpinLock已经不再安全，请大家谨慎使用。</p>
-<h2 id="三、性能对比"><a href="#三、性能对比" class="headerlink" title="三、性能对比"></a>三、性能对比</h2><p>对以上各个锁进行1000000此的加锁解锁的空操作时间如下：</p>
-<p>OSSpinLock: 46.15 ms<br>dispatch_semaphore: 56.50 ms<br>pthread_mutex: 178.28 ms<br>NSCondition: 193.38 ms<br>NSLock: 175.02 ms<br>pthread_mutex(recursive): 172.56 ms<br>NSRecursiveLock: 157.44 ms<br>NSConditionLock: 490.04 ms<br>@synchronized: 371.17 ms</p>
-<p>总的来说：</p>
-<p>OSSpinLock和dispatch_semaphore的效率远远高于其他。</p>
-<p>@synchronized和NSConditionLock效率较差。</p>
-<p>鉴于OSSpinLock的不安全，所以我们在开发中如果考虑性能的话，建议使用dispatch_semaphore。</p>
-<p>如果不考虑性能，只是图个方便的话，那就使用@synchronized。</p>
-<h2 id="四、联系方式"><a href="#四、联系方式" class="headerlink" title="四、联系方式"></a>四、联系方式</h2><p><a href="https://link.jianshu.com/?t=http://weibo.com/5612984599/info" target="_blank" rel="noopener">新浪微博</a><br><a href="https://link.jianshu.com/?t=https://github.com/yixiangboy" target="_blank" rel="noopener">github</a><br><a href="https://www.jianshu.com/users/c3c893a27097/timeline" target="_blank" rel="noopener">简书首页</a><br>欢迎加好友、一起交流。</p>
-<p><a href="https://www.jianshu.com/p/938d68ed832c" target="_blank" rel="noopener">转自 <a href="https://www.jianshu.com/u/c3c893a27097" target="_blank" rel="noopener">景铭巴巴</a></a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3616,7 +3628,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
