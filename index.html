@@ -292,6 +292,520 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/iOS-Block用法和实现原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/17/iOS-Block用法和实现原理/" itemprop="url">
+                  iOS Block用法和实现原理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-17 11:49:27 / 修改时间：11:50:18" itemprop="dateCreated datePublished" datetime="2018-09-17T11:49:27+08:00">2018-09-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Block/" itemprop="url" rel="index"><span itemprop="name">Block</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/Block技巧与底层解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/17/Block技巧与底层解析/" itemprop="url">
+                  Block技巧与底层解析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-17 11:49:12 / 修改时间：11:51:58" itemprop="dateCreated datePublished" datetime="2018-09-17T11:49:12+08:00">2018-09-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Block/" itemprop="url" rel="index"><span itemprop="name">Block</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li>Block底层解析<ul>
+<li>什么是block？<ul>
+<li>block编译转换结构</li>
+<li>block实际结构</li>
+</ul>
+</li>
+<li>block的类型<ul>
+<li>NSConcreteGlobalBlock和NSConcreteStackBlock</li>
+<li>NSConcreteMallocBlock</li>
+</ul>
+</li>
+<li>捕捉变量对block结构的影响<ul>
+<li>局部变量</li>
+<li>全局变量</li>
+<li>局部静态变量</li>
+<li>__block修饰的变量</li>
+<li>self隐式循环引用</li>
+</ul>
+</li>
+<li>不同类型block的复制<ul>
+<li>栈block</li>
+<li>堆block</li>
+<li>全局block</li>
+</ul>
+</li>
+<li>block辅助函数<ul>
+<li>__block修饰的基本类型的辅助函数</li>
+<li>对象的辅助函数</li>
+</ul>
+</li>
+<li>ARC中block的工作<ul>
+<li>block试验</li>
+<li>block作为参数传递</li>
+<li>block作为返回值</li>
+<li>block属性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>参考博文</li>
+</ul>
+<h1 id="Block底层解析"><a href="#Block底层解析" class="headerlink" title="Block底层解析"></a>Block底层解析</h1><p>最近看了一些block的资料，并动手做了一些实践，摘录并添加了一些结论。</p>
+<h2 id="什么是block？"><a href="#什么是block？" class="headerlink" title="什么是block？"></a>什么是block？</h2><p>首先，看一个极简的block：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        ^&#123; &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="block编译转换结构"><a href="#block编译转换结构" class="headerlink" title="block编译转换结构"></a>block编译转换结构</h6><p>对其执行<code>clang -rewrite-objc</code>编译转换成C++实现，得到以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">struct __block_impl &#123;</span><br><span class="line">    void *isa;</span><br><span class="line">    int Flags;</span><br><span class="line">    int Reserved;</span><br><span class="line">    void *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags=0) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static struct __main_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; 0, sizeof(struct __main_block_impl_0)&#125;;</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    /* @autoreleasepool */ &#123; __AtAutoreleasePool __autoreleasepool;</span><br><span class="line">        (void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不难看出其中的<code>__main_block_impl_0</code>就是block的一个C++的实现(最后面的<code>_0</code>代表是main中的第几个block)，也就是说也是一个<code>结构体</code>。<br>其中<code>__block_impl</code>的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct __block_impl &#123;</span><br><span class="line">  void *isa;</span><br><span class="line">  int Flags;</span><br><span class="line">  int Reserved;</span><br><span class="line">  void *FuncPtr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其结构体成员如下：</p>
+<ul>
+<li>isa，指向所属类的指针，也就是block的类型</li>
+<li>flags，标志变量，在实现block的内部操作时会用到</li>
+<li>Reserved，保留变量</li>
+<li>FuncPtr，block执行时调用的函数指针<br>可以看出，它包含了isa指针（包含isa指针的皆为对象），也就是说block也是一个<code>对象</code>(runtime里面，对象和类都是用结构体表示)。</li>
+</ul>
+<p><code>__main_block_desc_0</code>的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static struct __main_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; 0, sizeof(struct __main_block_impl_0)&#125;;</span><br></pre></td></tr></table></figure>
+<p>其结构成员含义如下：</p>
+<ul>
+<li>reserved：保留字段</li>
+<li>Block_size：block大小(sizeof(struct __main_block_impl_0))</li>
+</ul>
+<p>以上代码在定义<code>__main_block_desc_0</code>结构体时，同时创建了<code>__main_block_desc_0_DATA</code>，并给它赋值，以供在<code>main</code>函数中对<code>__main_block_impl_0</code>进行初始化。<br><code>__main_block_impl_0</code>定义了显式的构造函数，其函数体如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags=0) &#123;</span><br><span class="line">  impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">  impl.Flags = flags;</span><br><span class="line">  impl.FuncPtr = fp;</span><br><span class="line">  Desc = desc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，</p>
+<ul>
+<li><code>__main_block_impl_0</code>的<code>isa</code>指针指向了<code>_NSConcreteStackBlock</code>，</li>
+<li>从<code>main</code>函数中看， <code>__main_block_impl_0</code>的<code>FuncPtr</code>指向了函数<code>__main_block_func_0</code></li>
+<li><code>__main_block_impl_0</code>的<code>Desc</code>也指向了定义<code>__main_block_desc_0</code>时就创建的<code>__main_block_desc_0_DATA</code>，其中纪录了block结构体大小等信息。</li>
+</ul>
+<p>以上就是根据编译转换的结果，对一个简单block的解析，后面会将block操作<code>不同类型的外部变量</code>，对block结构的影响进行相应的说明。</p>
+<h6 id="block实际结构"><a href="#block实际结构" class="headerlink" title="block实际结构"></a>block实际结构</h6><p>接下来观察下<code>Block_private.h</code>文件中对block的相关结构体的真实定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/* Revised new layout. */</span><br><span class="line">struct Block_descriptor &#123;</span><br><span class="line">    unsigned long int reserved;</span><br><span class="line">    unsigned long int size;</span><br><span class="line">    void (*copy)(void *dst, void *src);</span><br><span class="line">    void (*dispose)(void *);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct Block_layout &#123;</span><br><span class="line">    void *isa;</span><br><span class="line">    int flags;</span><br><span class="line">    int reserved;</span><br><span class="line">    void (*invoke)(void *, ...);</span><br><span class="line">    struct Block_descriptor *descriptor;</span><br><span class="line">    /* Imported variables. */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>有了上文对编译转换的分析，这里只针对略微不同的成员进行分析：</p>
+<ul>
+<li><p>invoke，同上文的FuncPtr，block执行时调用的函数指针，block定义时内部的执行代码都在这个函数中</p>
+</li>
+<li><p>Block_descriptor，block的详细描述</p>
+<p>​</p>
+<ul>
+<li>copy/dispose，辅助拷贝/销毁函数，处理block范围外的变量时使用</li>
+</ul>
+</li>
+</ul>
+<p>总体来说，block就是一个里面存储了指向<code>函数体中包含定义block时的代码块</code>的函数指针，以及<code>block外部上下文</code>变量等信息的结构体。</p>
+<h2 id="block的类型"><a href="#block的类型" class="headerlink" title="block的类型"></a>block的类型</h2><p>block的常见类型有3种：</p>
+<ul>
+<li>_NSConcreteGlobalBlock（全局）</li>
+<li>_NSConcreteStackBlock（栈）</li>
+<li>_NSConcreteMallocBlock（堆）</li>
+</ul>
+<p>附上APUE的进程虚拟内存段分布图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/608238-2393520e3fec4271.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/707" alt="img"></p>
+<p>进程虚拟内存空间分布</p>
+<p>其中前2种在<code>Block.h</code>种声明，后1种在<code>Block_private.h</code>中声明，所以最后1种基本不会在源码中出现。<br>由于无法直接创建<code>_NSConcreteMallocBlock</code>类型的block，所以这里只对前面2种进行手动创建分析，最后1种通过源代码分析。</p>
+<h6 id="NSConcreteGlobalBlock和NSConcreteStackBlock"><a href="#NSConcreteGlobalBlock和NSConcreteStackBlock" class="headerlink" title="NSConcreteGlobalBlock和NSConcreteStackBlock"></a>NSConcreteGlobalBlock和NSConcreteStackBlock</h6><p>首先，根据前面两种类型，编写以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void (^globalBlock)() = ^&#123;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        void (^stackBlock1)() = ^&#123;</span><br><span class="line"></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对其进行编译转换后得到以下缩略代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// globalBlock</span><br><span class="line">struct __globalBlock_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __globalBlock_block_desc_0* Desc;</span><br><span class="line">  __globalBlock_block_impl_0(void *fp, struct __globalBlock_block_desc_0 *desc, int flags=0) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteGlobalBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">// stackBlock</span><br><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags=0) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">...</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    /* @autoreleasepool */ &#123; __AtAutoreleasePool __autoreleasepool;</span><br><span class="line">        void (*stackBlock)() = (void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出<code>globalBlock</code>的isa指向了<code>_NSConcreteGlobalBlock</code>，即在全局区域创建，编译时具体的代码就已经确定在上图中的代码段中了，block变量存储在全局数据存储区；<code>stackBlock</code>的isa指向了<code>_NSConcreteStackBlock</code>，即在栈区创建。</p>
+<h6 id="NSConcreteMallocBlock"><a href="#NSConcreteMallocBlock" class="headerlink" title="NSConcreteMallocBlock"></a>NSConcreteMallocBlock</h6><p>接下来是在堆中的block，堆中的block无法直接创建，其需要由<code>_NSConcreteStackBlock</code>类型的block拷贝而来(也就是说<code>block需要执行copy之后才能存放到堆中</code>)。由于block的拷贝最终都会调用<code>_Block_copy_internal</code>函数，所以观察这个函数就可以知道堆中block是如何被创建的了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">static void *_Block_copy_internal(const void *arg, const int flags) &#123;</span><br><span class="line">    struct Block_layout *aBlock;</span><br><span class="line">    ...</span><br><span class="line">    aBlock = (struct Block_layout *)arg;</span><br><span class="line">    ...</span><br><span class="line">    // Its a stack block.  Make a copy.</span><br><span class="line">    if (!isGC) &#123;</span><br><span class="line">        // 申请block的堆内存</span><br><span class="line">        struct Block_layout *result = malloc(aBlock-&gt;descriptor-&gt;size);</span><br><span class="line">        if (!result) return (void *)0;</span><br><span class="line">        // 拷贝栈中block到刚申请的堆内存中</span><br><span class="line">        memmove(result, aBlock, aBlock-&gt;descriptor-&gt;size); // bitcopy first</span><br><span class="line">        // reset refcount</span><br><span class="line">        result-&gt;flags &amp;= ~(BLOCK_REFCOUNT_MASK);    // XXX not needed</span><br><span class="line">        result-&gt;flags |= BLOCK_NEEDS_FREE | 1;</span><br><span class="line">        // 改变isa指向_NSConcreteMallocBlock，即堆block类型</span><br><span class="line">        result-&gt;isa = _NSConcreteMallocBlock;</span><br><span class="line">        if (result-&gt;flags &amp; BLOCK_HAS_COPY_DISPOSE) &#123;</span><br><span class="line">            //printf(&quot;calling block copy helper %p(%p, %p)...\n&quot;, aBlock-&gt;descriptor-&gt;copy, result, aBlock);</span><br><span class="line">            (*aBlock-&gt;descriptor-&gt;copy)(result, aBlock); // do fixup</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从以上代码以及注释可以很清楚的看出，函数通过<code>memmove</code>将栈中的block的内容拷贝到了堆中，并使isa指向了<code>_NSConcreteMallocBlock</code>。<br>block主要的一些学问就出在栈中block向堆中block的转移过程中了。</p>
+<h2 id="捕捉变量对block结构的影响"><a href="#捕捉变量对block结构的影响" class="headerlink" title="捕捉变量对block结构的影响"></a>捕捉变量对block结构的影响</h2><p>接下来会编译转换捕捉不同变量类型的block，以对比它们的区别。</p>
+<h6 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h6><p>前：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)test</span><br><span class="line">&#123;</span><br><span class="line">    int a;</span><br><span class="line">    ^&#123;a;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">struct __Person__test_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __Person__test_block_desc_0* Desc;</span><br><span class="line">  int a;</span><br><span class="line">  // a(_a)是构造函数的参数列表初始化形式，相当于a = _a。从_I_Person_test看，传入的就是a</span><br><span class="line">  __Person__test_block_impl_0(void *fp, struct __Person__test_block_desc_0 *desc, int _a, int flags=0) : a(_a) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __Person__test_block_func_0(struct __Person__test_block_impl_0 *__cself) &#123;</span><br><span class="line">  int a = __cself-&gt;a; // bound by copy</span><br><span class="line">a;&#125;</span><br><span class="line"></span><br><span class="line">static struct __Person__test_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __Person__test_block_desc_0_DATA = &#123; 0, sizeof(struct __Person__test_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line">static void _I_Person_test(Person * self, SEL _cmd) &#123;</span><br><span class="line">    int a;</span><br><span class="line">    (void (*)())&amp;__Person__test_block_impl_0((void *)__Person__test_block_func_0, &amp;__Person__test_block_desc_0_DATA, a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，block相对于文章开头增加了一个int类型的成员变量，他就是用来存储外部变量a的。可以看出，这次拷贝只是一次<code>值传递</code>。并且当我们想在block中进行以下操作时，将会发生错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^&#123;a = 10;&#125;;</span><br></pre></td></tr></table></figure>
+<p>编译器会提示</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/608238-712f1c798d842cbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/299" alt="img"></p>
+<p>错误提示</p>
+<p>。因为_I_Person_test函数中的a和<strong>Person</strong>test_block_func_0函数中的a并没有在同一个作用域，所以在block对a进行赋值是没有意义的，所以编译器给出了错误。我们可以通过地址传递来消除以上错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (void)test</span><br><span class="line">&#123;</span><br><span class="line">    int a = 0;</span><br><span class="line">    // 利用指针p存储a的地址</span><br><span class="line">    int *p = &amp;a;</span><br><span class="line"></span><br><span class="line">    ^&#123;</span><br><span class="line">        // 通过a的地址设置a的值</span><br><span class="line">        *p = 10;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是变量a的生命周期是和方法test的栈相关联的，当test运行结束，栈随之销毁，那么变量a就会被销毁，p也就成为了野指针。如果block是作为参数或者返回值，这些类型都是跨栈的，也就是说再次调用会造成野指针错误。</p>
+<h6 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h6><p>前：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 全局静态</span><br><span class="line">static int a;</span><br><span class="line">// 全局</span><br><span class="line">int b;</span><br><span class="line">- (void)test</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    ^&#123;</span><br><span class="line">        a = 10;</span><br><span class="line">        b = 10;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">static int a;</span><br><span class="line">int b;</span><br><span class="line"></span><br><span class="line">struct __Person__test_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __Person__test_block_desc_0* Desc;</span><br><span class="line">  __Person__test_block_impl_0(void *fp, struct __Person__test_block_desc_0 *desc, int flags=0) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __Person__test_block_func_0(struct __Person__test_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">        a = 10;</span><br><span class="line">        b = 10;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">static struct __Person__test_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __Person__test_block_desc_0_DATA = &#123; 0, sizeof(struct __Person__test_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line">static void _I_Person_test(Person * self, SEL _cmd) &#123;</span><br><span class="line"></span><br><span class="line">    (void (*)())&amp;__Person__test_block_impl_0((void *)__Person__test_block_func_0, &amp;__Person__test_block_desc_0_DATA);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，因为全局变量都是在<code>静态数据存储区</code>，在程序结束前不会被销毁，所以block直接访问了对应的变量，而没有在<strong>Person</strong>test_block_impl_0结构体中给变量预留位置。</p>
+<h6 id="局部静态变量"><a href="#局部静态变量" class="headerlink" title="局部静态变量"></a>局部静态变量</h6><p>前</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)test</span><br><span class="line">&#123;</span><br><span class="line">    static int a;</span><br><span class="line">    ^&#123;</span><br><span class="line">        a = 10;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">struct __Person__test_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __Person__test_block_desc_0* Desc;</span><br><span class="line">  int *a;</span><br><span class="line">  __Person__test_block_impl_0(void *fp, struct __Person__test_block_desc_0 *desc, int *_a, int flags=0) : a(_a) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __Person__test_block_func_0(struct __Person__test_block_impl_0 *__cself) &#123;</span><br><span class="line">  int *a = __cself-&gt;a; // bound by copy</span><br><span class="line">        // 这里通过局部静态变量a的地址来对其进行修改</span><br><span class="line">        (*a) = 10;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">static struct __Person__test_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __Person__test_block_desc_0_DATA = &#123; 0, sizeof(struct __Person__test_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line">static void _I_Person_test(Person * self, SEL _cmd) &#123;</span><br><span class="line">    static int a;</span><br><span class="line">    // 传入a的地址</span><br><span class="line">    (void (*)())&amp;__Person__test_block_impl_0((void *)__Person__test_block_func_0, &amp;__Person__test_block_desc_0_DATA, &amp;a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意一点的是静态局部变量是存储在静态数据存储区域的，也就是和程序拥有一样的<code>生命周期</code>，也就是说在程序运行时，都能够保证block访问到一个有效的变量。但是其<code>作用范围</code>还是局限于定义它的函数中，所以只能在block通过静态局部变量的<code>地址</code>来进行访问。<br>关于变量的存储我原来的这篇博客有提及：<a href="https://link.jianshu.com/?t=http://blog.csdn.net/triplecc/article/details/24808417" target="_blank" rel="noopener">c语言臆想–全局—局部变量</a></p>
+<h6 id="block修饰的变量"><a href="#block修饰的变量" class="headerlink" title="__block修饰的变量"></a>__block修饰的变量</h6><p>前：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)test</span><br><span class="line">&#123;</span><br><span class="line">   __block int a;</span><br><span class="line">    ^&#123;</span><br><span class="line">        a = 10;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">struct __Block_byref_a_0 &#123;</span><br><span class="line">  void *__isa;</span><br><span class="line">__Block_byref_a_0 *__forwarding;</span><br><span class="line"> int __flags;</span><br><span class="line"> int __size;</span><br><span class="line"> int a;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct __Person__test_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __Person__test_block_desc_0* Desc;</span><br><span class="line">  __Block_byref_a_0 *a; // by ref</span><br><span class="line">  __Person__test_block_impl_0(void *fp, struct __Person__test_block_desc_0 *desc, __Block_byref_a_0 *_a, int flags=0) : a(_a-&gt;__forwarding) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __Person__test_block_func_0(struct __Person__test_block_impl_0 *__cself) &#123;</span><br><span class="line">  __Block_byref_a_0 *a = __cself-&gt;a; // bound by ref</span><br><span class="line">        // 注意，这里的_forwarding用来保证操作的始终是堆中的拷贝a，而不是栈中的a</span><br><span class="line">        (a-&gt;__forwarding-&gt;a) = 10;</span><br><span class="line">    &#125;</span><br><span class="line">static void __Person__test_block_copy_0(struct __Person__test_block_impl_0*dst, struct __Person__test_block_impl_0*src) &#123;_Block_object_assign((void*)&amp;dst-&gt;a, (void*)src-&gt;a, 8/*BLOCK_FIELD_IS_BYREF*/);&#125;</span><br><span class="line"></span><br><span class="line">static void __Person__test_block_dispose_0(struct __Person__test_block_impl_0*src) &#123;_Block_object_dispose((void*)src-&gt;a, 8/*BLOCK_FIELD_IS_BYREF*/);&#125;</span><br><span class="line"></span><br><span class="line">static struct __Person__test_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">  void (*copy)(struct __Person__test_block_impl_0*, struct __Person__test_block_impl_0*);</span><br><span class="line">  void (*dispose)(struct __Person__test_block_impl_0*);</span><br><span class="line">&#125; __Person__test_block_desc_0_DATA = &#123; 0, sizeof(struct __Person__test_block_impl_0), __Person__test_block_copy_0, __Person__test_block_dispose_0&#125;;</span><br><span class="line"></span><br><span class="line">static void _I_Person_test(Person * self, SEL _cmd) &#123;</span><br><span class="line">    // __block将a包装成了一个对象</span><br><span class="line">   __attribute__((__blocks__(byref))) __Block_byref_a_0 a = &#123;(void*)0,(__Block_byref_a_0 *)&amp;a, 0, sizeof(__Block_byref_a_0)&#125;;</span><br><span class="line">;</span><br><span class="line">    (void (*)())&amp;__Person__test_block_impl_0((void *)__Person__test_block_func_0, &amp;__Person__test_block_desc_0_DATA, (__Block_byref_a_0 *)&amp;a, 570425344);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，对比上面的结果，明显多了<code>__Block_byref_a_0</code>结构体，这个结构体中含有<code>isa</code>指针，所以也是一个对象，它是用来包装局部变量a的。当block被copy到堆中时，<code>__Person__test_block_impl_0</code>的拷贝辅助函数<code>__Person__test_block_copy_0</code>会将<code>__Block_byref_a_0</code>拷贝至堆中，所以即使局部变量所在堆被销毁，block依然能对堆中的局部变量进行操作。其中<code>__Block_byref_a_0</code>成员指针<code>__forwarding</code>用来指向它在堆中的拷贝，其依据源码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">static void _Block_byref_assign_copy(void *dest, const void *arg, const int flags) &#123;</span><br><span class="line">    struct Block_byref **destp = (struct Block_byref **)dest;</span><br><span class="line">    struct Block_byref *src = (struct Block_byref *)arg;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    // 堆中拷贝的forwarding指向它自己</span><br><span class="line">    copy-&gt;forwarding = copy; // patch heap copy to point to itself (skip write-barrier)</span><br><span class="line">    // 栈中的forwarding指向堆中的拷贝</span><br><span class="line">    src-&gt;forwarding = copy;  // patch stack to point to heap copy</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样做是为了保证操作的值始终是堆中的拷贝，而不是栈中的值。（处理在局部变量所在栈还没销毁，就调用block来改变局部变量值的情况，如果没有__forwarding指针，则修改无效）<br>至于block如何实现对局部变量的拷贝，下面会详细说明。</p>
+<h6 id="self隐式循环引用"><a href="#self隐式循环引用" class="headerlink" title="self隐式循环引用"></a>self隐式循环引用</h6><p>前：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@implementation Person</span><br><span class="line">&#123;</span><br><span class="line">    int _a;</span><br><span class="line">    void (^_block)();</span><br><span class="line">&#125;</span><br><span class="line">- (void)test</span><br><span class="line">&#123;</span><br><span class="line">  void (^_block)() = ^&#123;</span><br><span class="line">        _a = 10;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">struct __Person__test_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __Person__test_block_desc_0* Desc;</span><br><span class="line">  // 可以看到，block强引用了self</span><br><span class="line">  Person *self;</span><br><span class="line">  __Person__test_block_impl_0(void *fp, struct __Person__test_block_desc_0 *desc, Person *_self, int flags=0) : self(_self) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __Person__test_block_func_0(struct __Person__test_block_impl_0 *__cself) &#123;</span><br><span class="line">  Person *self = __cself-&gt;self; // bound by copy</span><br><span class="line"></span><br><span class="line">        (*(int *)((char *)self + OBJC_IVAR_$_Person$_a)) = 10;</span><br><span class="line">    &#125;</span><br><span class="line">static void __Person__test_block_copy_0(struct __Person__test_block_impl_0*dst, struct __Person__test_block_impl_0*src) &#123;_Block_object_assign((void*)&amp;dst-&gt;self, (void*)src-&gt;self, 3/*BLOCK_FIELD_IS_OBJECT*/);&#125;</span><br><span class="line"></span><br><span class="line">static void __Person__test_block_dispose_0(struct __Person__test_block_impl_0*src) &#123;_Block_object_dispose((void*)src-&gt;self, 3/*BLOCK_FIELD_IS_OBJECT*/);&#125;</span><br><span class="line"></span><br><span class="line">static struct __Person__test_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">  void (*copy)(struct __Person__test_block_impl_0*, struct __Person__test_block_impl_0*);</span><br><span class="line">  void (*dispose)(struct __Person__test_block_impl_0*);</span><br><span class="line">&#125; __Person__test_block_desc_0_DATA = &#123; 0, sizeof(struct __Person__test_block_impl_0), __Person__test_block_copy_0, __Person__test_block_dispose_0&#125;;</span><br><span class="line"></span><br><span class="line">static void _I_Person_test(Person * self, SEL _cmd) &#123;</span><br><span class="line">  void (*_block)() = (void (*)())&amp;__Person__test_block_impl_0((void *)__Person__test_block_func_0, &amp;__Person__test_block_desc_0_DATA, self, 570425344);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果在编译转换前，将<code>_a</code>改成<code>self.a</code>，能很明显地看出是产生了循环引用(self强引用block，block强引用self)。那么使用<code>_a</code>呢？经过编译转换后，依然可以在<code>__Person__test_block_impl_0</code>看见<code>self</code>的身影。且在函数<code>_I_Person_test</code>中，传入的参数也是<code>self</code>。通过以下语句，可以看出，不管是用什么形式访问实例变量，最终都会转换成<code>self+变量内存偏移的形式</code>。所以在上面例子中使用<code>_a</code>也会造成循环引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">static void __Person__test_block_func_0(struct __Person__test_block_impl_0 *__cself) &#123;</span><br><span class="line">  Person *self = __cself-&gt;self; // bound by copy</span><br><span class="line">        // self＋实例变量a的偏移值</span><br><span class="line">        (*(int *)((char *)self + OBJC_IVAR_$_Person$_a)) = 10;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="不同类型block的复制"><a href="#不同类型block的复制" class="headerlink" title="不同类型block的复制"></a>不同类型block的复制</h2><p><code>block</code>的复制代码在<code>_Block_copy_internal</code>函数中。</p>
+<h6 id="栈block"><a href="#栈block" class="headerlink" title="栈block"></a>栈block</h6><p>从以下代码可以看出，栈block的复制不仅仅复制了其内容，还添加了一些额外的东西</p>
+<ul>
+<li>1、往flags中并入了<code>BLOCK_NEEDS_FREE</code>（这个标志表明block需要释放，在<code>release</code>以及<code>再次拷贝</code>时会用到）</li>
+<li>2、如果有辅助copy函数（<code>BLOCK_HAS_COPY_DISPOSE</code>），那么就调用（这个辅助copy函数是用来<code>拷贝block捕获的变量</code>的）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">struct Block_layout *result = malloc(aBlock-&gt;descriptor-&gt;size);</span><br><span class="line">      if (!result) return (void *)0;</span><br><span class="line">      memmove(result, aBlock, aBlock-&gt;descriptor-&gt;size); // bitcopy first</span><br><span class="line">      // reset refcount</span><br><span class="line">      result-&gt;flags &amp;= ~(BLOCK_REFCOUNT_MASK);    // XXX not needed</span><br><span class="line">      result-&gt;flags |= BLOCK_NEEDS_FREE | 1;</span><br><span class="line">      result-&gt;isa = _NSConcreteMallocBlock;</span><br><span class="line">      if (result-&gt;flags &amp; BLOCK_HAS_COPY_DISPOSE) &#123;</span><br><span class="line">          //printf(&quot;calling block copy helper %p(%p, %p)...\n&quot;, aBlock-&gt;descriptor-&gt;copy, result, aBlock);</span><br><span class="line">          (*aBlock-&gt;descriptor-&gt;copy)(result, aBlock); // do fixup</span><br><span class="line">      &#125;</span><br><span class="line">      return result;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h6 id="堆block"><a href="#堆block" class="headerlink" title="堆block"></a>堆block</h6><p>从以下代码看出，如果block的flags中有<code>BLOCK_NEEDS_FREE</code>标志（block从栈中拷贝到堆时添加的标志），就执行<code>latching_incr_int</code>操作，其功能就是让block的引用计数加1。所以堆中block的拷贝只是单纯地改变了引用计数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">if (aBlock-&gt;flags &amp; BLOCK_NEEDS_FREE) &#123;</span><br><span class="line">      // latches on high</span><br><span class="line">      latching_incr_int(&amp;aBlock-&gt;flags);</span><br><span class="line">      return aBlock;</span><br><span class="line">  &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h6 id="全局block"><a href="#全局block" class="headerlink" title="全局block"></a>全局block</h6><p>从以下代码看出，对于全局block，函数没有做任何操作，直接返回了传入的block</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">else if (aBlock-&gt;flags &amp; BLOCK_IS_GLOBAL) &#123;</span><br><span class="line">      return aBlock;</span><br><span class="line">  &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="block辅助函数"><a href="#block辅助函数" class="headerlink" title="block辅助函数"></a>block辅助函数</h2><p>上文提及到了block辅助copy与dispose处理函数，这里分析下这两个函数的内部实现。在捕获变量为<code>__block</code>修饰的<code>基本类型</code>，或者为<code>对象</code>时，block才会有这两个辅助函数。<br>block<code>捕捉变量</code>拷贝函数为<code>_Block_object_assign</code>。在调用复制block的函数_Block_copy_internal时，会根据block有无辅助函数来对<code>捕捉变量</code>拷贝函数<code>_Block_object_assign</code>进行调用。而在<code>_Block_object_assign</code>函数中，也会判断<code>捕捉变量</code>包装而成的对象(Block_byref结构体)是否有辅助函数，来进行调用。</p>
+<h6 id="block修饰的基本类型的辅助函数"><a href="#block修饰的基本类型的辅助函数" class="headerlink" title="__block修饰的基本类型的辅助函数"></a><code>__block</code>修饰的基本类型的辅助函数</h6><p>编写以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">typedef void(^Block)();</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        __block int a;</span><br><span class="line">        Block block = ^ &#123;</span><br><span class="line">            a;</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>转换成C++代码后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">typedef void(*Block)();</span><br><span class="line">// __block int a</span><br><span class="line">struct __Block_byref_a_0 &#123;</span><br><span class="line">  void *__isa;</span><br><span class="line">__Block_byref_a_0 *__forwarding;</span><br><span class="line"> int __flags;</span><br><span class="line"> int __size;</span><br><span class="line"> int a;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// block</span><br><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __main_block_desc_0* Desc;</span><br><span class="line">  __Block_byref_a_0 *a; // by ref</span><br><span class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, __Block_byref_a_0 *_a, int flags=0) : a(_a-&gt;__forwarding) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// block函数体</span><br><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line">  __Block_byref_a_0 *a = __cself-&gt;a; // bound by ref</span><br><span class="line"></span><br><span class="line">            (a-&gt;__forwarding-&gt;a);</span><br><span class="line">        &#125;</span><br><span class="line">// 辅助copy函数</span><br><span class="line">static void __main_block_copy_0(struct __main_block_impl_0*dst, struct __main_block_impl_0*src) &#123;_Block_object_assign((void*)&amp;dst-&gt;a, (void*)src-&gt;a, 8/*BLOCK_FIELD_IS_BYREF*/);&#125;</span><br><span class="line"></span><br><span class="line">// 辅助dispose函数</span><br><span class="line">static void __main_block_dispose_0(struct __main_block_impl_0*src) &#123;_Block_object_dispose((void*)src-&gt;a, 8/*BLOCK_FIELD_IS_BYREF*/);&#125;</span><br><span class="line"></span><br><span class="line">static struct __main_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">  void (*copy)(struct __main_block_impl_0*, struct __main_block_impl_0*);</span><br><span class="line">  void (*dispose)(struct __main_block_impl_0*);</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; 0, sizeof(struct __main_block_impl_0), __main_block_copy_0, __main_block_dispose_0&#125;;</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    /* @autoreleasepool */ &#123; __AtAutoreleasePool __autoreleasepool;</span><br><span class="line">        // 这里创建了，并将a的flags设置为0</span><br><span class="line">        __attribute__((__blocks__(byref))) __Block_byref_a_0 a = &#123;(void*)0,(__Block_byref_a_0 *)&amp;a, 0, sizeof(__Block_byref_a_0)&#125;;</span><br><span class="line">;</span><br><span class="line">        Block block = (void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, (__Block_byref_a_0 *)&amp;a, 570425344);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面代码中，被<code>__block</code>修饰的a变量变为了<code>__Block_byref_a_0</code>类型，根据这个格式，从源码中查看得到相似的定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">struct Block_byref &#123;</span><br><span class="line">    void *isa;</span><br><span class="line">    struct Block_byref *forwarding;</span><br><span class="line">    int flags; /* refcount; */</span><br><span class="line">    int size;</span><br><span class="line">    void (*byref_keep)(struct Block_byref *dst, struct Block_byref *src);</span><br><span class="line">    void (*byref_destroy)(struct Block_byref *);</span><br><span class="line">    /* long shared[0]; */</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 做下对比</span><br><span class="line">struct __Block_byref_a_0 &#123;</span><br><span class="line">  void *__isa;</span><br><span class="line">__Block_byref_a_0 *__forwarding;</span><br><span class="line"> int __flags;</span><br><span class="line"> int __size;</span><br><span class="line"> int a;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// flags/_flags类型</span><br><span class="line">enum &#123;</span><br><span class="line">        /* See function implementation for a more complete description of these fields and combinations */</span><br><span class="line">        // 是一个对象</span><br><span class="line">        BLOCK_FIELD_IS_OBJECT   =  3,  /* id, NSObject, __attribute__((NSObject)), block, ... */</span><br><span class="line">        // 是一个block</span><br><span class="line">        BLOCK_FIELD_IS_BLOCK    =  7,  /* a block variable */</span><br><span class="line">        // 被__block修饰的变量</span><br><span class="line">        BLOCK_FIELD_IS_BYREF    =  8,  /* the on stack structure holding the __block variable */</span><br><span class="line">        // 被__weak修饰的变量，只能被辅助copy函数使用</span><br><span class="line">        BLOCK_FIELD_IS_WEAK     = 16,  /* declared __weak, only used in byref copy helpers */</span><br><span class="line">        // block辅助函数调用（告诉内部实现不要进行retain或者copy）</span><br><span class="line">        BLOCK_BYREF_CALLER      = 128  /* called from __block (byref) copy/dispose support routines. */</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<p>可以看出，<code>__block</code>将原来的基本类型包装成了<code>对象</code>。因为以上两个结构体的前4个成员的类型都是一样的，内存空间排列一致，所以可以进行以下操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">// 转换成C++代码</span><br><span class="line">static void __main_block_copy_0(struct __main_block_impl_0*dst, struct __main_block_impl_0*src) &#123;_Block_object_assign((void*)&amp;dst-&gt;a, (void*)src-&gt;a, 8/*BLOCK_FIELD_IS_BYREF*/);&#125;</span><br><span class="line"></span><br><span class="line">// _Block_object_assign源码</span><br><span class="line">void _Block_object_assign(void *destAddr, const void *object, const int flags) &#123;</span><br><span class="line">...</span><br><span class="line">    else if ((flags &amp; BLOCK_FIELD_IS_BYREF) == BLOCK_FIELD_IS_BYREF)  &#123;</span><br><span class="line">        // copying a __block reference from the stack Block to the heap</span><br><span class="line">        // flags will indicate if it holds a __weak reference and needs a special isa</span><br><span class="line">        _Block_byref_assign_copy(destAddr, object, flags);</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// _Block_byref_assign_copy源码</span><br><span class="line">static void _Block_byref_assign_copy(void *dest, const void *arg, const int flags) &#123;</span><br><span class="line">    // 这里因为前面4个成员的内存分布一样，所以直接转换后，使用Block_byref的成员变量名，能访问到__Block_byref_a_0的前面4个成员</span><br><span class="line">    struct Block_byref **destp = (struct Block_byref **)dest;</span><br><span class="line">    struct Block_byref *src = (struct Block_byref *)arg;</span><br><span class="line">...</span><br><span class="line">    else if ((src-&gt;forwarding-&gt;flags &amp; BLOCK_REFCOUNT_MASK) == 0) &#123;</span><br><span class="line">        // 从main函数对__Block_byref_a_0的初始化，可以看到初始化时将flags赋值为0</span><br><span class="line">        // 这里表示第一次拷贝，会进行复制操作，并修改原来flags的值</span><br><span class="line">        // static int _Byref_flag_initial_value = BLOCK_NEEDS_FREE | 2;</span><br><span class="line">        // 可以看出，复制后，会并入BLOCK_NEEDS_FREE，后面的2是block的初始引用计数</span><br><span class="line">        ...</span><br><span class="line">        copy-&gt;flags = src-&gt;flags | _Byref_flag_initial_value;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    // 已经拷贝到堆了，只增加引用计数</span><br><span class="line">    else if ((src-&gt;forwarding-&gt;flags &amp; BLOCK_NEEDS_FREE) == BLOCK_NEEDS_FREE) &#123;</span><br><span class="line">        latching_incr_int(&amp;src-&gt;forwarding-&gt;flags);</span><br><span class="line">    &#125;</span><br><span class="line">    // 普通的赋值，里面最底层就*destptr = value;这句表达式</span><br><span class="line">    _Block_assign(src-&gt;forwarding, (void **)destp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要操作都在代码注释中了，总体来说，<code>__block</code>修饰的基本类型会被包装为对象，并且只在最初block拷贝时复制一次，后面的拷贝只会增加这个捕获变量的引用计数。</p>
+<h6 id="对象的辅助函数"><a href="#对象的辅助函数" class="headerlink" title="对象的辅助函数"></a>对象的辅助函数</h6><ul>
+<li>没有<code>__block</code>修饰</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">typedef void(^Block)();</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        NSObject *a = [[NSObject alloc] init];</span><br><span class="line">        Block block = ^ &#123;</span><br><span class="line">            a;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先，在没有<code>__block</code>修饰时，对象编译转换的结果如下，删除了一些变化不大的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line">  NSObject *a = __cself-&gt;a; // bound by copy</span><br><span class="line">            a;</span><br><span class="line">        &#125;</span><br><span class="line">static void __main_block_copy_0(struct __main_block_impl_0*dst, struct __main_block_impl_0*src) &#123;_Block_object_assign((void*)&amp;dst-&gt;a, (void*)src-&gt;a, 3/*BLOCK_FIELD_IS_OBJECT*/);&#125;</span><br><span class="line"></span><br><span class="line">static void __main_block_dispose_0(struct __main_block_impl_0*src) &#123;_Block_object_dispose((void*)src-&gt;a, 3/*BLOCK_FIELD_IS_OBJECT*/);&#125;</span><br><span class="line"></span><br><span class="line">static struct __main_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">  void (*copy)(struct __main_block_impl_0*, struct __main_block_impl_0*);</span><br><span class="line">  void (*dispose)(struct __main_block_impl_0*);</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; 0, sizeof(struct __main_block_impl_0),</span><br></pre></td></tr></table></figure>
+<p>对象在没有<code>__block</code>修饰时，并没有产生<code>__Block_byref_a_0</code>结构体，只是将标志位修改为<code>BLOCK_FIELD_IS_OBJECT</code>。而在<code>_Block_object_assign</code>中对应的判断分支代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">else if ((flags &amp; BLOCK_FIELD_IS_OBJECT) == BLOCK_FIELD_IS_OBJECT) &#123;</span><br><span class="line">    _Block_retain_object(object);</span><br><span class="line">    _Block_assign((void *)object, destAddr);</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>可以看到，block复制时，会retain捕捉对象，以增加其引用计数。</p>
+<ul>
+<li>有<code>__block</code>修饰</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">typedef void(^Block)();</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        __block NSObject *a = [[NSObject alloc] init];</span><br><span class="line">        Block block = ^ &#123;</span><br><span class="line">            a;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这种情况下，编译转换的部分结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">struct __Block_byref_a_0 &#123;</span><br><span class="line">  void *__isa;</span><br><span class="line">__Block_byref_a_0 *__forwarding;</span><br><span class="line"> int __flags;</span><br><span class="line"> int __size;</span><br><span class="line"> void (*__Block_byref_id_object_copy)(void*, void*);</span><br><span class="line"> void (*__Block_byref_id_object_dispose)(void*);</span><br><span class="line"> NSObject *a;</span><br><span class="line">&#125;;</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    /* @autoreleasepool */ &#123; __AtAutoreleasePool __autoreleasepool;</span><br><span class="line">attribute__((__blocks__(byref))) __Block_byref_a_0 a = &#123;(void*)0,(__Block_byref_a_0 *)&amp;a, 33554432, sizeof(__Block_byref_a_0), __Block_byref_id_object_copy_131, __Block_byref_id_object_dispose_131,....&#125;;</span><br><span class="line">Block block = (void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, (__Block_byref_a_0 *)&amp;a, 570425344);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 以下的40表示__Block_byref_a_0对象a的位移（4个指针(32字节)＋2个int变量(8字节)＝40字节）</span><br><span class="line">static void __Block_byref_id_object_copy_131(void *dst, void *src) &#123;</span><br><span class="line"> _Block_object_assign((char*)dst + 40, *(void * *) ((char*)src + 40), 131);</span><br><span class="line">&#125;</span><br><span class="line">static void __Block_byref_id_object_dispose_131(void *src) &#123;</span><br><span class="line"> _Block_object_dispose(*(void * *) ((char*)src + 40), 131);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，对于对象，<code>__Block_byref_a_0</code>另外增加了两个辅助函数<code>__Block_byref_id_object_copy</code>、<code>__Block_byref_id_object_dispose</code>,以实现对对象内存的管理。其中两者的最后一个参数<code>131</code>表示<code>BLOCK_BYREF_CALLER</code>|<code>BLOCK_FIELD_IS_OBJECT</code>，BLOCK_BYREF_CALLER表示在内部实现中不对a对象进行retain或copy；以下为相关源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if ((flags &amp; BLOCK_BYREF_CALLER) == BLOCK_BYREF_CALLER) &#123;</span><br><span class="line">    ...</span><br><span class="line">    else &#123;</span><br><span class="line">        // do *not* retain or *copy* __block variables whatever they are</span><br><span class="line">        _Block_assign((void *)object, destAddr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>_Block_byref_assign_copy</code>函数的以下代码会对上面的辅助函数（__Block_byref_id_object_copy_131）进行调用；<code>570425344</code>表示<code>BLOCK_HAS_COPY_DISPOSE</code>|<code>BLOCK_HAS_DESCRIPTOR</code>，所以会执行以下相关源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (src-&gt;flags &amp; BLOCK_HAS_COPY_DISPOSE) &#123;</span><br><span class="line">    // Trust copy helper to copy everything of interest</span><br><span class="line">    // If more than one field shows up in a byref block this is wrong XXX</span><br><span class="line">    copy-&gt;byref_keep = src-&gt;byref_keep;</span><br><span class="line">    copy-&gt;byref_destroy = src-&gt;byref_destroy;</span><br><span class="line">    (*src-&gt;byref_keep)(copy, src);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ARC中block的工作"><a href="#ARC中block的工作" class="headerlink" title="ARC中block的工作"></a>ARC中block的工作</h2><p><img src="http://upload-images.jianshu.io/upload_images/608238-0fbaf756460d459f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>苹果说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_NSConcreteStackBlock</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_NSConcreteMallocBlock</span><br></pre></td></tr></table></figure>
+<h6 id="block试验"><a href="#block试验" class="headerlink" title="block试验"></a>block试验</h6><p>下面对block做点实验：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        int i = 10;</span><br><span class="line">        void (^block)() = ^&#123;i;&#125;;</span><br><span class="line"></span><br><span class="line">        __weak void (^weakBlock)() = ^&#123;i;&#125;;</span><br><span class="line"></span><br><span class="line">        void (^stackBlock)() = ^&#123;&#125;;</span><br><span class="line"></span><br><span class="line">        // ARC情况下</span><br><span class="line"></span><br><span class="line">        // 创建时，都会在栈中</span><br><span class="line">        // &lt;__NSStackBlock__: 0x7fff5fbff730&gt;</span><br><span class="line">        NSLog(@&quot;%@&quot;, ^&#123;i;&#125;);</span><br><span class="line"></span><br><span class="line">        // 因为block为strong类型，且捕获了外部变量，所以赋值时，自动进行了copy</span><br><span class="line">        // &lt;__NSMallocBlock__: 0x100206920&gt;</span><br><span class="line">        NSLog(@&quot;%@&quot;, block);</span><br><span class="line"></span><br><span class="line">        // 如果是weak类型的block，依然不会自动进行copy</span><br><span class="line">        // &lt;__NSStackBlock__: 0x7fff5fbff728&gt;</span><br><span class="line">        NSLog(@&quot;%@&quot;, weakBlock);</span><br><span class="line"></span><br><span class="line">        // 如果block是strong类型，并且没有捕获外部变量，那么就会转换成__NSGlobalBlock__</span><br><span class="line">        // &lt;__NSGlobalBlock__: 0x100001110&gt;</span><br><span class="line">        NSLog(@&quot;%@&quot;, stackBlock);</span><br><span class="line"></span><br><span class="line">        // 在非ARC情况下，产生以下输出</span><br><span class="line">        // &lt;__NSStackBlock__: 0x7fff5fbff6d0&gt;</span><br><span class="line">        // &lt;__NSStackBlock__: 0x7fff5fbff730&gt;</span><br><span class="line">        // &lt;__NSStackBlock__: 0x7fff5fbff700&gt;</span><br><span class="line">        // &lt;__NSGlobalBlock__: 0x1000010d0&gt;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，ARC对<code>类型为strong</code>且<code>捕获了外部变量</code>的block进行了copy。并且当block<code>类型为strong</code>，但是创建时<code>没有捕获外部变量</code>，block最终会变成<code>__NSGlobalBlock__</code>类型（这里可能因为block中的代码没有捕获外部变量，所以不需要在栈中开辟变量，也就是说，在<code>编译</code>时，这个block的<code>所有内容已经在代码段中生成了</code>，所以就把block的类型转换为全局类型）</p>
+<h6 id="block作为参数传递"><a href="#block作为参数传递" class="headerlink" title="block作为参数传递"></a>block作为参数传递</h6><p>再来看下使用在栈中的block需要注意的情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">NSMutableArray *arrayM;</span><br><span class="line">void myBlock()</span><br><span class="line">&#123;</span><br><span class="line">    int a = 5;</span><br><span class="line">    Block block = ^ &#123;</span><br><span class="line">        NSLog(@&quot;%d&quot;, a);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    [arrayM addObject:block];</span><br><span class="line">    NSLog(@&quot;%@&quot;, block);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        arrayM = @[].mutableCopy;</span><br><span class="line"></span><br><span class="line">        myBlock();</span><br><span class="line"></span><br><span class="line">        Block block = [arrayM firstObject];</span><br><span class="line">        // 非ARC这里崩溃</span><br><span class="line">        block();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">// ARC情况下输出</span><br><span class="line">// &lt;__NSMallocBlock__: 0x100214480&gt;</span><br><span class="line"></span><br><span class="line">// 非ARC情况下输出</span><br><span class="line">// &lt;__NSStackBlock__: 0x7fff5fbff738&gt;</span><br><span class="line">// 崩溃，野指针错误</span><br></pre></td></tr></table></figure>
+<p>可以看到，ARC情况下因为自动执行了copy，所以返回类型为<code>__NSMallocBlock__</code>，在函数结束后依然可以访问；而非ARC情况下，需要我们手动调用<code>[block copy]</code>来将block拷贝到堆中，否则因为栈中的block生命周期和函数中的栈生命周期关联，当函数退出后，相应的堆被销毁，block也就不存在了。<br>如果把block的以下代码删除：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSLog(@&quot;%d&quot;, a);</span><br></pre></td></tr></table></figure>
+<p>那么block就会变成全局类型，在main中访问也不会出崩溃。</p>
+<h6 id="block作为返回值"><a href="#block作为返回值" class="headerlink" title="block作为返回值"></a>block作为返回值</h6><p>在非ARC情况下，如果返回值是block，则一般这样操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return [[block copy] autorelease];</span><br></pre></td></tr></table></figure>
+<p>对于外部要使用的block，更趋向于把它拷贝到堆中，使其脱离栈生命周期的约束。</p>
+<h6 id="block属性"><a href="#block属性" class="headerlink" title="block属性"></a>block属性</h6><p>这里还有一点关于block类型的ARC属性。上文也说明了，ARC会自动帮<code>strong类型</code>且<code>捕获外部变量</code>的block进行copy，所以在定义block类型的属性时也可以使用strong，不一定使用copy。也就是以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/** 假如有栈block赋给以下两个属性 **/</span><br><span class="line"></span><br><span class="line">// 这里因为ARC，当栈block中会捕获外部变量时，这个block会被copy进堆中</span><br><span class="line">// 如果没有捕获外部变量，这个block会变为全局类型</span><br><span class="line">// 不管怎么样，它都脱离了栈生命周期的约束</span><br><span class="line"></span><br><span class="line">@property (strong, nonatomic) Block *strongBlock;</span><br><span class="line"></span><br><span class="line">// 这里都会被copy进堆中</span><br><span class="line">@property (copy, nonatomic) Block *copyBlock;</span><br></pre></td></tr></table></figure>
+<h2 id="参考博文"><a href="#参考博文" class="headerlink" title="参考博文"></a>参考博文</h2><p><a href="https://link.jianshu.com/?t=http://blog.devtang.com/blog/2013/07/28/a-look-inside-blocks/" target="_blank" rel="noopener">谈Objective-C Block的实现</a><br><a href="https://link.jianshu.com/?t=http://blog.csdn.net/jasonblog/article/details/7756763" target="_blank" rel="noopener">iOS中block实现的探究</a><br><a href="https://link.jianshu.com/?t=http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/" target="_blank" rel="noopener">A look inside blocks: Episode 3</a><br><a href="https://link.jianshu.com/?t=http://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/BlocksRuntime/runtime.c" target="_blank" rel="noopener">runtime.c</a><br><a href="https://link.jianshu.com/?t=http://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/BlocksRuntime/Block_private.h" target="_blank" rel="noopener">Block_private.h</a></p>
+<h2 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h2><p><a href="https://link.jianshu.com/?t=http://clang.llvm.org/docs/Block-ABI-Apple.html" target="_blank" rel="noopener">llvm对于Block的编译规则</a><br><a href="https://link.jianshu.com/?t=https://github.com/EmbeddedSources/BlockRuntime" target="_blank" rel="noopener">ESBlockRuntime</a></p>
+<p><a href="https://www.jianshu.com/p/51d04b7639f1" target="_blank" rel="noopener">转自 [<a href="https://www.jianshu.com/u/97e39e95c2cc" target="_blank" rel="noopener">tripleCC</a>]</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/14/NSString的内存问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2048,434 +2562,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/13/通知/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/13/通知/" itemprop="url">
-                  通知
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-09-13 17:18:02 / 修改时间：18:02:50" itemprop="dateCreated datePublished" datetime="2018-09-13T17:18:02+08:00">2018-09-13</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Objective-C语言特性/" itemprop="url" rel="index"><span itemprop="name">Objective-C语言特性</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">目录 </span><br><span class="line">    一、通知的基本使用</span><br><span class="line">    1、基本概念</span><br><span class="line">    2、什么情况下使用通知</span><br><span class="line">    3、如何使用通知</span><br><span class="line">    4、使用通知需要注意哪些细节</span><br><span class="line">    二、通知的实现原理</span><br><span class="line">    1、概述</span><br><span class="line">    2、实现</span><br></pre></td></tr></table></figure>
-<h1 id="通知的基本使用"><a href="#通知的基本使用" class="headerlink" title="通知的基本使用"></a>通知的基本使用</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>NSNotification 是iOS中一个调度消息通知的类,采用单例模式设计,在程序中实现传值、回调等地方应用很广。在iOS中，NSNotification &amp; NSNotificationCenter是使用<strong>观察者模式</strong>来实现的用于跨层传递消息。</p>
-<h2 id="什么情况下使用通知"><a href="#什么情况下使用通知" class="headerlink" title="什么情况下使用通知"></a>什么情况下使用通知</h2><p>观察者模式 ： 定义对象间的一种一对多的依赖关系。当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并自动更新。 </p>
-<p>应用场景 : </p>
-<p>1&gt; 对一个对象的改变需要同时改变其他对象，而不知道具体有多少对象有待改变。</p>
-<p>2&gt; 一个对象必须通知其他对象，而它又不需要知道其他对象是什么</p>
-<p>3、如何使用通知</p>
-<p>1&gt; 向观察者中心添加观察者(2种方式)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//观察者接收到通知后执行任务的代码在发送通知的线程中执行</span><br><span class="line">addObserver:selector:name:object:</span><br><span class="line"></span><br><span class="line">//观察者接收到通知后执行任务的代码在指定的操作队列中执行</span><br><span class="line">addObserverForName:object:queue:usingBlock:</span><br></pre></td></tr></table></figure>
-<p>2&gt; 通知中心向观察者发送消息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">postNotification:</span><br><span class="line">postNotificationName:object:</span><br><span class="line">postNotificationName:object:userInfo:</span><br></pre></td></tr></table></figure>
-<p>3&gt; 观察者接收到消息执行相应的行为</p>
-<p>4&gt; 在通知中心移除观察者</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">removeObserver:</span><br><span class="line">removeObserver:name:object:</span><br></pre></td></tr></table></figure>
-<p>4、使用通知需要注意哪些细节</p>
-<p>1&gt; 通知一定要移除，在dealloc方法里面移除<br>2&gt; 通知有同步通知和异步通知，只不过我们同步通知用得比较多。<br>3&gt; 不能用<code>- (instancetype)init</code> 初始化一个通知</p>
-<h1 id="通知的实现原理"><a href="#通知的实现原理" class="headerlink" title="通知的实现原理"></a>通知的实现原理</h1><p>1、概述 ： 首先，信息的传递就依靠通知(NSNotification),也就是说，通知就是信息(执行的方法，观察者本身(self),参数)的包装。通知中心(NSNotificationCenter)是个单例，向通知中心注册观察者，也就是说，这个通知中心有个集合，这个集合存放着观察者。那么这个集合是什么样的数据类型 ？ 可以这么思考： 发送通知需要name参数，添加观察者也有个name参数，这两个name一样的时候，当发送通知时候，观察者对象就能接受到信息，执行对应的操作。那么这个集合很容易想到就是NSDictionary!<br>key就是name，value就是NSArray(存放数据模型)，里面存放观察者对象。如下图<br><img src="http://ovwhbnlx7.bkt.clouddn.com/20170727145827579.png" alt="avatar"><br>当发送通知时，在通知通知的字典，根据name找到value，这个value就是一数组，数组里面存放数据模型(observer、SEL)。即可执行对应的行为。</p>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>根据NSNotification&amp;NSNotificationCenter接口给出实现代码,创建两个新类YFLNotification,YFLNotificationCenter，这两个类的接口和苹果提供的接口完全一样，我将根据接口提供的功能给出实现代码。<br>要点是通知中心是单例类，并且通知中心维护了一个包含所有注册的观察者的集合，这里我选择了动态数组来存储所有的观察者，源码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">+(YFLNotificationCenter*)defaultCenter</span><br><span class="line">&#123;</span><br><span class="line">    static YFLNotificationCenter *singleton;</span><br><span class="line"></span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line"></span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line"></span><br><span class="line">        singleton = [[self alloc] initSingleton];</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return singleton;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (instancetype)initSingleton</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    if ([super init]) &#123;</span><br><span class="line"></span><br><span class="line">        _obsetvers = [[NSMutableDictionary alloc]init];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return self;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>还定义了一个观察者模型用于保存观察者，通知消息名，观察者收到通知后执行代码所在的操作队列和执行代码的回调，模型源码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@interface YFLObserverModel : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) id observer;  //观察者对象</span><br><span class="line">@property (nonatomic, assign) SEL selector;  //执行的方法</span><br><span class="line">@property (nonatomic, copy) NSString *notificationName; //通知名字</span><br><span class="line">@property (nonatomic, strong) id object;  //携带参数</span><br><span class="line">@property (nonatomic, strong) NSOperationQueue *operationQueue;//队列</span><br><span class="line">@property (nonatomic, copy) OperationBlock block;  //回调</span><br><span class="line">@end12345678910</span><br></pre></td></tr></table></figure>
-<p>向通知中心注册观察者，源码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">- (void)addObserver:(id)observer selector:(SEL)aSelector name:(nullable NSString*)aName object:(nullable id)anObject</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    //如果不存在，那么即创建</span><br><span class="line">    if (![self.obsetvers objectForKey:aName]) &#123;</span><br><span class="line"></span><br><span class="line">        NSMutableArray *arrays = [[NSMutableArray alloc]init];</span><br><span class="line"></span><br><span class="line">        // 创建数组模型</span><br><span class="line">        YFLObserverModel *observerModel = [[YFLObserverModel alloc]init];</span><br><span class="line">        observerModel.observer = observer;</span><br><span class="line">        observerModel.selector = aSelector;</span><br><span class="line">        observerModel.notificationName = aName;</span><br><span class="line">        observerModel.object = anObject;</span><br><span class="line">        [arrays addObject:observerModel];</span><br><span class="line"></span><br><span class="line">        //填充进入数组</span><br><span class="line">        [self.obsetvers setObject:arrays forKey:aName];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;else&#123;</span><br><span class="line"></span><br><span class="line">        //如果存在，取出来，继续添加减去即可</span><br><span class="line">        NSMutableArray *arrays = (NSMutableArray*)[self.obsetvers objectForKey:aName];</span><br><span class="line">        // 创建数组模型</span><br><span class="line">        YFLObserverModel *observerModel = [[YFLObserverModel alloc]init];</span><br><span class="line">        observerModel.observer = observer;</span><br><span class="line">        observerModel.selector = aSelector;</span><br><span class="line">        observerModel.notificationName = aName;</span><br><span class="line">        observerModel.object = anObject;</span><br><span class="line">        [arrays addObject:observerModel];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (id &lt;NSObject&gt;)addObserverForName:(nullable NSString *)name object:(nullable id)obj queue:(nullable NSOperationQueue *)queue usingBlock:(void (^)(YFLNotification *note))block</span><br><span class="line">&#123;</span><br><span class="line">    //如果不存在，那么即创建</span><br><span class="line">    if (![self.obsetvers objectForKey:name]) &#123;</span><br><span class="line"></span><br><span class="line">        NSMutableArray *arrays = [[NSMutableArray alloc]init];</span><br><span class="line"></span><br><span class="line">        // 创建数组模型</span><br><span class="line">        YFLObserverModel *observerModel = [[YFLObserverModel alloc]init];</span><br><span class="line">        observerModel.block = block;</span><br><span class="line">        observerModel.notificationName = name;</span><br><span class="line">        observerModel.object = obj;</span><br><span class="line">        observerModel.operationQueue = queue;</span><br><span class="line">        [arrays addObject:observerModel];</span><br><span class="line"></span><br><span class="line">        //填充进入数组</span><br><span class="line">        [self.obsetvers setObject:arrays forKey:name];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;else&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //如果存在，取出来，继续添加即可</span><br><span class="line">        NSMutableArray *arrays = (NSMutableArray*)[self.obsetvers objectForKey:name];</span><br><span class="line"></span><br><span class="line">        // 创建数组模型</span><br><span class="line">        YFLObserverModel *observerModel = [[YFLObserverModel alloc]init];</span><br><span class="line">        observerModel.block = block;</span><br><span class="line">        observerModel.notificationName = name;</span><br><span class="line">        observerModel.object = obj;</span><br><span class="line">        observerModel.operationQueue = queue;</span><br><span class="line">        [arrays addObject:observerModel];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>发送通知有三种方式，最终都是调用- (void)postNotification:(YFLNotification *)notification，源码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">- (void)postNotification:(YFLNotification *)notification</span><br><span class="line">&#123;</span><br><span class="line">    //name 取出来对应观察者数组，执行任务</span><br><span class="line">    NSMutableArray *arrays = (NSMutableArray*)[self.obsetvers objectForKey:notification.name];</span><br><span class="line"></span><br><span class="line">    [arrays enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</span><br><span class="line"></span><br><span class="line">        //取出数据模型</span><br><span class="line">        YFLObserverModel *observerModel = obj;</span><br><span class="line">        id observer = observerModel.observer;</span><br><span class="line">        SEL secector = observerModel.selector;</span><br><span class="line"></span><br><span class="line">        if (!observerModel.operationQueue) &#123; </span><br><span class="line">#pragma clang diagnostic push</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Warc-performSelector-leaks&quot;</span><br><span class="line">            [observer performSelector:secector withObject:notification];</span><br><span class="line">#pragma clang diagnostic pop</span><br><span class="line">        &#125;else&#123;</span><br><span class="line"></span><br><span class="line">            //创建任务</span><br><span class="line">            NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line"></span><br><span class="line">                //这里用block回调出去</span><br><span class="line">                observerModel.block(notification);</span><br><span class="line"></span><br><span class="line">            &#125;];</span><br><span class="line"></span><br><span class="line">            // 如果添加观察者 传入 队列，那么就任务放在队列中执行(子线程异步执行)</span><br><span class="line">            NSOperationQueue *operationQueue = observerModel.operationQueue;</span><br><span class="line">            [operationQueue addOperation:operation];</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>移除观察者的代码我就不贴了，一样的思路。</p>
-<p><a href="http://download.csdn.net/download/qq_18505715/9912596" target="_blank" rel="noopener">要看源码点击这里</a><br>[转自 <a href="https://blog.csdn.net/qq_18505715/article/details/76146575" target="_blank" rel="noopener">YFL_iOS</a>]</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/13/iOS分类/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/13/iOS分类/" itemprop="url">
-                  iOS分类
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-09-13 14:39:45 / 修改时间：17:02:26" itemprop="dateCreated datePublished" datetime="2018-09-13T14:39:45+08:00">2018-09-13</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Objective-C语言特性/" itemprop="url" rel="index"><span itemprop="name">Objective-C语言特性</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Category是Objective-C 2.0之后添加的语言特性，Category又叫分类、类别、类目，能够在不改变原来类内容的基础上，为类增加一些方法。除此之外，Category还有以下功能：</p>
-<p>（1）将类的实现分开写在几个分类里面。<br>这样做的好处:</p>
-<ul>
-<li>可以减少单个文件的体积</li>
-<li>可以把不同的功能组织到不同的Category里</li>
-<li>可以由多个开发者共同完成一个类</li>
-<li>可以按需加载想要的category</li>
-</ul>
-<p>（2）声明私有的方法。</p>
-<p>（3）模拟多继承。</p>
-<h1 id="Category的定义与使用"><a href="#Category的定义与使用" class="headerlink" title="Category的定义与使用"></a>Category的定义与使用</h1><p>为了便于理解，这里直接通过一个小例子去讲解其用法。</p>
-<p>例如，我们创建一个Person类，并为其创建一个Category命名为MyCategory。创建Category很简单，如下图：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2017/1/19/a129eff572b96c5d40342a2491620d07?imageView2/0/w/1280/h/960/ignore-error/1" alt="snip20170109_5"></p>
-<p><img src="https://user-gold-cdn.xitu.io/2017/1/19/1648e30865a84419a4e69e1441d3ae45?imageView2/0/w/1280/h/960/ignore-error/1" alt="snip20170109_8"></p>
-<p>为Person创建一个名为MyCategory的Category后，会自动生成Person+MyCategory.h和Person+MyCategory.m文件。我们在MyCategory中声明和实现一个read方法，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//  Person+MyCategory.h</span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Person (MyCategory)</span><br><span class="line"></span><br><span class="line">-(void)read;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//  Person+MyCategory.m</span><br><span class="line">#import &quot;Person+MyCategory.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation Person (MyCategory)</span><br><span class="line"></span><br><span class="line">-(void)read&#123;</span><br><span class="line">    NSLog(@&quot;调用了MyCategory的read方法！&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>之后我们可以在ViewController或其他地方使用分类中添加的方法，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//  ViewController.m</span><br><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;Person+MyCategory.h&quot;</span><br><span class="line"></span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Person *p = [[Person alloc] init];</span><br><span class="line">    [p read];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>打印结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2017-01-09 16:27:39.089 Test[5347:483009] 调用了MyCategory的read方法！</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>1</th>
-<th>2017-01-09 16:27:39.089 Test [5347:483009] 调用了MyCategory的 read方法！</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="使"><a href="#使" class="headerlink" title="使"></a>使</h3><h3 id="用注意"><a href="#用注意" class="headerlink" title="用注意"></a>用注意</h3><ol>
-<li>分类只能增加方法，不能增加成员变量。</li>
-<li>分类方法实现中可以访问原来类中声明的成员变量。</li>
-<li>分类可以重新实现原来类中的方法，但是会覆盖掉原来的方法，会导致原来的方法没法再使用（实际上并没有真的替换，而是Category的方法被放到了新方法列表的前面，而原来类的方法被放到了新方法列表的后面，这也就是我们平常所说的Category的方法会“覆盖”掉原来类的同名方法，这是因为运行时在查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应名字的方法，就会罢休，殊不知后面可能还有一样名字的方法）。</li>
-<li>当分类、原来类、原来类的父类中有相同方法时，方法调用的优先级：分类(最后参与编译的分类优先) –&gt; 原来类  –&gt; 父类，即先去调用分类中的方法，分类中没这个方法再去原来类中找，原来类中没有再去父类中找。</li>
-<li>Category是在runtime时候加载，而不是在编译的时候。</li>
-</ol>
-<h2 id="Category与成员变量、属性"><a href="#Category与成员变量、属性" class="headerlink" title="Category与成员变量、属性"></a>Category与成员变量、属性</h2><p>如果你在你Category的.h文件中写如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    NSString *str1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Xcode会报如下错误:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Instance variable may not be placed in categories</span><br></pre></td></tr></table></figure>
-<p>通过这句话我们知道Xcode是不允许我们在Category中添加成员变量的。</p>
-<p>为什么不能添加成员变量呢？</p>
-<p>Objective-C类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针。它的定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_class *Class;</span><br></pre></td></tr></table></figure>
-<p>objc_class结构体的定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">struct objc_class &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">#if !__OBJC2__</span><br><span class="line">    Class super_class                       OBJC2_UNAVAILABLE;  // 父类</span><br><span class="line">    const char *name                        OBJC2_UNAVAILABLE;  // 类名</span><br><span class="line">    long version                            OBJC2_UNAVAILABLE;  // 类的版本信息，默认为0</span><br><span class="line">    long info                               OBJC2_UNAVAILABLE;  // 类信息，供运行期使用的一些位标识</span><br><span class="line">    long instance_size                      OBJC2_UNAVAILABLE;  // 该类的实例变量大小</span><br><span class="line">    struct objc_ivar_list *ivars            OBJC2_UNAVAILABLE;  // 该类的成员变量链表</span><br><span class="line">    struct objc_method_list **methodLists   OBJC2_UNAVAILABLE;  // 方法定义的链表</span><br><span class="line">    struct objc_cache *cache                OBJC2_UNAVAILABLE;  // 方法缓存</span><br><span class="line">    struct objc_protocol_list *protocols    OBJC2_UNAVAILABLE;  // 协议链表</span><br><span class="line">#endif</span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
-<p>在上面的objc_class结构体中，ivars是objc_ivar_list（成员变量列表）指针；methodLists是指向objc_method_list指针的指针。在Runtime中，objc_class结构体大小是固定的，不可能往这个结构体中添加数据，只能修改。所以ivars指向的是一个固定区域，只能修改成员变量值，不能增加成员变量个数。methodList是一个二维数组，所以可以修改*methodLists的值来增加成员方法，虽没办法扩展methodLists指向的内存区域，却可以改变这个内存区域的值（存储的是指针）。因此，可以动态添加方法，不能添加成员变量。</p>
-<p>Category不能添加成员变量（instance variables），那到底能不能添加属性（property）呢？</p>
-<p>这个我们要从Category的结构体开始分析：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">typedef struct category_t &#123;</span><br><span class="line">    const char *name;  //类的名字</span><br><span class="line">    classref_t cls;  //类</span><br><span class="line">    struct method_list_t *instanceMethods;  //category中所有给类添加的实例方法的列表</span><br><span class="line">    struct method_list_t *classMethods;  //category中所有添加的类方法的列表</span><br><span class="line">    struct protocol_list_t *protocols;  //category实现的所有协议的列表</span><br><span class="line">    struct property_list_t *instanceProperties;  //category中添加的所有属性</span><br><span class="line">&#125; category_t;</span><br></pre></td></tr></table></figure>
-<p>从Category的定义也可以看出Category的可为（可以添加实例方法，类方法，甚至可以实现协议，添加属性）和不可为（无法添加实例变量）。</p>
-<p>但是为什么网上很多人都说Category不能添加属性呢？</p>
-<p>实际上，Category实际上允许添加属性的，同样可以使用@property，但是不会生成_变量（带下划线的成员变量），也不会生成添加属性的getter和setter方法，所以，尽管添加了属性，也无法使用点语法调用getter和setter方法。但实际上可以使用runtime去实现Category为已有的类添加新的属性并生成getter和setter方法。详细内容可以看峰哥之前的文章：《<a href="https://link.juejin.im/?target=http%3A%2F%2Fwww.imlifengfeng.com%2Fblog%2F%3Fp%3D397" target="_blank" rel="noopener"><em>iOS Runtime之四：关联对象</em></a>》</p>
-<p>四、<strong>Category与Extension</strong></p>
-<p>1、Extension的基本用法</p>
-<p>Extension的创建方法与Category一样，只要在原来选择Category选择Extension即可，比如我们为Person创建一个名为MyExtension的Extension，则最终会生成一个Person_MyExtension.h文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//  Person_MyExtension.h</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Person ()</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>但要注意的是和Category不同的是它不会生成Person_MyExtension.m文件。之后我们可以在Person_MyExtension.h中<strong>直接添加成员变量、属性和方法</strong>，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//  Person_MyExtension.h</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Person ()</span><br><span class="line">&#123;</span><br><span class="line">    NSString * _address;</span><br><span class="line">&#125;</span><br><span class="line">@property (nonatomic) NSInteger age;</span><br><span class="line"></span><br><span class="line">-(NSString*)WhereAmI;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>他常用的形式不是创建一个单独的文件，而是在实现文件中添加私有的成员变量、属性和方法。例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//  Person.m</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line"></span><br><span class="line">/////////Extension start///////////</span><br><span class="line"></span><br><span class="line">@interface Person ()</span><br><span class="line">&#123;</span><br><span class="line">    NSString * _address;</span><br><span class="line">&#125;</span><br><span class="line">@property (nonatomic) NSInteger age;</span><br><span class="line"></span><br><span class="line">-(NSString*)WhereAmI;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">/////////Extension end///////////</span><br><span class="line"></span><br><span class="line">@implementation Person</span><br><span class="line"></span><br><span class="line">-(NSString*)WhereAmI&#123;</span><br><span class="line">    return @&quot;谁知道你在哪里&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>2、Extension与Category区别</p>
-<ul>
-<li>Extension<ul>
-<li>在编译器决议，是类的一部分，在编译器和头文件的@interface和实现文件里的@implement一起形成了一个完整的类。</li>
-<li>伴随着类的产生而产生，也随着类的消失而消失。</li>
-<li>Extension一般用来隐藏类的私有消息，你必须有一个类的源码才能添加一个类的Extension，所以对于系统一些类，如NSString，就无法添加类扩展</li>
-</ul>
-</li>
-<li>Category<ul>
-<li>是运行期决议的</li>
-<li>类扩展可以添加实例变量，分类不能添加实例变量</li>
-<li>原因：因为在运行期，对象的内存布局已经确定，如果添加实例变量会破坏类的内部布局，这对编译性语言是灾难性的。</li>
-</ul>
-</li>
-</ul>
-<p><strong>原创文章，转载请注明：</strong> 转载自<a href="https://link.juejin.im/?target=http%3A%2F%2Fwww.imlifengfeng.com%2Fblog%2F" target="_blank" rel="noopener">李峰峰博客</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2518,7 +2609,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2541,7 +2632,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
