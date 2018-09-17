@@ -292,6 +292,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/TCP和UDP的区别和优缺点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/17/TCP和UDP的区别和优缺点/" itemprop="url">
+                  TCP和UDP的区别和优缺点
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-17 14:44:15 / 修改时间：14:48:31" itemprop="dateCreated datePublished" datetime="2018-09-17T14:44:15+08:00">2018-09-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/网络相关/" itemprop="url" rel="index"><span itemprop="name">网络相关</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://blog.csdn.net/xiaobangkuaipao/article/details/76793702" target="_blank" rel="noopener">转自 <a href="https://blog.csdn.net/xiaobangkuaipao" target="_blank" rel="noopener">xiaobangkuaipao</a></a></p>
+<p>1、TCP与UDP区别总结：</p>
+<p>1、</p>
+<p>TCP面向连接</p>
+<p>（如打电话要先拨号建立连接）;</p>
+<p>UDP是无连接</p>
+<p>的，即发送数据之前不需要建立连接</p>
+<p>2、TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付</p>
+<p>Tcp通过校验和，重传控制，序号标识，滑动窗口、确认应答实现可靠传输。如丢包时的重发控制，还可以对次序乱掉的分包进行顺序控制。</p>
+<p>3、UDP具有较好的实时性，工作效率比TCP高，适用于对高速传输和实时性有较高的通信或广播通信。</p>
+<p>4.每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信</p>
+<p>5、TCP对系统资源要求较多，UDP对系统资源要求较少。</p>
+<p>2、为什么UDP有时比TCP更有优势?</p>
+<p>UDP以其简单、传输快的优势，在越来越多场景下取代了TCP,如实时游戏。</p>
+<p>（1）网速的提升给UDP的稳定性提供可靠网络保障，丢包率很低，如果使用应用层重传，能够确保传输的可靠性。</p>
+<p>（2）TCP为了实现网络通信的可靠性，使用了复杂的拥塞控制算法，建立了繁琐的握手过程，由于TCP内置的系统协议栈中，极难对其进行改进。</p>
+<p>采用TCP，一旦发生丢包，TCP会将后续的包缓存起来，等前面的包重传并接收到后再继续发送，延时会越来越大，基于UDP对实时性要求较为严格的情况下，采用自定义重传机制，能够把丢包产生的延迟降到最低，尽量减少网络问题对游戏性造成影响。</p>
+<p>3、UDP和TCP编程步骤也有些不同，如下：</p>
+<p><strong>TCP: </strong><br>TCP编程的服务器端一般步骤是：<br>　　1、创建一个socket，用函数socket()；     SOCKET SocketListen =socket(AF_INET,SOCK_STREAM, IPPROTO_TCP);<br>　　2、设置socket属性，用函数setsockopt(); <em> 可选<br>　　3、绑定IP地址、端口等信息到socket上，用函数bind(); SOCKET_ERROR = bind(SocketListen,(const sockaddr</em>)&amp;addr,sizeof(addr))<br>　　4、开启监听，用函数listen()；                 SOCKET_ERROR == listen(SocketListen,2)<br>　　5、接收客户端上来的连接，用函数accept()；    SOCKET SocketWaiter = accept(SocketListen,</p>
+<p>​                                                  <em>Out</em>    struct sockaddr *addr</p>
+<p> <em>Inout</em>  int <em>addrlen);<br>　　6、收发数据，用函数send()和recv()，或者read()和write();<br>　　7、关闭网络连接； closesocket(SocketListen);closesocket(SocketWaiter);<br>　　8、关闭监听；<br>SOCK_STREAM这种的特点是面向连接的，即每次收发数据之前必须通过connect建立连接，而SOCK_DGRAM这种是User Datagram Protocol协议的网络通讯，它是无连接的，不可靠的。<br>TCP编程的客户端一般步骤是：<br>　　1、创建一个socket，用函数socket()；<br>　　2、设置socket属性，用函数setsockopt();</em> 可选<br>　　3、绑定IP地址、端口等信息到socket上，用函数bind();* 可选<br>　　4、设置要连接的对方的IP地址和端口等属性；<br>　　5、连接服务器，用函数connect()；<br>　　6、收发数据，用函数send()和recv()，或者read()和write();<br>　　7、关闭网络连接；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int send(</span><br><span class="line">  _In_  SOCKET s,         //向哪个socket发送，accept返回的socket。</span><br><span class="line">  _In_  const char *buf,</span><br><span class="line">  _In_  int len,</span><br><span class="line">  _In_  int flags</span><br><span class="line">);                               由于</span><br></pre></td></tr></table></figure>
+<p>send(SocketClient,(const char *)&amp;fh,sizeof(fh),0);</p>
+<p>recv(SocketClient,szbuf,sizeof(szbuf),0);<br><strong>UDP:</strong><br>与之对应的UDP编程步骤要简单许多，分别如下：<br>　　UDP编程的服务器端一般步骤是：<br>　　1、创建一个socket，用函数socket()；<br>　　2、设置socket属性，用函数setsockopt();<em> 可选<br>　　3、绑定IP地址、端口等信息到socket上，用函数bind();<br>　　4、循环接收数据，用函数recvfrom();<br>　　5、关闭网络连接；<br>UDP编程的客户端一般步骤是：<br>　　1、创建一个socket，用函数socket()；<br>　　2、设置socket属性，用函数setsockopt();</em> 可选<br>　　3、绑定IP地址、端口等信息到socket上，用函数bind();* 可选<br>　　4、设置对方的IP地址和端口等属性;<br>　　5、发送数据，用函数sendto();<br>　　6、关闭网络连接；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int recvfrom(</span><br><span class="line">  _In_         SOCKET s,       //绑定的socket</span><br><span class="line">  _Out_        char *buf,</span><br><span class="line">  _In_         int len,</span><br><span class="line">  _In_         int flags,</span><br><span class="line">  _Out_        struct sockaddr *from,  //用来接收对方的</span><br><span class="line">  _Inout_opt_  int *fromlen</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>int nres=</p>
+<p>recvfrom</p>
+<p>(pThis-&gt;m_socketListen,szBuf,sizeof(szBuf),0,(sockaddr<em>)&amp;addrClient,&amp;nSize);//0处标志位<br>sendto(m_socketListen,szBuffer,nSize,0,(const sockaddr</em>)&amp;addr,sizeof(sockaddr_in))</p>
+<p>TCP和UDP是OSI模型中的运输层中的协议。TCP提供可靠的通信传输，而UDP则常被用于让广播和细节控制交给应用的通信传输。</p>
+<p>4、将socket设置为广播属性<br>bool optval=true;<br>setsockopt(m_socketListen,SOL_SOCKET,SO_BROADCAST,(const char *)&amp;optval,sizeof(bool));</p>
+<p>5、将Socket设置为非阻塞。<br>//bool benable=true;<br>//ioctlsocket(m_socketListen,FIONBIO,(u_long*)&amp;benable);</p>
+<p>6、Tcp头，20字节</p>
+<p><img src="/Users/sunlei/Desktop/20170806225229000.png" alt="20170806225229000"></p>
+<p>7、UDP首部,8个字节</p>
+<p><img src="/Users/sunlei/Desktop/20170806225326602.png" alt="20170806225326602"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/RunLoop详尽总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -985,7 +1177,7 @@
                 
               
 
-              <time title="创建时间：2018-09-17 12:17:42 / 修改时间：12:22:36" itemprop="dateCreated datePublished" datetime="2018-09-17T12:17:42+08:00">2018-09-17</time>
+              <time title="创建时间：2018-09-17 12:17:42 / 修改时间：14:29:19" itemprop="dateCreated datePublished" datetime="2018-09-17T12:17:42+08:00">2018-09-17</time>
             
 
             
@@ -1043,7 +1235,9 @@
       
         
           
-            <p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png" alt="img"></a></p>
+            <p>[转自 <a href="https://bujige.net/" target="_blank" rel="noopener">『不羁阁』 | 行走的少年郎 - 博客</a></p>
+<p><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">**](https://bujige.net/)</a></p>
+<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png" alt="img"></a></p>
 <blockquote>
 <p>本文用来介绍 iOS 多线程中 NSOperation、NSOperationQueue 的相关知识以及使用方法。<br>通过本文，您将了解到：<br><strong>NSOperation、NSOperationQueue 简介</strong>、<strong>操作和操作队列</strong>、<strong>使用步骤和基本使用方法</strong>、<strong>控制串行/并发执行</strong>、<strong>NSOperation 操作依赖和优先级</strong>、<strong>线程间的通信</strong>、<strong>线程同步和线程安全</strong>，以及 <strong>NSOperation、NSOperationQueue 常用属性和方法归纳</strong>。</p>
 <p>文中 Demo 我已放在了 Github 上，Demo 链接：<a href="https://github.com/bujige/YSC-NSOperation-demo" target="_blank" rel="noopener">传送门</a></p>
@@ -1335,8 +1529,6 @@
 <li><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">iOS多线程：『NSOperation』详解总结</a></li>
 <li><a href="https://bujige.net/blog/iOS-Complete-learning-RunLoop.html" target="_blank" rel="noopener">iOS多线程：『RunLoop』详解总结</a></li>
 </ul>
-<p>[转自 <a href="https://bujige.net/" target="_blank" rel="noopener">『不羁阁』 | 行走的少年郎 - 博客</a></p>
-<p><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">**](https://bujige.net/)</a></p>
 
           
         
@@ -3188,208 +3380,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/14/iOS底层解析weak的实现原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/14/iOS底层解析weak的实现原理/" itemprop="url">
-                  iOS底层解析weak的实现原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-09-14 12:31:00 / 修改时间：13:54:01" itemprop="dateCreated datePublished" datetime="2018-09-14T12:31:00+08:00">2018-09-14</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/内存管理/" itemprop="url" rel="index"><span itemprop="name">内存管理</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>很少有人知道weak表其实是一个hash（哈希）表，Key是所指对象的地址，Value是weak指针的地址数组。更多人的人只是知道weak是弱引用，所引用对象的计数器不会加一，并在引用对象被释放的时候自动被设置为nil。通常用于解决循环引用问题。但现在单知道这些已经不足以应对面试了，好多公司会问weak的原理。weak的原理是什么呢？下面就分析一下weak的工作原理（只是自己对这个问题好奇，学习过程中的笔记，希望对读者也有所帮助）。</p>
-<h1 id="weak-实现原理的概括"><a href="#weak-实现原理的概括" class="headerlink" title="weak 实现原理的概括"></a>weak 实现原理的概括</h1><p>Runtime维护了一个weak表，用于存储指向某个对象的所有weak指针。weak表其实是一个hash（哈希）表，Key是所指对象的地址，Value是weak指针的地址（这个地址的值是所指对象指针的地址）数组。</p>
-<h2 id="weak-的实现原理可以概括一下三步："><a href="#weak-的实现原理可以概括一下三步：" class="headerlink" title="weak 的实现原理可以概括一下三步："></a>weak 的实现原理可以概括一下三步：</h2><p>1、初始化时：runtime会调用objc_initWeak函数，初始化一个新的weak指针指向对象的地址。<br>2、添加引用时：objc_initWeak函数会调用 objc_storeWeak() 函数， objc_storeWeak() 的作用是更新指针指向，创建对应的弱引用表。<br>3、释放时，调用clearDeallocating函数。clearDeallocating函数首先根据对象地址获取所有weak指针地址的数组，然后遍历这个数组把其中的数据设为nil，最后把这个entry从weak表中删除，最后清理对象的记录。</p>
-<h3 id="下面将开始详细介绍每一步："><a href="#下面将开始详细介绍每一步：" class="headerlink" title="下面将开始详细介绍每一步："></a>下面将开始详细介绍每一步：</h3><h4 id="初始化时：runtime会调用objc-initWeak函数，objc-initWeak函数会初始化一个新的weak指针指向对象的地址。"><a href="#初始化时：runtime会调用objc-initWeak函数，objc-initWeak函数会初始化一个新的weak指针指向对象的地址。" class="headerlink" title="初始化时：runtime会调用objc_initWeak函数，objc_initWeak函数会初始化一个新的weak指针指向对象的地址。"></a>初始化时：runtime会调用objc_initWeak函数，objc_initWeak函数会初始化一个新的weak指针指向对象的地址。</h4><p>示例代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    NSObject *obj = [[NSObject alloc] init];</span><br><span class="line">    id __weak obj1 = obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当我们初始化一个weak变量时，runtime会调用 NSObject.mm 中的objc_initWeak函数。这个函数在Clang中的声明如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id objc_initWeak(id *object, id value);</span><br></pre></td></tr></table></figure>
-<p>而对于 objc_initWeak() 方法的实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">id objc_initWeak(id *location, id newObj) &#123;</span><br><span class="line">// 查看对象实例是否有效</span><br><span class="line">// 无效对象直接导致指针释放</span><br><span class="line">    if (!newObj) &#123;</span><br><span class="line">        *location = nil;</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    // 这里传递了三个 bool 数值</span><br><span class="line">    // 使用 template 进行常量参数传递是为了优化性能</span><br><span class="line">    return storeWeakfalse/*old*/, true/*new*/, true/*crash*/&gt;</span><br><span class="line">    (location, (objc_object*)newObj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看出，这个函数仅仅是一个深层函数的调用入口，而一般的入口函数中，都会做一些简单的判断（例如 objc_msgSend 中的缓存判断），这里判断了其指针指向的类对象是否有效，无效直接释放，不再往深层调用函数。否则，object将被注册为一个指向value的__weak对象。而这事应该是objc_storeWeak函数干的。</p>
-<p>注意：<em>objc_initWeak函数有一个前提条件：就是object必须是一个没有被注册为__weak对象的有效指针。而value则可以是null，或者指向一个有效的对象。</em></p>
-<h4 id="添加引用时：objc-initWeak函数会调用-objc-storeWeak-函数，-objc-storeWeak-的作用是更新指针指向，创建对应的弱引用表。"><a href="#添加引用时：objc-initWeak函数会调用-objc-storeWeak-函数，-objc-storeWeak-的作用是更新指针指向，创建对应的弱引用表。" class="headerlink" title="添加引用时：objc_initWeak函数会调用 objc_storeWeak() 函数， objc_storeWeak() 的作用是更新指针指向，创建对应的弱引用表。"></a>添加引用时：objc_initWeak函数会调用 objc_storeWeak() 函数， objc_storeWeak() 的作用是更新指针指向，创建对应的弱引用表。</h4><p>objc_storeWeak的函数声明如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id objc_storeWeak(id *location, id value);</span><br></pre></td></tr></table></figure>
-<p>objc_storeWeak() 的具体实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">// HaveOld:  true - 变量有值</span><br><span class="line">//          false - 需要被及时清理，当前值可能为 nil</span><br><span class="line">// HaveNew:  true - 需要被分配的新值，当前值可能为 nil</span><br><span class="line">//          false - 不需要分配新值</span><br><span class="line">// CrashIfDeallocating: true - 说明 newObj 已经释放或者 newObj 不支持弱引用，该过程需要暂停</span><br><span class="line">//          false - 用 nil 替代存储</span><br><span class="line">template bool HaveOld, bool HaveNew, bool CrashIfDeallocating&gt;</span><br><span class="line">static id storeWeak(id *location, objc_object *newObj) &#123;</span><br><span class="line">    // 该过程用来更新弱引用指针的指向</span><br><span class="line">    // 初始化 previouslyInitializedClass 指针</span><br><span class="line">    Class previouslyInitializedClass = nil;</span><br><span class="line">    id oldObj;</span><br><span class="line">    // 声明两个 SideTable</span><br><span class="line">    // ① 新旧散列创建</span><br><span class="line">    SideTable *oldTable;</span><br><span class="line">    SideTable *newTable;</span><br><span class="line">    // 获得新值和旧值的锁存位置（用地址作为唯一标示）</span><br><span class="line">    // 通过地址来建立索引标志，防止桶重复</span><br><span class="line">    // 下面指向的操作会改变旧值</span><br><span class="line">retry:</span><br><span class="line">    if (HaveOld) &#123;</span><br><span class="line">        // 更改指针，获得以 oldObj 为索引所存储的值地址</span><br><span class="line">        oldObj = *location;</span><br><span class="line">        oldTable = &amp;SideTables()[oldObj];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        oldTable = nil;</span><br><span class="line">    &#125;</span><br><span class="line">    if (HaveNew) &#123;</span><br><span class="line">        // 更改新值指针，获得以 newObj 为索引所存储的值地址</span><br><span class="line">        newTable = &amp;SideTables()[newObj];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        newTable = nil;</span><br><span class="line">    &#125;</span><br><span class="line">    // 加锁操作，防止多线程中竞争冲突</span><br><span class="line">    SideTable::lockTwoHaveOld, HaveNew&gt;(oldTable, newTable);</span><br><span class="line">    // 避免线程冲突重处理</span><br><span class="line">    // location 应该与 oldObj 保持一致，如果不同，说明当前的 location 已经处理过 oldObj 可是又被其他线程所修改</span><br><span class="line">    if (HaveOld  &amp;&amp;  *location != oldObj) &#123;</span><br><span class="line">        SideTable::unlockTwoHaveOld, HaveNew&gt;(oldTable, newTable);</span><br><span class="line">        goto retry;</span><br><span class="line">    &#125;</span><br><span class="line">    // 防止弱引用间死锁</span><br><span class="line">    // 并且通过 +initialize 初始化构造器保证所有弱引用的 isa 非空指向</span><br><span class="line">    if (HaveNew  &amp;&amp;  newObj) &#123;</span><br><span class="line">        // 获得新对象的 isa 指针</span><br><span class="line">        Class cls = newObj-&gt;getIsa();</span><br><span class="line">        // 判断 isa 非空且已经初始化</span><br><span class="line">        if (cls != previouslyInitializedClass  &amp;&amp;</span><br><span class="line">            !((objc_class *)cls)-&gt;isInitialized()) &#123;</span><br><span class="line">            // 解锁</span><br><span class="line">            SideTable::unlockTwoHaveOld, HaveNew&gt;(oldTable, newTable);</span><br><span class="line">            // 对其 isa 指针进行初始化</span><br><span class="line">            _class_initialize(_class_getNonMetaClass(cls, (id)newObj));</span><br><span class="line">            // 如果该类已经完成执行 +initialize 方法是最理想情况</span><br><span class="line">            // 如果该类 +initialize 在线程中</span><br><span class="line">            // 例如 +initialize 正在调用 storeWeak 方法</span><br><span class="line">            // 需要手动对其增加保护策略，并设置 previouslyInitializedClass 指针进行标记</span><br><span class="line">            previouslyInitializedClass = cls;</span><br><span class="line">            // 重新尝试</span><br><span class="line">            goto retry;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // ② 清除旧值</span><br><span class="line">    if (HaveOld) &#123;</span><br><span class="line">        weak_unregister_no_lock(&amp;oldTable-&gt;weak_table, oldObj, location);</span><br><span class="line">    &#125;</span><br><span class="line">    // ③ 分配新值</span><br><span class="line">    if (HaveNew) &#123;</span><br><span class="line">        newObj = (objc_object *)weak_register_no_lock(&amp;newTable-&gt;weak_table,</span><br><span class="line">                                                      (id)newObj, location,</span><br><span class="line">                                                      CrashIfDeallocating);</span><br><span class="line">        // 如果弱引用被释放 weak_register_no_lock 方法返回 nil</span><br><span class="line">        // 在引用计数表中设置若引用标记位</span><br><span class="line">        if (newObj  &amp;&amp;  !newObj-&gt;isTaggedPointer()) &#123;</span><br><span class="line">            // 弱引用位初始化操作</span><br><span class="line">            // 引用计数那张散列表的weak引用对象的引用计数中标识为weak引用</span><br><span class="line">            newObj-&gt;setWeaklyReferenced_nolock();</span><br><span class="line">        &#125;</span><br><span class="line">        // 之前不要设置 location 对象，这里需要更改指针指向</span><br><span class="line">        *location = (id)newObj;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        // 没有新值，则无需更改</span><br><span class="line">    &#125;</span><br><span class="line">    SideTable::unlockTwoHaveOld, HaveNew&gt;(oldTable, newTable);</span><br><span class="line">    return (id)newObj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>撇开源码中各种锁操作，来看看这段代码都做了些什么。</p>
-<h5 id="SideTable"><a href="#SideTable" class="headerlink" title="SideTable"></a>SideTable</h5><p>SideTable 这个结构体，我给他起名引用计数和弱引用依赖表，因为它主要用于管理对象的引用计数和 weak 表。在 NSObject.mm 中声明其数据结构：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct SideTable &#123;</span><br><span class="line">// 保证原子操作的自旋锁</span><br><span class="line">    spinlock_t slock;</span><br><span class="line">    // 引用计数的 hash 表</span><br><span class="line">    RefcountMap refcnts;</span><br><span class="line">    // weak 引用全局 hash 表</span><br><span class="line">    weak_table_t weak_table;</span><br></pre></td></tr></table></figure>
-<p>}<br>对于 slock 和 refcnts 两个成员不用多说，第一个是为了防止竞争选择的自旋锁，第二个是协助对象的 isa 指针的 extra_rc 共同引用计数的变量（对于对象结果，在今后的文中提到）。这里主要看 weak 全局 hash 表的结构与作用。</p>
-<h5 id="weak表"><a href="#weak表" class="headerlink" title="weak表"></a>weak表</h5><p>weak表是一个弱引用表，实现为一个weak_table_t结构体，存储了某个对象相关的的所有的弱引用信息。其定义如下(具体定义在<a href="https://link.jianshu.com/?t=https://opensource.apple.com/source/objc4/objc4-646/runtime/objc-weak.h" target="_blank" rel="noopener">objc-weak.h</a>中)：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">   struct weak_table_t &#123;</span><br><span class="line">    // 保存了所有指向指定对象的 weak 指针</span><br><span class="line">    weak_entry_t *weak_entries;</span><br><span class="line">    // 存储空间</span><br><span class="line">    size_t    num_entries;</span><br><span class="line">    // 参与判断引用计数辅助量</span><br><span class="line">    uintptr_t mask;</span><br><span class="line">    // hash key 最大偏移值</span><br><span class="line">    uintptr_t max_hash_displacement;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>这是一个全局弱引用hash表。使用不定类型对象的地址作为 key ，用 weak_entry_t 类型结构体对象作为 value 。其中的 weak_entries 成员，从字面意思上看，即为弱引用表入口。其实现也是这样的。</p>
-<p>其中weak_entry_t是存储在弱引用表中的一个内部结构体，它负责维护和存储指向一个对象的所有弱引用hash表。其定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">typedef objc_object ** weak_referrer_t;</span><br><span class="line">struct weak_entry_t &#123;</span><br><span class="line">    DisguisedPtrobjc_object&gt; referent;</span><br><span class="line">    union &#123;</span><br><span class="line">        struct &#123;</span><br><span class="line">            weak_referrer_t *referrers;</span><br><span class="line">            uintptr_t        out_of_line : 1;</span><br><span class="line">            uintptr_t        num_refs : PTR_MINUS_1;</span><br><span class="line">            uintptr_t        mask;</span><br><span class="line">            uintptr_t        max_hash_displacement;</span><br><span class="line">        &#125;;</span><br><span class="line">        struct &#123;</span><br><span class="line">            // out_of_line=0 is LSB of one of these (don&apos;t care which)</span><br><span class="line">            weak_referrer_t  inline_referrers[WEAK_INLINE_COUNT];</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 weak_entry_t 的结构中，DisguisedPtr referent 是对泛型对象的指针做了一个封装，通过这个泛型类来解决内存泄漏的问题。从注释中写 out_of_line 成员为最低有效位，当其为0的时候， weak_referrer_t 成员将扩展为多行静态 hash table。其实其中的 weak_referrer_t 是二维 objc_object 的别名，通过一个二维指针地址偏移，用下标作为 hash 的 key，做成了一个弱引用散列。<br>那么在有效位未生效的时候，out_of_line 、 num_refs、 mask 、 max_hash_displacement 有什么作用？以下是笔者自身的猜测：</p>
-<p>out_of_line：最低有效位，也是标志位。当标志位 0 时，增加引用表指针纬度。<br>num_refs：引用数值。这里记录弱引用表中引用有效数字，因为弱引用表使用的是静态 hash 结构，所以需要使用变量来记录数目。<br>mask：计数辅助量。<br>max_hash_displacement：hash 元素上限阀值。<br>其实 out_of_line 的值通常情况下是等于零的，所以弱引用表总是一个 objc_objective 指针二维数组。一维 objc_objective 指针可构成一张弱引用散列表，通过第三纬度实现了多张散列表，并且表数量为 WEAK_INLINE_COUNT 。</p>
-<p>总结一下 StripedMap[] ： StripedMap 是一个模板类，在这个类中有一个 array 成员，用来存储 PaddedT 对象，并且其中对于 [] 符的重载定义中，会返回这个 PaddedT 的 value 成员，这个 value 就是我们传入的 T 泛型成员，也就是 SideTable 对象。在 array 的下标中，这里使用了 indexForPointer 方法通过位运算计算下标，实现了静态的 Hash Table。而在 weak_table 中，其成员 weak_entry 会将传入对象的地址加以封装起来，并且其中也有访问全局弱引用表的入口。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1204112-3b57375cebb02aee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="img"></p>
-<p>31B622B5-77ED-4D50-8CF9-0803785117BC.png</p>
-<h5 id="旧对象解除注册操作-weak-unregister-no-lock"><a href="#旧对象解除注册操作-weak-unregister-no-lock" class="headerlink" title="旧对象解除注册操作 weak_unregister_no_lock"></a>旧对象解除注册操作 weak_unregister_no_lock</h5><p>该方法主要作用是将旧对象在 weak_table 中接触 weak 指针的对应绑定。根据函数名，称之为解除注册操作。从源码中，可以知道其功能就是从 weak_table 中接触 weak 指针的绑定。而其中的遍历查询，就是针对于 weak_entry 中的多张弱引用散列表。</p>
-<h5 id="新对象添加注册操作-weak-register-no-lock"><a href="#新对象添加注册操作-weak-register-no-lock" class="headerlink" title="新对象添加注册操作 weak_register_no_lock"></a>新对象添加注册操作 weak_register_no_lock</h5><p>这一步与上一步相反，通过 weak_register_no_lock 函数把心的对象进行注册操作，完成与对应的弱引用表进行绑定操作。</p>
-<h1 id="初始化弱引用对象流程一览"><a href="#初始化弱引用对象流程一览" class="headerlink" title="初始化弱引用对象流程一览"></a>初始化弱引用对象流程一览</h1><p>弱引用的初始化，从上文的分析中可以看出，主要的操作部分就在弱引用表的取键、查询散列、创建弱引用表等操作，可以总结出如下的流程图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1204112-4deeaa2c414b5350.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/553" alt="img"></p>
-<p>C6029C92-5145-4334-9C25-3CDBA50F142B.png</p>
-<p>这个图中省略了很多情况的判断，但是当声明一个 <strong>weak 会调用上图中的这些方法。当然， storeWeak 方法不仅仅用在 </strong>weak 的声明中，在 class 内部的操作中也会常常通过该方法来对 weak 对象进行操作。</p>
-<h2 id="释放时，调用clearDeallocating函数。clearDeallocating函数首先根据对象地址获取所有weak指针地址的数组，然后遍历这个数组把其中的数据设为nil，最后把这个entry从weak表中删除，最后清理对象的记录。"><a href="#释放时，调用clearDeallocating函数。clearDeallocating函数首先根据对象地址获取所有weak指针地址的数组，然后遍历这个数组把其中的数据设为nil，最后把这个entry从weak表中删除，最后清理对象的记录。" class="headerlink" title="# 释放时，调用clearDeallocating函数。clearDeallocating函数首先根据对象地址获取所有weak指针地址的数组，然后遍历这个数组把其中的数据设为nil，最后把这个entry从weak表中删除，最后清理对象的记录。"></a># 释放时，调用clearDeallocating函数。clearDeallocating函数首先根据对象地址获取所有weak指针地址的数组，然后遍历这个数组把其中的数据设为nil，最后把这个entry从weak表中删除，最后清理对象的记录。</h2><h4 id="当weak引用指向的对象被释放时，又是如何去处理weak指针的呢？当释放对象时，其基本流程如下："><a href="#当weak引用指向的对象被释放时，又是如何去处理weak指针的呢？当释放对象时，其基本流程如下：" class="headerlink" title="当weak引用指向的对象被释放时，又是如何去处理weak指针的呢？当释放对象时，其基本流程如下："></a>当weak引用指向的对象被释放时，又是如何去处理weak指针的呢？当释放对象时，其基本流程如下：</h4><p>1、调用objc_release<br>2、因为对象的引用计数为0，所以执行dealloc<br>3、在dealloc中，调用了_objc_rootDealloc函数<br>4、在_objc_rootDealloc中，调用了object_dispose函数<br>5、调用objc_destructInstance<br>6、最后调用objc_clear_deallocating</p>
-<p>重点看对象被释放时调用的objc_clear_deallocating函数。该函数实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void  objc_clear_deallocating(id obj) </span><br><span class="line">&#123;</span><br><span class="line">    assert(obj);</span><br><span class="line">    assert(!UseGC);</span><br><span class="line">    if (obj-&gt;isTaggedPointer()) return;</span><br><span class="line">   obj-&gt;clearDeallocating();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也就是调用了clearDeallocating，继续追踪可以发现，它最终是使用了迭代器来取weak表的value，然后调用weak_clear_no_lock,然后查找对应的value，将该weak指针置空，weak_clear_no_lock函数的实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Called by dealloc; nils out all weak pointers that point to the</span><br><span class="line"> * provided object so that they can no longer be used.</span><br><span class="line"> *</span><br><span class="line"> * @param weak_table</span><br><span class="line"> * @param referent The object being deallocated.</span><br><span class="line"> */</span><br><span class="line">void weak_clear_no_lock(weak_table_t *weak_table, id referent_id)</span><br><span class="line">&#123;</span><br><span class="line">    objc_object *referent = (objc_object *)referent_id;</span><br><span class="line">    weak_entry_t *entry = weak_entry_for_referent(weak_table, referent);</span><br><span class="line">    if (entry == nil) &#123;</span><br><span class="line">        /// XXX shouldn&apos;t happen, but does with mismatched CF/objc</span><br><span class="line">        //printf(&quot;XXX no entry for clear deallocating %p\n&quot;, referent);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    // zero out references</span><br><span class="line">    weak_referrer_t *referrers;</span><br><span class="line">    size_t count;</span><br><span class="line">    </span><br><span class="line">    if (entry-&gt;out_of_line) &#123;</span><br><span class="line">        referrers = entry-&gt;referrers;</span><br><span class="line">        count = TABLE_SIZE(entry);</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        referrers = entry-&gt;inline_referrers;</span><br><span class="line">        count = WEAK_INLINE_COUNT;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    for (size_t i = 0; i &lt; count; ++i) &#123;</span><br><span class="line">        objc_object **referrer = referrers[i];</span><br><span class="line">        if (referrer) &#123;</span><br><span class="line">            if (*referrer == referent) &#123;</span><br><span class="line">                *referrer = nil;</span><br><span class="line">            &#125;</span><br><span class="line">            else if (*referrer) &#123;</span><br><span class="line">                _objc_inform(&quot;__weak variable at %p holds %p instead of %p. &quot;</span><br><span class="line">                             &quot;This is probably incorrect use of &quot;</span><br><span class="line">                             &quot;objc_storeWeak() and objc_loadWeak(). &quot;</span><br><span class="line">                             &quot;Break on objc_weak_error to debug.\n&quot;,</span><br><span class="line">                             referrer, (void*)*referrer, (void*)referent);</span><br><span class="line">                objc_weak_error();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    weak_entry_remove(weak_table, entry);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>objc_clear_deallocating该函数的动作如下：</p>
-<p>1、从weak表中获取废弃对象的地址为键值的记录<br>2、将包含在记录中的所有附有 weak修饰符变量的地址，赋值为nil<br>3、将weak表中该记录删除<br>4、从引用计数表中删除废弃对象的地址为键值的记录</p>
-<p>看了objc-weak.mm的源码就明白了：其实Weak表是一个hash（哈希）表，然后里面的key是指向对象的地址，Value是Weak指针的地址的数组。</p>
-<h2 id="补充：-m和-mm的区别"><a href="#补充：-m和-mm的区别" class="headerlink" title="补充：.m和.mm的区别"></a>补充：.m和.mm的区别</h2><p>.m：源代码文件，这个典型的源代码文件扩展名，可以包含OC和C代码。<br>.mm：源代码文件，带有这种扩展名的源代码文件，除了可以包含OC和C代码之外，还可以包含C++代码。仅在你的OC代码中确实需要使用C++类或者特性的时候才用这种扩展名。</p>
-<p>参考资料：<br><a href="https://link.jianshu.com/?t=http://ios.jobbole.com/89012/" target="_blank" rel="noopener">weak 弱引用的实现方式</a><br><a href="https://link.jianshu.com/?t=http://www.cocoachina.com/ios/20150605/11990.html" target="_blank" rel="noopener">weak的生命周期：具体实现方法</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3437,7 +3427,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3466,7 +3456,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

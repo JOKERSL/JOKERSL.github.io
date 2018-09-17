@@ -108,12 +108,12 @@
 
 
 
-  <meta name="description" content="本文用来介绍 iOS 多线程中 NSOperation、NSOperationQueue 的相关知识以及使用方法。通过本文，您将了解到：NSOperation、NSOperationQueue 简介、操作和操作队列、使用步骤和基本使用方法、控制串行/并发执行、NSOperation 操作依赖和优先级、线程间的通信、线程同步和线程安全，以及 NSOperation、NSOperationQueu">
+  <meta name="description" content="[转自 『不羁阁』 | 行走的少年郎 - 博客 **](https://bujige.net/)   本文用来介绍 iOS 多线程中 NSOperation、NSOperationQueue 的相关知识以及使用方法。通过本文，您将了解到：NSOperation、NSOperationQueue 简介、操作和操作队列、使用步骤和基本使用方法、控制串行/并发执行、NSOperation 操作依赖和优先">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NSOperation">
 <meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/17/NSOperation/index.html">
 <meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
-<meta property="og:description" content="本文用来介绍 iOS 多线程中 NSOperation、NSOperationQueue 的相关知识以及使用方法。通过本文，您将了解到：NSOperation、NSOperationQueue 简介、操作和操作队列、使用步骤和基本使用方法、控制串行/并发执行、NSOperation 操作依赖和优先级、线程间的通信、线程同步和线程安全，以及 NSOperation、NSOperationQueu">
+<meta property="og:description" content="[转自 『不羁阁』 | 行走的少年郎 - 博客 **](https://bujige.net/)   本文用来介绍 iOS 多线程中 NSOperation、NSOperationQueue 的相关知识以及使用方法。通过本文，您将了解到：NSOperation、NSOperationQueue 简介、操作和操作队列、使用步骤和基本使用方法、控制串行/并发执行、NSOperation 操作依赖和优先">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-result01.png">
@@ -131,10 +131,10 @@
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-result14.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-result15.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-result16.png">
-<meta property="og:updated_time" content="2018-09-17T04:22:36.687Z">
+<meta property="og:updated_time" content="2018-09-17T06:29:19.782Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSOperation">
-<meta name="twitter:description" content="本文用来介绍 iOS 多线程中 NSOperation、NSOperationQueue 的相关知识以及使用方法。通过本文，您将了解到：NSOperation、NSOperationQueue 简介、操作和操作队列、使用步骤和基本使用方法、控制串行/并发执行、NSOperation 操作依赖和优先级、线程间的通信、线程同步和线程安全，以及 NSOperation、NSOperationQueu">
+<meta name="twitter:description" content="[转自 『不羁阁』 | 行走的少年郎 - 博客 **](https://bujige.net/)   本文用来介绍 iOS 多线程中 NSOperation、NSOperationQueue 的相关知识以及使用方法。通过本文，您将了解到：NSOperation、NSOperationQueue 简介、操作和操作队列、使用步骤和基本使用方法、控制串行/并发执行、NSOperation 操作依赖和优先">
 <meta name="twitter:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png">
 
 
@@ -351,7 +351,7 @@
                 
               
 
-              <time title="创建时间：2018-09-17 12:17:42 / 修改时间：12:22:36" itemprop="dateCreated datePublished" datetime="2018-09-17T12:17:42+08:00">2018-09-17</time>
+              <time title="创建时间：2018-09-17 12:17:42 / 修改时间：14:29:19" itemprop="dateCreated datePublished" datetime="2018-09-17T12:17:42+08:00">2018-09-17</time>
             
 
             
@@ -407,7 +407,9 @@
       
 
       
-        <p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png" alt="img"></a></p>
+        <p>[转自 <a href="https://bujige.net/" target="_blank" rel="noopener">『不羁阁』 | 行走的少年郎 - 博客</a></p>
+<p><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">**](https://bujige.net/)</a></p>
+<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-NSOperation-demo-background.png" alt="img"></a></p>
 <blockquote>
 <p>本文用来介绍 iOS 多线程中 NSOperation、NSOperationQueue 的相关知识以及使用方法。<br>通过本文，您将了解到：<br><strong>NSOperation、NSOperationQueue 简介</strong>、<strong>操作和操作队列</strong>、<strong>使用步骤和基本使用方法</strong>、<strong>控制串行/并发执行</strong>、<strong>NSOperation 操作依赖和优先级</strong>、<strong>线程间的通信</strong>、<strong>线程同步和线程安全</strong>，以及 <strong>NSOperation、NSOperationQueue 常用属性和方法归纳</strong>。</p>
 <p>文中 Demo 我已放在了 Github 上，Demo 链接：<a href="https://github.com/bujige/YSC-NSOperation-demo" target="_blank" rel="noopener">传送门</a></p>
@@ -699,8 +701,6 @@
 <li><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">iOS多线程：『NSOperation』详解总结</a></li>
 <li><a href="https://bujige.net/blog/iOS-Complete-learning-RunLoop.html" target="_blank" rel="noopener">iOS多线程：『RunLoop』详解总结</a></li>
 </ul>
-<p>[转自 <a href="https://bujige.net/" target="_blank" rel="noopener">『不羁阁』 | 行走的少年郎 - 博客</a></p>
-<p><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">**](https://bujige.net/)</a></p>
 
       
     </div>
@@ -810,7 +810,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -839,7 +839,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

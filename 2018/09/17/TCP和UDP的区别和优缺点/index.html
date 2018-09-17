@@ -108,29 +108,27 @@
 
 
 
-  <meta name="description" content="一.isa指针要认识什么是isa指针，我们得先明确一点： 在Objective-C中，任何类的定义都是对象。类和类的实例（对象）没有任何本质上的区别。任何对象都有isa指针。 那么什么是类呢？在xcode中用快捷键Shift＋Cmd＋O 打开文件objc.h 能看到类的定义：  可以看出: Class 是一个 objc_class 结构类型的指针, id是一个 objc_object 结构类型的指">
+  <meta name="description" content="转自 xiaobangkuaipao 1、TCP与UDP区别总结： 1、 TCP面向连接 （如打电话要先拨号建立连接）; UDP是无连接 的，即发送数据之前不需要建立连接 2、TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付 Tcp通过校验和，重传控制，序号标识，滑动窗口、确认应答实现可靠传输。如丢包时的重发控制，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Objective-C isa 指针 与 runtime 机制">
-<meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/13/Objective-C-isa-指针-与-runtime-机制/index.html">
+<meta property="og:title" content="TCP和UDP的区别和优缺点">
+<meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/17/TCP和UDP的区别和优缺点/index.html">
 <meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
-<meta property="og:description" content="一.isa指针要认识什么是isa指针，我们得先明确一点： 在Objective-C中，任何类的定义都是对象。类和类的实例（对象）没有任何本质上的区别。任何对象都有isa指针。 那么什么是类呢？在xcode中用快捷键Shift＋Cmd＋O 打开文件objc.h 能看到类的定义：  可以看出: Class 是一个 objc_class 结构类型的指针, id是一个 objc_object 结构类型的指">
+<meta property="og:description" content="转自 xiaobangkuaipao 1、TCP与UDP区别总结： 1、 TCP面向连接 （如打电话要先拨号建立连接）; UDP是无连接 的，即发送数据之前不需要建立连接 2、TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付 Tcp通过校验和，重传控制，序号标识，滑动窗口、确认应答实现可靠传输。如丢包时的重发控制，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/449095-4006820f1afc3318.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/449095-02d25b1edb82d5b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/593">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/449095-3e972ec16703c54d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/598">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/449095-aec569427bcb7436.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/690">
-<meta property="og:updated_time" content="2018-09-13T03:52:21.311Z">
+<meta property="og:image" content="http://yoursite.com/Users/sunlei/Desktop/20170806225229000.png">
+<meta property="og:image" content="http://yoursite.com/Users/sunlei/Desktop/20170806225326602.png">
+<meta property="og:updated_time" content="2018-09-17T06:48:31.592Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Objective-C isa 指针 与 runtime 机制">
-<meta name="twitter:description" content="一.isa指针要认识什么是isa指针，我们得先明确一点： 在Objective-C中，任何类的定义都是对象。类和类的实例（对象）没有任何本质上的区别。任何对象都有isa指针。 那么什么是类呢？在xcode中用快捷键Shift＋Cmd＋O 打开文件objc.h 能看到类的定义：  可以看出: Class 是一个 objc_class 结构类型的指针, id是一个 objc_object 结构类型的指">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/449095-4006820f1afc3318.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728">
+<meta name="twitter:title" content="TCP和UDP的区别和优缺点">
+<meta name="twitter:description" content="转自 xiaobangkuaipao 1、TCP与UDP区别总结： 1、 TCP面向连接 （如打电话要先拨号建立连接）; UDP是无连接 的，即发送数据之前不需要建立连接 2、TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付 Tcp通过校验和，重传控制，序号标识，滑动窗口、确认应答实现可靠传输。如丢包时的重发控制，">
+<meta name="twitter:image" content="http://yoursite.com/Users/sunlei/Desktop/20170806225229000.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/iOS面试/2018/09/13/Objective-C-isa-指针-与-runtime-机制/"/>
+  <link rel="canonical" href="http://yoursite.com/iOS面试/2018/09/17/TCP和UDP的区别和优缺点/"/>
 
 
 
@@ -140,7 +138,7 @@
   };
 </script>
 
-  <title>Objective-C isa 指针 与 runtime 机制 | Man Tou Pu's Blog</title>
+  <title>TCP和UDP的区别和优缺点 | Man Tou Pu's Blog</title>
   
 
 
@@ -297,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/13/Objective-C-isa-指针-与-runtime-机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/TCP和UDP的区别和优缺点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sun Lei">
@@ -314,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Objective-C isa 指针 与 runtime 机制
+          <h1 class="post-title" itemprop="name headline">TCP和UDP的区别和优缺点
               
             
           </h1>
@@ -339,7 +337,7 @@
                 
               
 
-              <time title="创建时间：2018-09-13 11:49:08 / 修改时间：11:52:21" itemprop="dateCreated datePublished" datetime="2018-09-13T11:49:08+08:00">2018-09-13</time>
+              <time title="创建时间：2018-09-17 14:44:15 / 修改时间：14:48:31" itemprop="dateCreated datePublished" datetime="2018-09-17T14:44:15+08:00">2018-09-17</time>
             
 
             
@@ -361,7 +359,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/runtime/" itemprop="url" rel="index"><span itemprop="name">runtime</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/网络相关/" itemprop="url" rel="index"><span itemprop="name">网络相关</span></a></span>
 
                 
                 
@@ -395,59 +393,41 @@
       
 
       
-        <h2 id="一-isa指针"><a href="#一-isa指针" class="headerlink" title="一.isa指针"></a>一.isa指针</h2><p>要认识什么是isa指针，我们得先明确一点：</p>
-<p><strong>在Objective-C中，任何类的定义都是对象。类和类的实例（对象）没有任何本质上的区别。任何对象都有isa指针。</strong></p>
-<p>那么什么是类呢？在xcode中用快捷键Shift＋Cmd＋O 打开文件objc.h 能看到类的定义：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/449095-4006820f1afc3318.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728" alt="img"></p>
-<p>可以看出:</p>
-<p><strong>Class 是一个 objc_class 结构类型的指针, id是一个 objc_object 结构类型的指针.</strong></p>
-<p>我们再来看看 objc_class 的定义：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/449095-02d25b1edb82d5b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/593" alt="img"></p>
-<p>稍微解释一下各个参数的意思：</p>
-<p>isa：是一个Class 类型的指针. 每个实例对象有个isa的指针,他指向对象的类，而Class里也有个isa的指针, 指向meteClass(元类)。元类保存了类方法的列表。当类方法被调用时，先会从本身查找类方法的实现，如果没有，元类会向他父类查找该方法。同时注意的是：<strong>元类（meteClass）也是类，它也是对象。</strong>元类也有isa指针,它的isa指针最终指向的是一个根元类(root meteClass).根元类的isa指针指向本身，这样形成了一个封闭的内循环。</p>
-<p>super_class：父类，如果该类已经是最顶层的根类,那么它为NULL。</p>
-<p>version：类的版本信息,默认为0</p>
-<p>info：供运行期使用的一些位标识。</p>
-<p>instance_size：该类的实例变量大小</p>
-<p>ivars：成员变量的数组</p>
-<p>再来看看各个类实例变量的继承关系：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/449095-3e972ec16703c54d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/598" alt="img"></p>
-<p><strong>每一个对象本质上都是一个类的实例。其中类定义了成员变量和成员方法的列表。对象通过对象的isa指针指向类。</strong></p>
-<p><strong>每一个类本质上都是一个对象，类其实是元类（meteClass）的实例。元类定义了类方法的列表。类通过类的isa指针指向元类。</strong></p>
-<p><strong>所有的元类最终继承一个根元类，根元类isa指针指向本身，形成一个封闭的内循环。</strong></p>
-<h2 id="二-runtime-机制"><a href="#二-runtime-机制" class="headerlink" title="二.runtime 机制"></a><strong>二.runtime 机制</strong></h2><p>runtime：指一个程序在运行（或者在被执行）的状态。也就是说，当你打开一个程序使它在电脑上运行的时候，那个程序就是处于运行时刻。在一些编程语言中，把某些可以重用的程序或者实例打包或者重建成为“运行库”。这些实例可以在它们运行的时候被连接或者被任何程序调用。</p>
-<p>objective-c中runtime：是一套比较底层的纯C语言API, 属于1个C语言库, 包含了很多底层的C语言API。 在我们平时编写的OC代码中, 程序运行过程时, 其实最终都是转成了runtime的C语言代码。</p>
-<p><strong>runtime的应用：</strong></p>
-<p>1.动态创建一个类(比如KVO的底层实现)</p>
-<p> 2.动态地为某个类添加属性\方法, 修改属性值\方法</p>
-<p>3.遍历一个类的所有成员变量(属性)\所有方法</p>
-<p><strong>实质上，以上的是通过相关方法来获取对象或者类的isa指针来实现的。</strong></p>
-<p><strong>相关函数</strong></p>
-<ol>
-<li>增加</li>
-</ol>
-<p>增加函数:class_addMethod</p>
-<p>增加实例变量:class_addIvar</p>
-<p>增加属性:@dynamic标签，或者class_addMethod，因为属性其实就是由getter和setter函数组成</p>
-<p>增加Protocol:class<em>addProtocol (说实话我真不知道动态增加一个protocol有什么用,-</em>-!!)</p>
-<ol>
-<li>获取</li>
-</ol>
-<p>获取函数列表及每个函数的信息(函数指针、函数名等等):class_getClassMethod method_getName …</p>
-<p>获取属性列表及每个属性的信息:class_copyPropertyList property_getName</p>
-<p>获取类本身的信息,如类名等：class_getName class_getInstanceSize</p>
-<p>获取变量列表及变量信息：class_copyIvarList</p>
-<p>获取变量的值</p>
-<ol>
-<li>替换</li>
-</ol>
-<p>将实例替换成另一个类：object_setClass</p>
-<p>替换类方法的定义：class_replaceMethod</p>
-<p>4.其他常用方法：</p>
-<p>交换两个方法的实现：method_exchangeImplementations.</p>
-<p>设置一个方法的实现：method_setImplementation.        </p>
-<p><img src="http://upload-images.jianshu.io/upload_images/449095-aec569427bcb7436.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/690" alt="img"></p>
-<p>[转自 <a href="https://www.jianshu.com/p/41735c66dccb" target="_blank" rel="noopener">曲年</a>]</p>
+        <p><a href="https://blog.csdn.net/xiaobangkuaipao/article/details/76793702" target="_blank" rel="noopener">转自 <a href="https://blog.csdn.net/xiaobangkuaipao" target="_blank" rel="noopener">xiaobangkuaipao</a></a></p>
+<p>1、TCP与UDP区别总结：</p>
+<p>1、</p>
+<p>TCP面向连接</p>
+<p>（如打电话要先拨号建立连接）;</p>
+<p>UDP是无连接</p>
+<p>的，即发送数据之前不需要建立连接</p>
+<p>2、TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付</p>
+<p>Tcp通过校验和，重传控制，序号标识，滑动窗口、确认应答实现可靠传输。如丢包时的重发控制，还可以对次序乱掉的分包进行顺序控制。</p>
+<p>3、UDP具有较好的实时性，工作效率比TCP高，适用于对高速传输和实时性有较高的通信或广播通信。</p>
+<p>4.每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信</p>
+<p>5、TCP对系统资源要求较多，UDP对系统资源要求较少。</p>
+<p>2、为什么UDP有时比TCP更有优势?</p>
+<p>UDP以其简单、传输快的优势，在越来越多场景下取代了TCP,如实时游戏。</p>
+<p>（1）网速的提升给UDP的稳定性提供可靠网络保障，丢包率很低，如果使用应用层重传，能够确保传输的可靠性。</p>
+<p>（2）TCP为了实现网络通信的可靠性，使用了复杂的拥塞控制算法，建立了繁琐的握手过程，由于TCP内置的系统协议栈中，极难对其进行改进。</p>
+<p>采用TCP，一旦发生丢包，TCP会将后续的包缓存起来，等前面的包重传并接收到后再继续发送，延时会越来越大，基于UDP对实时性要求较为严格的情况下，采用自定义重传机制，能够把丢包产生的延迟降到最低，尽量减少网络问题对游戏性造成影响。</p>
+<p>3、UDP和TCP编程步骤也有些不同，如下：</p>
+<p><strong>TCP: </strong><br>TCP编程的服务器端一般步骤是：<br>　　1、创建一个socket，用函数socket()；     SOCKET SocketListen =socket(AF_INET,SOCK_STREAM, IPPROTO_TCP);<br>　　2、设置socket属性，用函数setsockopt(); <em> 可选<br>　　3、绑定IP地址、端口等信息到socket上，用函数bind(); SOCKET_ERROR = bind(SocketListen,(const sockaddr</em>)&amp;addr,sizeof(addr))<br>　　4、开启监听，用函数listen()；                 SOCKET_ERROR == listen(SocketListen,2)<br>　　5、接收客户端上来的连接，用函数accept()；    SOCKET SocketWaiter = accept(SocketListen,</p>
+<p>​                                                  <em>Out</em>    struct sockaddr *addr</p>
+<p> <em>Inout</em>  int <em>addrlen);<br>　　6、收发数据，用函数send()和recv()，或者read()和write();<br>　　7、关闭网络连接； closesocket(SocketListen);closesocket(SocketWaiter);<br>　　8、关闭监听；<br>SOCK_STREAM这种的特点是面向连接的，即每次收发数据之前必须通过connect建立连接，而SOCK_DGRAM这种是User Datagram Protocol协议的网络通讯，它是无连接的，不可靠的。<br>TCP编程的客户端一般步骤是：<br>　　1、创建一个socket，用函数socket()；<br>　　2、设置socket属性，用函数setsockopt();</em> 可选<br>　　3、绑定IP地址、端口等信息到socket上，用函数bind();* 可选<br>　　4、设置要连接的对方的IP地址和端口等属性；<br>　　5、连接服务器，用函数connect()；<br>　　6、收发数据，用函数send()和recv()，或者read()和write();<br>　　7、关闭网络连接；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int send(</span><br><span class="line">  _In_  SOCKET s,         //向哪个socket发送，accept返回的socket。</span><br><span class="line">  _In_  const char *buf,</span><br><span class="line">  _In_  int len,</span><br><span class="line">  _In_  int flags</span><br><span class="line">);                               由于</span><br></pre></td></tr></table></figure>
+<p>send(SocketClient,(const char *)&amp;fh,sizeof(fh),0);</p>
+<p>recv(SocketClient,szbuf,sizeof(szbuf),0);<br><strong>UDP:</strong><br>与之对应的UDP编程步骤要简单许多，分别如下：<br>　　UDP编程的服务器端一般步骤是：<br>　　1、创建一个socket，用函数socket()；<br>　　2、设置socket属性，用函数setsockopt();<em> 可选<br>　　3、绑定IP地址、端口等信息到socket上，用函数bind();<br>　　4、循环接收数据，用函数recvfrom();<br>　　5、关闭网络连接；<br>UDP编程的客户端一般步骤是：<br>　　1、创建一个socket，用函数socket()；<br>　　2、设置socket属性，用函数setsockopt();</em> 可选<br>　　3、绑定IP地址、端口等信息到socket上，用函数bind();* 可选<br>　　4、设置对方的IP地址和端口等属性;<br>　　5、发送数据，用函数sendto();<br>　　6、关闭网络连接；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int recvfrom(</span><br><span class="line">  _In_         SOCKET s,       //绑定的socket</span><br><span class="line">  _Out_        char *buf,</span><br><span class="line">  _In_         int len,</span><br><span class="line">  _In_         int flags,</span><br><span class="line">  _Out_        struct sockaddr *from,  //用来接收对方的</span><br><span class="line">  _Inout_opt_  int *fromlen</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>int nres=</p>
+<p>recvfrom</p>
+<p>(pThis-&gt;m_socketListen,szBuf,sizeof(szBuf),0,(sockaddr<em>)&amp;addrClient,&amp;nSize);//0处标志位<br>sendto(m_socketListen,szBuffer,nSize,0,(const sockaddr</em>)&amp;addr,sizeof(sockaddr_in))</p>
+<p>TCP和UDP是OSI模型中的运输层中的协议。TCP提供可靠的通信传输，而UDP则常被用于让广播和细节控制交给应用的通信传输。</p>
+<p>4、将socket设置为广播属性<br>bool optval=true;<br>setsockopt(m_socketListen,SOL_SOCKET,SO_BROADCAST,(const char *)&amp;optval,sizeof(bool));</p>
+<p>5、将Socket设置为非阻塞。<br>//bool benable=true;<br>//ioctlsocket(m_socketListen,FIONBIO,(u_long*)&amp;benable);</p>
+<p>6、Tcp头，20字节</p>
+<p><img src="/Users/sunlei/Desktop/20170806225229000.png" alt="20170806225229000"></p>
+<p>7、UDP首部,8个字节</p>
+<p><img src="/Users/sunlei/Desktop/20170806225326602.png" alt="20170806225326602"></p>
 
       
     </div>
@@ -475,8 +455,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/13/Objective-C-消息发送与转发机制原理/" rel="next" title="Objective-C-消息发送与转发机制原理">
-                <i class="fa fa-chevron-left"></i> Objective-C-消息发送与转发机制原理
+              <a href="/2018/09/17/RunLoop详尽总结/" rel="next" title="RunLoop详尽总结">
+                <i class="fa fa-chevron-left"></i> RunLoop详尽总结
               </a>
             
           </div>
@@ -484,10 +464,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/13/RunTime应用实例-关于埋点的思考/" rel="prev" title="RunTime应用实例--关于埋点的思考">
-                RunTime应用实例--关于埋点的思考 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -532,17 +508,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -616,22 +583,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-isa指针"><span class="nav-number">1.</span> <span class="nav-text">一.isa指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-runtime-机制"><span class="nav-number">2.</span> <span class="nav-text">二.runtime 机制</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
