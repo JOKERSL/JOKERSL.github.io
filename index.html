@@ -292,6 +292,521 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/XMPP的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/17/XMPP的使用/" itemprop="url">
+                  XMPP的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-17 16:47:00 / 修改时间：16:49:19" itemprop="dateCreated datePublished" datetime="2018-09-17T16:47:00+08:00">2018-09-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/网络相关/" itemprop="url" rel="index"><span itemprop="name">网络相关</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[转自 <a href="https://www.cnblogs.com/QianChia/" target="_blank" rel="noopener">Qian Chia 工作室</a>]（<a href="http://www.cnblogs.com/QianChia/p/6411914.html）" target="_blank" rel="noopener">http://www.cnblogs.com/QianChia/p/6411914.html）</a></p>
+<h1 id="iOS-XMPP-的使用"><a href="#iOS-XMPP-的使用" class="headerlink" title="iOS - XMPP 的使用"></a><a href="https://www.cnblogs.com/QianChia/p/6411914.html" target="_blank" rel="noopener">iOS - XMPP 的使用</a></h1><p><strong>本文目录</strong></p>
+<ul>
+<li><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_label0" target="_blank" rel="noopener">1、XMPP</a></li>
+<li><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_label1" target="_blank" rel="noopener">2、XMPPFramework 框架简介</a></li>
+<li><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_label2" target="_blank" rel="noopener">3、XMPPFramework 框架使用</a></li>
+<li><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_label3" target="_blank" rel="noopener">4、XMPPFramework 实现简单聊天</a></li>
+<li><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_label4" target="_blank" rel="noopener">5、XMPPFramework 快速登录</a></li>
+<li><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_label5" target="_blank" rel="noopener">6、XMPPFramework 重连以及其他问题</a></li>
+</ul>
+<p><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_labelTop" target="_blank" rel="noopener">回到顶部</a></p>
+<h1 id="1、XMPP"><a href="#1、XMPP" class="headerlink" title="1、XMPP"></a>1、XMPP</h1><ul>
+<li><p>XMPP 是一个基于 Socket 通信的即时通讯的协议，它规范了即时通信在网络上数据的传输格式，比如登录，获取好友列表等等的格式。XMPP 在网络传输的数据是 XML 格式。</p>
+</li>
+<li><p>开发架构：</p>
+<p><img src="https://images2015.cnblogs.com/blog/993906/201702/993906-20170219013850269-115138110.png" alt="IM3"></p>
+</li>
+<li><p>iOS 框架：<a href="https://github.com/robbiehanson/XMPPFramework" target="_blank" rel="noopener">XMPPFramework</a></p>
+</li>
+<li><p>服务器：<a href="http://www.igniterealtime.org/downloads/index.jsp" target="_blank" rel="noopener">Openfire</a></p>
+</li>
+<li><p>数据库：<a href="https://www.mysql.com/downloads/" target="_blank" rel="noopener">MySQL</a></p>
+</li>
+</ul>
+<p><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_labelTop" target="_blank" rel="noopener">回到顶部</a></p>
+<h1 id="2、XMPPFramework-框架简介"><a href="#2、XMPPFramework-框架简介" class="headerlink" title="2、XMPPFramework 框架简介"></a>2、XMPPFramework 框架简介</h1><h2 id="2-1-XMPPFramework-简介"><a href="#2-1-XMPPFramework-简介" class="headerlink" title="2.1 XMPPFramework 简介"></a>2.1 XMPPFramework 简介</h2><ul>
+<li><a href="https://github.com/robbiehanson/XMPPFramework" target="_blank" rel="noopener">XMPPFramework</a> 是一个 OS X/iOS 平台的开源项目，使用 Objective-C 实现了 XMPP 协议（RFC-3920），同时还提供了用于读写 XML 的工具，大大简化了基于 XMPP 的通信应用的开发。</li>
+</ul>
+<h2 id="2-2-XMPPFramework-结构"><a href="#2-2-XMPPFramework-结构" class="headerlink" title="2.2 XMPPFramework 结构"></a>2.2 XMPPFramework 结构</h2><ul>
+<li><p>1、XMPPFramework 的目录结构如下：</p>
+<p><img src="https://images2015.cnblogs.com/blog/993906/201702/993906-20170226011813366-1554692760.png" alt="IM5"></p>
+<p>| 目录             | 说明                                       |<br>| ————– | —————————————- |<br>| Authentication | 授权，与授权验证相关，如用户名密码等                       |<br>| Categories     | 分类，XMPP 自己写的一些分类，尤其是 NSXMLElement+XMPP 扩展是必备的 |<br>| Core           | 核心，这里是 XMPP 的核心文件目录，我们最主要的目光还是要放在这个目录上   |<br>| Extensions     | 扩展，XMPP 的扩展模块，用于扩展各种协议和各种独立的功能，其下每个子目录都是对应的一个单独的子功能 |<br>| Utilities      | 工具，都是辅助类，我们开发者不用关心这里                     |<br>| Vendor         | 第三方库，这个目录是 XMPP 所引用的第三方类库，我们也不用关心这里      |</p>
+<ul>
+<li><p>虽然这里有很多个目录，但是我们在开发中基本只关心 Core 和 Extensions 这两个目录下的类。</p>
+</li>
+<li><p>在 Core 中：</p>
+<p>| 目录           | 说明                       |<br>| ———— | ———————— |<br>| XMPPElement  | 是一个基类，延展出三个子类            |<br>| XMPPIQ       | 请求，用户登录，用户注册，添加好友等       |<br>| XMPPMessage  | 消息，用来发各种消息等              |<br>| XMPPPresence | 展现，用户上线下线提示等             |<br>| XMPPStream   | 流，非常常用，大部分类的加载都在写在流的懒加载里 |</p>
+</li>
+<li><p>在 Extensions 中：</p>
+<p>| 目录                         | 说明          |<br>| ————————– | ———– |<br>| CoreDataStorage            | coreData 存储 |<br>| Reconnect                  | 重新连接        |<br>| Roster                     | 好友管理        |<br>| SystemInputActivityMonitor | 系统输入的活动监控   |</p>
+</li>
+<li><p>在 Vendor 中：</p>
+<p>| 文件夹              | 说明        |<br>| —————- | ——— |<br>| CocoaAsyncSocket | 异步 Socket |<br>| CocoaLumberjack  | ⽇志相关      |<br>| KissXML          | XML 解析    |</p>
+</li>
+</ul>
+</li>
+<li><p>2、XMPPFramework 中常用的类：</p>
+<p>| 类                                        | 说明                                    |<br>| —————————————- | ————————————- |<br>| XMPPStream                               | XMPP 基础服务类                            |<br>| XMPPRoster                               | 好友列表类                                 |<br>| XMPPUserCoreDataStorageObject            | 管理用户的类                                |<br>| XMPPRosterCoreDataStorage                | 好友列表（用户账号）在 core data 中的操作类           |<br>| XMPPvCardCoreDataStorage                 | 好友名片（昵称，签名，性别，年龄等信息）在 core data 中的操作类 |<br>| XMPPvCardTemp                            | 好友名片实体类，从数据库里取出来的都是它                  |<br>| xmppvCardAvatarModule                    | 好友头像                                  |<br>| XMPPReconnect                            | 如果失去连接，自动重连                           |<br>| XMPPRoom                                 | 提供多用户聊天支持                             |<br>| XMPPPubSub                               | 发布订阅                                  |<br>| XMPPMessageArchiving                     | 其中有数据表                                |<br>| XMPPMessageArchiving_Message_CoreDataObject | 取出当前信息的类                              |</p>
+</li>
+<li><p>3、XMPPFramework 几个常用到的扩展协议：</p>
+<p>| 协议       | 协议简介                                     |<br>| ——– | —————————————- |<br>| XEP-0006 | 使能与网络上某个 XMPP 实体间的通信                     |<br>| XEP-0009 | 在两个 XMPP 实体间传输 XML-RPC 编码请求和响应           |<br>| XEP-0012 | 最后的活动（判断上线，离开断开）                         |<br>| XEP-0045 | 多人聊天相关协议                                 |<br>| XEP-0054 | 名片格式的标准文档，个人信息设置                         |<br>| XEP-0060 | 提供通用公共订阅功能                               |<br>| XEP-0065 | 两个 XMPP 用户之间建立一个带外流，主要用于文件传输，sockets5 字节流 |<br>| XEP-0066 | 二进制数据传输（特殊信息的发送）                         |<br>| XEP-0082 | 日期和时间信息的标准化表示                            |<br>| XEP-0085 | 聊天对话中通知用户状态，聊天状态通知                       |<br>| XEP-0100 | 表述了 XMPP 客户端与提供传统的 IM 服务的代理网关之间交换的最佳实践   |<br>| XEP-0115 | 广播和动态发现客户端、设备、或一般实体能力                    |<br>| XEP-0136 | 为服务端备份和检索 XMPP 消息定义机制和偏好设置，聊天记录归档        |<br>| XEP-0153 | 用于交换用户头像，基于名片的头像                         |<br>| XEP-0184 | 消息送达回执协议                                 |<br>| XEP-0199 | XMPP ping 协议（用来 ping 服务器和 ping 自己）       |<br>| XEP-0202 | 用于交换实体间的本地时间信息                           |<br>| XEP-0203 | 用于延迟发送                                   |<br>| XEP-0224 | 引起另一个用户注意的协议                             |<br>| XEP-0335 | JSON 容器（可能以后某些信息传输将用 JSON 格式）            |</p>
+<ul>
+<li>XMPP 的扩展协议 <a href="https://en.wikipedia.org/wiki/Jingle_(protocol" target="_blank" rel="noopener">Jingle</a>) 使得其支持语音和视频，目前 iOS 尚不支持。<ul>
+<li>iOS 发送附件（图片，语音，文档…）时比较麻烦，XMPP 框架没有提供发送附件的功能，需要自己实现。</li>
+<li>iOS 发送附件实现方法：<ul>
+<li>1、将获取到的图片／音频文件通过 base64 加密，直接通过 xmpp 的消息体发送过去，然后解码。</li>
+<li>2、通过 http 请求的方式将图片／音频文件上传到服务器，然后将图片／音频文件的下载地址通过 xmpp 消息体发送过去，另外一个客户端下载。</li>
+<li>音频文件建议转码为 amr，这种格式的音频文件比较小。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-3-XMPPJID-类"><a href="#2-3-XMPPJID-类" class="headerlink" title="2.3 XMPPJID 类"></a>2.3 XMPPJID 类</h2><ul>
+<li>登录需要到账号，而所谓的账号其实就是用户唯一标识符（JID），在 XMPP 中使用 XMPPJID 类来表示。</li>
+<li>JID 一般由三部分构成：用户名，域名和资源名，格式为 <code>user@domain/resource</code>，例如：<code>test@example.com/Anthony</code>。对应于 XMPPJID 类中的三个属性 user、domain、resource。</li>
+<li>如果没有设置主机名（HOST），则使用 JID 的域名（domain）作为主机名，而端口号是可选的，默认是 5222，一般也没有必要改动它。</li>
+</ul>
+<h2 id="2-4-XMPPStream-类"><a href="#2-4-XMPPStream-类" class="headerlink" title="2.4 XMPPStream 类"></a>2.4 XMPPStream 类</h2><ul>
+<li><p>我们要与服务器连接，就必须通过 XMPPStream 类了，它提供了很多的 API 和属性设置，通过 socket 来实现的。Verdor 目录包含了 CocoaAsyncSocket 这个非常有名的 socket 编程库。XMPPStream 类还遵守并实现了 GCDAsyncSocketDelegate 代理，用于客户端与服务器交互。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@interface XMPPStream : NSObject &lt;GCDAsyncSocketDelegate&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当我们创建 XMPPStream 对象后，我们需要设置代理，才能回调我们的代理方法，这个是支持 multicast delegate，也就是说对于一个 XMPPStream 对象，可以设置多个代理对象，其中协议是XMPPStreamDelegate。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)addDelegate:(id)delegate delegateQueue:(dispatch_queue_t)delegateQueue;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>而当我们不希望某个 XMPPStream 对象继续接收到代理回调时，我们通过这样的方式来移除代理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)removeDelegate:(id)delegate delegateQueue:(dispatch_queue_t)delegateQueue;</span><br><span class="line">- (void)removeDelegate:(id)delegate;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来，我们要设置主机和端口，通过设置这两个属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 主机，可选设置，如果没有设置默认会使用 domain</span><br><span class="line">@property (readwrite, copy) NSString *hostName;</span><br><span class="line"></span><br><span class="line">// 端口号，默认为 5222</span><br><span class="line">@property (readwrite, assign) UInt16 hostPort;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XMPPStream 有 XMPPJID 类对象作为属性，标识用户，因为我们后续很多操作都需要到 myJID。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (readwrite, copy) XMPPJID *myJID;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>而管理用户在线状态的就交由 XMPPPresence 类了，它同样被作为 XMPPStream 的属性，组合到 XMPPStream 中，后续很多关于用户的操作是需要到处理用户状态的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (strong, readonly) XMPPPresence *myPresence;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-5-XMPPStreamDelegate"><a href="#2-5-XMPPStreamDelegate" class="headerlink" title="2.5 XMPPStreamDelegate"></a>2.5 XMPPStreamDelegate</h2><ul>
+<li><p>这个协议是非常关键的，我们的很多主要操作都集中在这个协议的代理回调上。它分为好几种类型的代理 API，比如授权的、注册的、安全的等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line">@protocol XMPPStreamDelegate</span><br><span class="line">@optional</span><br><span class="line"></span><br><span class="line">// 将要与服务器连接</span><br><span class="line">- (void)xmppStreamWillConnect:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 已经与服务器连接，</span><br><span class="line">// 当 TCP Socket 已经与远程主机连接上时会回调此方法</span><br><span class="line">// 若 App 要求在后台运行，需要设置 XMPPStream&apos;s enableBackgroundingOnSocket 属性</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket;</span><br><span class="line"></span><br><span class="line">// 当 TCP 与服务器建立连接后会回调此方法</span><br><span class="line">- (void)xmppStreamDidStartNegotiation:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// TLS 传输层协议在将要验证安全设置时会回调</span><br><span class="line">// 参数 settings 会被传到 startTLS，此方法可以不实现的</span><br><span class="line">// 若服务端使用自签名的证书，需要在 settings 中添加 GCDAsyncSocketManuallyEvaluateTrust = YES</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender willSecureWithSettings:(NSMutableDictionary *)settings;</span><br><span class="line"></span><br><span class="line">// 上面的方法执行后，下一步就会执行这个代理回调</span><br><span class="line">// 用于在 TCP 握手时手动验证是否受信任</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didReceiveTrust:(SecTrustRef)trust</span><br><span class="line">                                      completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler;</span><br><span class="line"></span><br><span class="line">// 当 stream 通过了 SSL/TLS 的安全验证时，会回调此代理方法</span><br><span class="line">- (void)xmppStreamDidSecure:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 当 XML 流已经完全打开时（也就是与服务器的连接完成时）会回调此代理方法。此时可以安全地与服务器通信了</span><br><span class="line">- (void)xmppStreamDidConnect:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 注册新用户成功时的回调</span><br><span class="line">- (void)xmppStreamDidRegister:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 注册新用户失败时的回调</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didNotRegister:(NSXMLElement *)error;</span><br><span class="line"></span><br><span class="line">// 授权通过时的回调，也就是登录成功的回调</span><br><span class="line">- (void)xmppStreamDidAuthenticate:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 授权失败时的回调，也就是登录失败时的回调</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error;</span><br><span class="line"></span><br><span class="line">// 将要绑定 JID resource 时的回调，这是授权程序的标准部分</span><br><span class="line">// 当验证 JID 用户名通过时，下一步就验证 resource。若使用标准绑定处理，return nil 或者不要实现此方法</span><br><span class="line">- (id &lt;XMPPCustomBinding&gt;)xmppStreamWillBind:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 如果服务器出现 resouce 冲突而导致不允许 resource 选择时，会回调此代理方法</span><br><span class="line">// 返回指定的 resource 或者返回 nil 让服务器自动帮助我们来选择。一般不用实现它</span><br><span class="line">- (NSString *)xmppStream:(XMPPStream *)sender alternativeResourceForConflictingResource:(NSString *)conflictingResource;</span><br><span class="line"></span><br><span class="line">// 将要接收 IQ（消息查询）时的回调</span><br><span class="line">- (XMPPIQ *)xmppStream:(XMPPStream *)sender willReceiveIQ:(XMPPIQ *)iq;</span><br><span class="line"></span><br><span class="line">// 将要接收到消息时的回调</span><br><span class="line">- (XMPPMessage *)xmppStream:(XMPPStream *)sender willReceiveMessage:(XMPPMessage *)message;</span><br><span class="line"></span><br><span class="line">// 将要接收到用户在线状态时的回调</span><br><span class="line">- (XMPPPresence *)xmppStream:(XMPPStream *)sender willReceivePresence:(XMPPPresence *)presence;</span><br><span class="line"></span><br><span class="line">// 通过实现此代理方法，可以知道被过滤的原因，有一定的帮助</span><br><span class="line">// 当 xmppStream:willReceiveX: (也就是前面这三个 API 回调后)，过滤了 stanza，会回调此代理方法</span><br><span class="line">- (void)xmppStreamDidFilterStanza:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 在接收了 IQ（消息查询后）会回调此代理方法</span><br><span class="line">- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq;</span><br><span class="line"></span><br><span class="line">// 在接收了消息后会回调此代理方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message;</span><br><span class="line"></span><br><span class="line">// 在接收了用户在线状态消息后会回调此代理方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence;</span><br><span class="line"></span><br><span class="line">// 在接收 IQ/messag、presence 出错时，会回调此代理方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didReceiveError:(NSXMLElement *)error;</span><br><span class="line"></span><br><span class="line">// 将要发送 IQ（消息查询时）时会回调此代理方法</span><br><span class="line">- (XMPPIQ *)xmppStream:(XMPPStream *)sender willSendIQ:(XMPPIQ *)iq;</span><br><span class="line"></span><br><span class="line">// 在将要发送消息时，会回调此代理方法</span><br><span class="line">- (XMPPMessage *)xmppStream:(XMPPStream *)sender willSendMessage:(XMPPMessage *)message;</span><br><span class="line"></span><br><span class="line">// 在将要发送用户在线状态信息时，会回调此方法</span><br><span class="line">- (XMPPPresence *)xmppStream:(XMPPStream *)sender willSendPresence:(XMPPPresence *)presence;</span><br><span class="line"></span><br><span class="line">// 在发送 IQ（消息查询）成功后会回调此代理方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didSendIQ:(XMPPIQ *)iq;</span><br><span class="line"></span><br><span class="line">// 在发送消息成功后，会回调此代理方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message;</span><br><span class="line"></span><br><span class="line">// 在发送用户在线状态信息成功后，会回调此方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didSendPresence:(XMPPPresence *)presence;</span><br><span class="line"></span><br><span class="line">// 在发送 IQ（消息查询）失败后会回调此代理方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didFailToSendIQ:(XMPPIQ *)iq error:(NSError *)error;</span><br><span class="line"></span><br><span class="line">// 在发送消息失败后，会回调此代理方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error;</span><br><span class="line"></span><br><span class="line">// 在发送用户在线状态失败信息后，会回调此方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didFailToSendPresence:(XMPPPresence *)presence error:(NSError *)error;</span><br><span class="line"></span><br><span class="line">// 当修改了 JID 信息时，会回调此代理方法</span><br><span class="line">- (void)xmppStreamDidChangeMyJID:(XMPPStream *)xmppStream;</span><br><span class="line"></span><br><span class="line">// 当 Stream 被告知与服务器断开连接时会回调此代理方法</span><br><span class="line">- (void)xmppStreamWasToldToDisconnect:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 当发送了 &lt;/stream:stream&gt; 节点时，会回调此代理方法</span><br><span class="line">- (void)xmppStreamDidSendClosingStreamStanza:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 连接超时时会回调此代理方法</span><br><span class="line">- (void)xmppStreamConnectDidTimeout:(XMPPStream *)sender;</span><br><span class="line"></span><br><span class="line">// 当与服务器断开连接后，会回调此代理方法</span><br><span class="line">- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error;</span><br><span class="line"></span><br><span class="line">// P2P 类型相关的</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didReceiveP2PFeatures:(NSXMLElement *)streamFeatures;</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender willSendP2PFeatures:(NSXMLElement *)streamFeatures;</span><br><span class="line"></span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didRegisterModule:(id)module;</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender willUnregisterModule:(id)module;</span><br><span class="line"></span><br><span class="line">// 当发送非 XMPP 元素节点时，会回调此代理方法</span><br><span class="line">// 也就是说，如果发送的 element 不是 &lt;iq&gt;, &lt;message&gt; 或者 &lt;presence&gt;，那么就会回调此代理方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didSendCustomElement:(NSXMLElement *)element;</span><br><span class="line"></span><br><span class="line">// 当接收到非 XMPP 元素节点时，会回调此代理方法</span><br><span class="line">// 也就是说，如果接收的element不是 &lt;iq&gt;, &lt;message&gt; 或者 &lt;presence&gt;，那么就会回调此代理方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didReceiveCustomElement:(NSXMLElement *)element;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-6-XMPPIQ-类"><a href="#2-6-XMPPIQ-类" class="headerlink" title="2.6 XMPPIQ 类"></a>2.6 XMPPIQ 类</h2><ul>
+<li><p>消息查询（IQ）就是通过此类来处理的了。XMPP 给我们提供了 IQ 方便创建的类，用于快速生成 XML 数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">@interface XMPPIQ : XMPPElement</span><br><span class="line"></span><br><span class="line">// 生成 IQ</span><br><span class="line"></span><br><span class="line">+ (XMPPIQ *)iq;</span><br><span class="line">+ (XMPPIQ *)iqWithType:(NSString *)type;</span><br><span class="line">+ (XMPPIQ *)iqWithType:(NSString *)type to:(XMPPJID *)jid;</span><br><span class="line">+ (XMPPIQ *)iqWithType:(NSString *)type to:(XMPPJID *)jid elementID:(NSString *)eid;</span><br><span class="line">+ (XMPPIQ *)iqWithType:(NSString *)type to:(XMPPJID *)jid elementID:(NSString *)eid child:(NSXMLElement *)childElement;</span><br><span class="line">+ (XMPPIQ *)iqWithType:(NSString *)type elementID:(NSString *)eid;</span><br><span class="line">+ (XMPPIQ *)iqWithType:(NSString *)type elementID:(NSString *)eid child:(NSXMLElement *)childElement;</span><br><span class="line">+ (XMPPIQ *)iqWithType:(NSString *)type child:(NSXMLElement *)childElement;</span><br><span class="line"></span><br><span class="line">- (id)init;</span><br><span class="line">- (id)initWithType:(NSString *)type;</span><br><span class="line">- (id)initWithType:(NSString *)type to:(XMPPJID *)jid;</span><br><span class="line">- (id)initWithType:(NSString *)type to:(XMPPJID *)jid elementID:(NSString *)eid;</span><br><span class="line">- (id)initWithType:(NSString *)type to:(XMPPJID *)jid elementID:(NSString *)eid child:(NSXMLElement *)childElement;</span><br><span class="line">- (id)initWithType:(NSString *)type elementID:(NSString *)eid;</span><br><span class="line">- (id)initWithType:(NSString *)type elementID:(NSString *)eid child:(NSXMLElement *)childElement;</span><br><span class="line">- (id)initWithType:(NSString *)type child:(NSXMLElement *)childElement;</span><br><span class="line"></span><br><span class="line">// IQ 类型</span><br><span class="line">- (NSString *)type;</span><br><span class="line"></span><br><span class="line">// 判断 type 类型</span><br><span class="line"></span><br><span class="line">- (BOOL)isGetIQ;</span><br><span class="line">- (BOOL)isSetIQ;</span><br><span class="line">- (BOOL)isResultIQ;</span><br><span class="line">- (BOOL)isErrorIQ;</span><br><span class="line"></span><br><span class="line">// 当 type 为 get 或者 set 时，这个 API 是很有用的，用于指定是否要求有响应</span><br><span class="line">- (BOOL)requiresResponse;</span><br><span class="line"></span><br><span class="line">- (NSXMLElement *)childElement;</span><br><span class="line">- (NSXMLElement *)childErrorElement;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>IQ 是一种请求／响应机制，从一个实体发送请求，另外一个实体接受请求并进行响应。例如，Client 在 stream 的上下文中插入一个元素，向 Server 请求得到自己的好友列表，Server 返回一个，里面是请求的结果。</p>
+</li>
+<li><p><code>&lt;type&gt;&lt;/type&gt;</code> 有以下类别（可选设置如：<code>&lt;type&gt;get&lt;/type&gt;</code>）</p>
+<p>| type   | 说明                             |<br>| —— | —————————— |<br>| get    | 获取当前域值。类似于 http get 方法         |<br>| set    | 设置或替换 get 查询的值。类似于 http put 方法 |<br>| result | 说明成功的响应了先前的查询。类似于 http 状态码 200 |<br>| error  | 查询和响应中出现的错误                    |</p>
+</li>
+<li><p>下面是一个 IQ 例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;iqfrom=&quot;huangyibiao@welcome.com/ios&quot;  </span><br><span class="line">    id=&quot;xxxxxxx&quot; </span><br><span class="line">    to=&quot;biaoge@welcome.com/ios&quot;  </span><br><span class="line">    type=&quot;get&quot;&gt; </span><br><span class="line">  &lt;queryxmlns=&quot;jabber:iq:roster&quot;/&gt; </span><br><span class="line">&lt;/iq&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-7-XMPPPresence-类"><a href="#2-7-XMPPPresence-类" class="headerlink" title="2.7 XMPPPresence 类"></a>2.7 XMPPPresence 类</h2><ul>
+<li><p>这个类代表节点，我们通过此类提供的方法来生成 XML 数据。presence 它代表用户在线状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@interface XMPPPresence : XMPPElement</span><br><span class="line"></span><br><span class="line">// Converts an NSXMLElement to an XMPPPresence element in place (no memory allocations or copying)</span><br><span class="line">+ (XMPPPresence *)presenceFromElement:(NSXMLElement *)element;</span><br><span class="line"></span><br><span class="line">+ (XMPPPresence *)presence;</span><br><span class="line">+ (XMPPPresence *)presenceWithType:(NSString *)type;</span><br><span class="line"></span><br><span class="line">// type：用户在线状态，to：接收方的 JID</span><br><span class="line">+ (XMPPPresence *)presenceWithType:(NSString *)type to:(XMPPJID *)to;</span><br><span class="line"></span><br><span class="line">- (id)init;</span><br><span class="line">- (id)initWithType:(NSString *)type;</span><br><span class="line">- (id)initWithType:(NSString *)type to:(XMPPJID *)to;</span><br><span class="line"></span><br><span class="line">- (NSString *)type;</span><br><span class="line"></span><br><span class="line">- (NSString *)show;</span><br><span class="line">- (NSString *)status;</span><br><span class="line"></span><br><span class="line">- (int)priority;</span><br><span class="line"></span><br><span class="line">- (int)intShow;</span><br><span class="line"></span><br><span class="line">- (BOOL)isErrorPresence;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>presence 用来表明用户的状态，如：online、offline、away、dnd (请勿打扰) 等。当改变自己的状态时，就会在 stream 的上下文中插入一个 Presence 元素，来表明自身的状态。要想接受 presence 消息，必须经过一个叫做 presence subscription 的授权过程。</p>
+</li>
+<li><p><code>&lt;type&gt;&lt;/type&gt;</code> 有以下类别（可选设置如：<code>&lt;type&gt;subscribe&lt;/type&gt;</code>）：</p>
+<p>| type           | 说明                |<br>| ————– | —————– |<br>| available      | 上线                |<br>| unavailable    | 下线                |<br>| away           | 离开                |<br>| do not disturb | 忙碌                |<br>| subscribe      | 订阅其他用户的状态         |<br>| probe          | 请求获取其他用户的状态       |<br>| unavailable    | 不可用，离线（offline）状态 |</p>
+</li>
+<li><p><code>&lt;show&gt;&lt;/show&gt;</code> 节点有以下类别，如 <code>&lt;show&gt;dnd&lt;/show&gt;</code> ：</p>
+<p>| show | 说明                |<br>| —- | —————– |<br>| chat | 聊天中               |<br>| away | 暂时离开              |<br>| xa   | eXtend Away，长时间离开 |<br>| dnd  | 勿打扰               |</p>
+</li>
+<li><p><code>&lt;status&gt;&lt;/status&gt;</code> 节点</p>
+<ul>
+<li>这个节点表示状态信息，内容比较自由，几乎可以是所有类型的内容。常用来表示用户当前心情，活动，听的歌曲，看的视频，所在的聊天室，访问的网页，玩的游戏等等。</li>
+</ul>
+</li>
+<li><p><code>&lt;priority&gt;&lt;/priority&gt;</code> 节点</p>
+<ul>
+<li>范围 -128~127。高优先级的 resource 能接受发送到 bare JID 的消息，低优先级的 resource 不能。优先级为负数的 resource 不能收到发送到 bare JID 的消息。</li>
+</ul>
+</li>
+<li><p>发送一个用户在线状态的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;presencefrom=&quot;alice@wonderland.lit/pda&quot;&gt; </span><br><span class="line">  &lt;show&gt;dnd&lt;/show&gt; </span><br><span class="line">  &lt;status&gt;浏览器搜索&lt;/status&gt; </span><br><span class="line">&lt;/presence&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-8-XMPPMessage-类"><a href="#2-8-XMPPMessage-类" class="headerlink" title="2.8 XMPPMessage 类"></a>2.8 XMPPMessage 类</h2><ul>
+<li><p>XMPPMessage 是 XMPP 框架给我们提供的，方便用于生成 XML 消息的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">@interface XMPPMessage : XMPPElement</span><br><span class="line"></span><br><span class="line">// Converts an NSXMLElement to an XMPPMessage element in place (no memory allocations or copying)</span><br><span class="line">+ (XMPPMessage *)messageFromElement:(NSXMLElement *)element;</span><br><span class="line"></span><br><span class="line">+ (XMPPMessage *)message;</span><br><span class="line">+ (XMPPMessage *)messageWithType:(NSString *)type;</span><br><span class="line">+ (XMPPMessage *)messageWithType:(NSString *)type to:(XMPPJID *)to;</span><br><span class="line">+ (XMPPMessage *)messageWithType:(NSString *)type to:(XMPPJID *)jid elementID:(NSString *)eid;</span><br><span class="line">+ (XMPPMessage *)messageWithType:(NSString *)type to:(XMPPJID *)jid elementID:(NSString *)eid child:(NSXMLElement *)childElement;</span><br><span class="line">+ (XMPPMessage *)messageWithType:(NSString *)type elementID:(NSString *)eid;</span><br><span class="line">+ (XMPPMessage *)messageWithType:(NSString *)type elementID:(NSString *)eid child:(NSXMLElement *)childElement;</span><br><span class="line">+ (XMPPMessage *)messageWithType:(NSString *)type child:(NSXMLElement *)childElement;</span><br><span class="line"></span><br><span class="line">- (id)init;</span><br><span class="line">- (id)initWithType:(NSString *)type;</span><br><span class="line">- (id)initWithType:(NSString *)type to:(XMPPJID *)to;</span><br><span class="line">- (id)initWithType:(NSString *)type to:(XMPPJID *)jid elementID:(NSString *)eid;</span><br><span class="line">- (id)initWithType:(NSString *)type to:(XMPPJID *)jid elementID:(NSString *)eid child:(NSXMLElement *)childElement;</span><br><span class="line">- (id)initWithType:(NSString *)type elementID:(NSString *)eid;</span><br><span class="line">- (id)initWithType:(NSString *)type elementID:(NSString *)eid child:(NSXMLElement *)childElement;</span><br><span class="line">- (id)initWithType:(NSString *)type child:(NSXMLElement *)childElement;</span><br><span class="line"></span><br><span class="line">- (NSString *)type;</span><br><span class="line">- (NSString *)subject;</span><br><span class="line">- (NSString *)body;</span><br><span class="line">- (NSString *)bodyForLanguage:(NSString *)language;</span><br><span class="line">- (NSString *)thread;</span><br><span class="line"></span><br><span class="line">- (void)addSubject:(NSString *)subject;</span><br><span class="line">- (void)addBody:(NSString *)body;</span><br><span class="line">- (void)addBody:(NSString *)body withLanguage:(NSString *)language;</span><br><span class="line">- (void)addThread:(NSString *)thread;</span><br><span class="line"></span><br><span class="line">- (BOOL)isChatMessage;</span><br><span class="line">- (BOOL)isChatMessageWithBody;</span><br><span class="line">- (BOOL)isErrorMessage;</span><br><span class="line">- (BOOL)isMessageWithBody;</span><br><span class="line"></span><br><span class="line">- (NSError *)errorMessage;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>message 是一种基本 推送 消息方法，它不要求响应。主要用于 IM、groupChat、alert 和 notification 之类的应用中。</p>
+</li>
+<li><p><code>&lt;type&gt;&lt;/type&gt;</code> 有以下类别（可选设置如：<code>&lt;type&gt;chat&lt;/type&gt;</code>）：</p>
+<p>| type      | 说明                                     |<br>| ——— | ————————————– |<br>| normal    | 类似于 email，主要特点是不要求响应                   |<br>| chat      | 类似于 qq 里的好友即时聊天，主要特点是实时通讯              |<br>| groupchat | 类似于聊天室里的群聊                             |<br>| headline  | 用于发送 alert 和 notification              |<br>| error     | 如果发送 message 出错，发现错误的实体会用这个类别来通知发送者出错了 |</p>
+</li>
+<li><p><code>&lt;body&gt;&lt;/body&gt;</code> 节点</p>
+<ul>
+<li>所要发送的内容就放在 body 节点下</li>
+</ul>
+</li>
+<li><p>消息节点的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;messageto=&quot;lily@jabber.org/contact&quot; type=&quot;chat&quot;&gt; </span><br><span class="line">    &lt;body&gt;您好？&lt;/body&gt;</span><br><span class="line">&lt;/message&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_labelTop" target="_blank" rel="noopener">回到顶部</a></p>
+<h1 id="3、XMPPFramework-框架使用"><a href="#3、XMPPFramework-框架使用" class="headerlink" title="3、XMPPFramework 框架使用"></a>3、XMPPFramework 框架使用</h1><h2 id="3-1-CocoaPods-导入框架"><a href="#3-1-CocoaPods-导入框架" class="headerlink" title="3.1 CocoaPods 导入框架"></a>3.1 CocoaPods 导入框架</h2><ul>
+<li><p>1、通过 CocoaPods 导入第三方框架 XMPPFramework。</p>
+<ul>
+<li><p>在 Podfile 文件中加入如下代码，在终端中，使用命令 <code>pod install</code> 下载添加 XMPPFramework 框架。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">platform :ios, &apos;8.0&apos;</span><br><span class="line"></span><br><span class="line">target &apos;XMPPDemo&apos; do</span><br><span class="line"></span><br><span class="line">    use_frameworks!</span><br><span class="line">    pod &apos;XMPPFramework&apos;, &apos;~&gt; 3.7.0&apos;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>2、在需要使用 XMPPFramework 的文件中导入以下头文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;XMPPFramework/XMPPFramework.h&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="3-2-导入框架过程中问题解决"><a href="#3-2-导入框架过程中问题解决" class="headerlink" title="3.2 导入框架过程中问题解决"></a>3.2 导入框架过程中问题解决</h2><ul>
+<li><p>1、用 Cocoapods 集成 XMPPFramework 遇 Module ‘KissXML’ not found 等问题解决方法。</p>
+<ul>
+<li><p>一般来说，通过 Coacopods 集成集成第三方框架，不会再有依赖库方面的问题，所以需要检查导入方式是否正确，最终找到原因，仔细看 githup 上导入说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Install</span><br><span class="line"></span><br><span class="line">The minimum deployment target is iOS 8.0 / macOS 10.8.</span><br><span class="line"></span><br><span class="line">The easiest way to install XMPPFramework is using CocoaPods. Remember to add to the top of your Podfile the </span><br><span class="line">use_frameworks! line (even if you are not using swift):</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>因此，Podfile 里必须写入这一句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use_frameworks!</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>2、Xcode8 之后 XMPP 重定义 Redefinition of module ‘dnssd’ 问题解决方法。</p>
+<ul>
+<li><p>在升级 Xcode 到 8 之后，原来的关于 XMPP 的项目运行报错，错误信息为： Redefinition of module ‘dnssd’。系统和XMPP框架同时用到了 ‘dnssd’，大概就是错误的原因。</p>
+</li>
+<li><p>解决方案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># The version pushed to CocoaPods is very out of date, use master branch for now </span><br><span class="line">pod &apos;XMPPFramework&apos;, :git =&gt; &quot;https://github.com/robbiehanson/XMPPFramework.git&quot;, :branch =&gt; &apos;master&apos;</span><br><span class="line"></span><br><span class="line">大概意思是需要更新 XMPP 框架，需要把 Podfile 文件中的 </span><br><span class="line">    pod &apos;XMPPFramework&apos;, &apos;~&gt; 3.6.6&apos; </span><br><span class="line">用 </span><br><span class="line">    pod &apos;XMPPFramework&apos;, :git =&gt; &quot;https://github.com/robbiehanson/XMPPFramework.git&quot;, :branch =&gt; &apos;master&apos;</span><br><span class="line">来替换</span><br><span class="line"></span><br><span class="line">或者直接改成 </span><br><span class="line">    pod &apos;XMPPFramework&apos;, &apos;~&gt; 3.7.0&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>3、在 pod update 的过程中有的童鞋会遇到下面这样的错误。</p>
+<p><img src="https://images2015.cnblogs.com/blog/993906/201702/993906-20170226012041710-1117027944.png" alt="IM6"></p>
+<ul>
+<li><p>这个是因为更新的 XMPP 框架中支持的最低版本为 iOS 8.0 / macOS 10.8。The minimum deployment target is iOS 8.0 / macOS 10.8.</p>
+</li>
+<li><p>把 Podfile 文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">platform：ios, &apos;7.0&apos;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>的 7.0 改为 8.0 或以上。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>4、pod 更新完成了，出现下面这样的错误。</p>
+<p><img src="https://images2015.cnblogs.com/blog/993906/201702/993906-20170226012052507-1749105216.png" alt="IM7"></p>
+<ul>
+<li><p>到报错的工程里面搜一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enable Strict Checking of objc_msgSend Calls</span><br></pre></td></tr></table></figure>
+<ul>
+<li>改成相反的值就行了，别改没有报错的工程。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_labelTop" target="_blank" rel="noopener">回到顶部</a></p>
+<h1 id="4、XMPPFramework-实现简单聊天"><a href="#4、XMPPFramework-实现简单聊天" class="headerlink" title="4、XMPPFramework 实现简单聊天"></a>4、XMPPFramework 实现简单聊天</h1><ul>
+<li>聊天实现的原理就是，一个客户端通过 XMPP 协议把信息传给服务器，服务器再发消息发给另一个客户端。</li>
+</ul>
+<h2 id="4-1-用户注册"><a href="#4-1-用户注册" class="headerlink" title="4.1 用户注册"></a>4.1 用户注册</h2><ul>
+<li><p>初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/// 包含头文件</span><br><span class="line">#import &lt;XMPPFramework/XMPPFramework.h&gt;</span><br><span class="line"></span><br><span class="line">/// 遵守协议</span><br><span class="line">&lt;XMPPStreamDelegate&gt;</span><br><span class="line"></span><br><span class="line">/// 定义 XMPP 服务器相关信息</span><br><span class="line">#define HOST_DOMAIN     @&quot;jhq0228-macbookair.local&quot;</span><br><span class="line">#define HOST_NAME       @&quot;jhq0228-macbookair.local&quot;</span><br><span class="line">#define HOST_PORT       5222</span><br><span class="line"></span><br><span class="line">/// 注册的账号</span><br><span class="line">@property (nonatomic, copy) NSString *registerUserName;</span><br><span class="line"></span><br><span class="line">/// 注册的密码</span><br><span class="line">@property (nonatomic, copy) NSString *registerPassWord;</span><br><span class="line"></span><br><span class="line">/// XMPP 流</span><br><span class="line">@property (nonatomic, strong) XMPPStream *stream;</span><br><span class="line"></span><br><span class="line">/// 初始化</span><br><span class="line">self.stream = [[XMPPStream alloc] init];</span><br><span class="line">self.stream.hostName = HOST_NAME;</span><br><span class="line">self.stream.hostPort = HOST_PORT;</span><br><span class="line">[self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>与服务器建立链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/// 与服务器建立链接</span><br><span class="line">[self connectToSercerWithUserName:self.registerUserName resource:nil];</span><br><span class="line"></span><br><span class="line">#pragma mark 与服务器连接通信</span><br><span class="line"></span><br><span class="line">    /// 与服务器建立链接，自定义方法</span><br><span class="line">    - (void)connectToSercerWithUserName:(NSString *)userName resource:(NSString *)resource &#123;</span><br><span class="line"></span><br><span class="line">        if ([self.stream isConnected]) &#123;</span><br><span class="line">            [self disconnectWithServer];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // jid</span><br><span class="line">        self.stream.myJID = [XMPPJID jidWithUser:userName domain:HOST_DOMAIN resource:resource];</span><br><span class="line"></span><br><span class="line">        NSError *error = nil;</span><br><span class="line"></span><br><span class="line">        // 进行链接</span><br><span class="line">        [self.stream connectWithTimeout:30.0 error:&amp;error];</span><br><span class="line"></span><br><span class="line">        if (error != nil) &#123;</span><br><span class="line">            NSLog(@&quot;连接出现问题&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进行注册</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark XMPPStreamDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 与服务器连接成功</span><br><span class="line">    - (void)xmppStreamDidConnect:(XMPPStream *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSError *error1 = nil;</span><br><span class="line"></span><br><span class="line">        // 进行注册</span><br><span class="line">        [self.stream registerWithPassword:self.registerPassWord error:&amp;error1];</span><br><span class="line"></span><br><span class="line">        if (error1 != nil) &#123;</span><br><span class="line">            NSLog(@&quot;注册出现问题&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 与服务器连接超时</span><br><span class="line">    - (void)xmppStreamConnectDidTimeout:(XMPPStream *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;连接服务器超时，请检查网络链接后再试！&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 注册成功</span><br><span class="line">    - (void)xmppStreamDidRegister:(XMPPStream *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;注册成功&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 注册失败</span><br><span class="line">    - (void)xmppStream:(XMPPStream *)sender didNotRegister:(DDXMLElement *)error &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;注册失败&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="4-2-用户登录、注销"><a href="#4-2-用户登录、注销" class="headerlink" title="4.2 用户登录、注销"></a>4.2 用户登录、注销</h2><ul>
+<li><p>初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/// 包含头文件</span><br><span class="line">#import &lt;XMPPFramework/XMPPFramework.h&gt;</span><br><span class="line"></span><br><span class="line">/// 遵守协议</span><br><span class="line">&lt;XMPPStreamDelegate&gt;</span><br><span class="line"></span><br><span class="line">/// 定义 XMPP 服务器相关信息</span><br><span class="line">#define HOST_DOMAIN     @&quot;jhq0228-macbookair.local&quot;</span><br><span class="line">#define HOST_NAME       @&quot;jhq0228-macbookair.local&quot;</span><br><span class="line">#define HOST_PORT       5222</span><br><span class="line"></span><br><span class="line">/// 登录的账号</span><br><span class="line">@property (nonatomic, copy) NSString *loginUserName;</span><br><span class="line"></span><br><span class="line">/// 登录的密码</span><br><span class="line">@property (nonatomic, copy) NSString *loginPassWord;</span><br><span class="line"></span><br><span class="line">/// XMPP 流</span><br><span class="line">@property (nonatomic, strong) XMPPStream *stream;</span><br><span class="line"></span><br><span class="line">/// 初始化</span><br><span class="line">self.stream = [[XMPPStream alloc] init];</span><br><span class="line">self.stream.hostName = HOST_NAME;</span><br><span class="line">self.stream.hostPort = HOST_PORT;</span><br><span class="line">[self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>与服务器建立链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/// 与服务器建立链接</span><br><span class="line">[self connectToSercerWithUserName:self.loginUserName resource:nil];</span><br><span class="line"></span><br><span class="line">#pragma mark 与服务器连接通信</span><br><span class="line"></span><br><span class="line">    /// 与服务器建立链接，自定义方法</span><br><span class="line">    - (void)connectToSercerWithUserName:(NSString *)userName resource:(NSString *)resource &#123;</span><br><span class="line"></span><br><span class="line">        if ([self.stream isConnected]) &#123;</span><br><span class="line">            [self disconnectWithServer];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // jid</span><br><span class="line">        self.stream.myJID = [XMPPJID jidWithUser:userName domain:HOST_DOMAIN resource:resource];</span><br><span class="line"></span><br><span class="line">        NSError *error = nil;</span><br><span class="line"></span><br><span class="line">        // 进行连接</span><br><span class="line">        [self.stream connectWithTimeout:30.0 error:&amp;error];</span><br><span class="line"></span><br><span class="line">        if (error != nil) &#123;</span><br><span class="line">            NSLog(@&quot;连接出现问题&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进行登录认证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark XMPPStreamDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 与服务器连接成功</span><br><span class="line">    - (void)xmppStreamDidConnect:(XMPPStream *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSError *error = nil;</span><br><span class="line"></span><br><span class="line">        // 进行登录认证</span><br><span class="line">        [self.stream authenticateWithPassword:self.loginPassWord error:&amp;error];</span><br><span class="line"></span><br><span class="line">        if (error != nil) &#123;</span><br><span class="line">            NSLog(@&quot;登录认证出现问题&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 与服务器连接超时</span><br><span class="line">    - (void)xmppStreamConnectDidTimeout:(XMPPStream *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;连接服务器超时，请检查网络链接后再试！&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 登录成功</span><br><span class="line">    - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;登录成功&quot;);</span><br><span class="line"></span><br><span class="line">        // 设置用户在线状态，如果没有添加，别人给你发的消息服务器默认为离线状态，是不会给你发送的</span><br><span class="line">        XMPPPresence *presence = [XMPPPresence presenceWithType:@&quot;available&quot;];</span><br><span class="line">        [self.stream sendElement:presence];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 登录失败</span><br><span class="line">    - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(DDXMLElement *)error &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;登录失败&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>与服务器断开链接，用户注销</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark 与服务器连接通信</span><br><span class="line"></span><br><span class="line">    /// 与服务器断开链接，用户注销，自定义方法</span><br><span class="line">    - (void)disconnectWithServer &#123;</span><br><span class="line"></span><br><span class="line">        // 断开链接</span><br><span class="line">        [self.stream disconnect];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">#pragma mark XMPPStreamDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 注销成功</span><br><span class="line">    - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;注销成功&quot;);</span><br><span class="line"></span><br><span class="line">        // 设置用户下线状态</span><br><span class="line">        XMPPPresence *presene = [XMPPPresence presenceWithType:@&quot;unavailable&quot;];</span><br><span class="line">        [self.stream sendElement:presene];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用户登录信息本地化存储</p>
+<ul>
+<li>添加第三方框架 <a href="https://github.com/soffes/SAMKeychain" target="_blank" rel="noopener">SAMKeychain</a>。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">/// 包含头文件</span><br><span class="line">#import &lt;SAMKeychain/SAMKeychain.h&gt;</span><br><span class="line"></span><br><span class="line">/// 用户名和密码</span><br><span class="line">@property (nonatomic, copy) NSString *userName;</span><br><span class="line">@property (nonatomic, copy) NSString *userPasswd;</span><br><span class="line"></span><br><span class="line">/// 是否记住密码</span><br><span class="line">@property (nonatomic, assign, getter=isSavePasswd) BOOL savePasswd;</span><br><span class="line"></span><br><span class="line">/// 保存用户登录信息</span><br><span class="line">- (void)saveUserLoginInfo &#123;</span><br><span class="line"></span><br><span class="line">    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];</span><br><span class="line"></span><br><span class="line">    [userDefaults setObject:self.userName forKey:@&quot;userNameKey&quot;];</span><br><span class="line">    [userDefaults setBool:self.isSavePasswd forKey:@&quot;isSavePwdKey&quot;];</span><br><span class="line">    [userDefaults synchronize];</span><br><span class="line"></span><br><span class="line">    if (self.isSavePasswd) &#123;</span><br><span class="line">        [SAMKeychain setPassword:self.userPasswd forService:[NSBundle mainBundle].bundleIdentifier account:self.userName];</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;保存用户登录信息&quot;);</span><br><span class="line"></span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        self.userPasswd = nil;</span><br><span class="line">        [SAMKeychain deletePasswordForService:[NSBundle mainBundle].bundleIdentifier account:self.userName];</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;不保存用户登录信息&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// 读取用户登录信息</span><br><span class="line">- (void)loadUserLoginInfo &#123;</span><br><span class="line"></span><br><span class="line">    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];</span><br><span class="line"></span><br><span class="line">    self.userName = [userDefaults objectForKey:@&quot;userNameKey&quot;];</span><br><span class="line">    self.savePasswd = [userDefaults boolForKey:@&quot;isSavePwdKey&quot;];</span><br><span class="line"></span><br><span class="line">    self.userPasswd = [SAMKeychain passwordForService:[NSBundle mainBundle].bundleIdentifier account:self.userName];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="4-3-好友管理"><a href="#4-3-好友管理" class="headerlink" title="4.3 好友管理"></a>4.3 好友管理</h2><ul>
+<li><p>初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/// 遵守协议</span><br><span class="line">&lt;XMPPStreamDelegate, XMPPRosterDelegate, XMPPRosterMemoryStorageDelegate&gt;</span><br><span class="line"></span><br><span class="line">/// 好友列表</span><br><span class="line">@property (nonatomic, strong) XMPPRoster *roster;</span><br><span class="line"></span><br><span class="line">/// 本地好友存储器</span><br><span class="line">@property (nonatomic, strong) XMPPRosterMemoryStorage *rosterMemoryStorage;</span><br><span class="line"></span><br><span class="line">// 添加好友模块</span><br><span class="line">self.rosterMemoryStorage = [[XMPPRosterMemoryStorage alloc] init];</span><br><span class="line">self.roster = [[XMPPRoster alloc] initWithRosterStorage:self.rosterMemoryStorage</span><br><span class="line">                                          dispatchQueue:dispatch_get_global_queue(0, 0)];</span><br><span class="line">[self.roster activate:self.stream];                                       // 激活</span><br><span class="line">[self.roster addDelegate:self delegateQueue:dispatch_get_main_queue()];   // 设置代理</span><br><span class="line">[self.roster setAutoFetchRoster:YES];                                     // 设置好友同步策略，XMPP 一旦连接成功，自动同步好友到本地</span><br><span class="line">[self.roster setAutoAcceptKnownPresenceSubscriptionRequests:NO];          // 关掉自动接收好友请求，默认开启自动同意</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取好友列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// 手动同步好友列表到本地好友存储器</span><br><span class="line">[self.roster fetchRoster];</span><br><span class="line"></span><br><span class="line">// 获取好友列表，从本地好友存储器中读取好友信息</span><br><span class="line">NSArray *users = self.rosterMemoryStorage.unsortedUsers;</span><br><span class="line"></span><br><span class="line">// 获取好友账号名称</span><br><span class="line">NSString *userName = [user[0] jid].user;</span><br><span class="line"></span><br><span class="line">// 获取好友昵称</span><br><span class="line">NSString *userName = [users[0] nickname];</span><br><span class="line"></span><br><span class="line">// 获取好友在线状态</span><br><span class="line">BOOL userStatus = [user[0] isOnline];</span><br><span class="line"></span><br><span class="line">#pragma mark XMPPRosterDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 开始同步好友列表到本地</span><br><span class="line">    - (void)xmppRosterDidBeginPopulating:(XMPPRoster *)sender withVersion:(NSString *)version &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 同步到一个好友节点到本地</span><br><span class="line">    - (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterItem:(NSXMLElement *)item &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 同步好友列表到本地完成</span><br><span class="line">    - (void)xmppRosterDidEndPopulating:(XMPPRoster *)sender &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>刷新好友列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - XMPPRosterMemoryStorageDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 本地好友存储器发生改变</span><br><span class="line">    - (void)xmppRosterDidChange:(XMPPRosterMemoryStorage *)sender &#123;</span><br><span class="line"></span><br><span class="line">        // 如果设置了自动同步，当服务器的好友列表发生改变时，会自动同步存入本地好友存储器 </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>刷新好友状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark XMPPStreamDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 好友状态改变</span><br><span class="line">    - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence &#123;</span><br><span class="line"></span><br><span class="line">        // 收到对方取消定阅我的消息，对方删除我、对方状态改变</span><br><span class="line"></span><br><span class="line">        if ([presence.type isEqualToString:@&quot;unsubscribe&quot;]) &#123;</span><br><span class="line"></span><br><span class="line">            // 从我的本地好友存储器中将对方移除</span><br><span class="line">            [self.roster removeUser:presence.from];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加好友</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/// 添加好友，自定义方法</span><br><span class="line">- (void)addFriendWithUserName:(NSString *)userName remarkName:(NSString *)remarkName &#123;</span><br><span class="line"></span><br><span class="line">    NSString *jidString = userName;</span><br><span class="line"></span><br><span class="line">    // 判断有没有域名，如果没有域名，自己添加形成完整的 jid</span><br><span class="line">    NSString *domainString = [NSString stringWithFormat:@&quot;@%@&quot;, HOST_DOMAIN];</span><br><span class="line">    if (![jidString containsString:domainString]) &#123;</span><br><span class="line">        jidString = [jidString stringByAppendingString:domainString];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    XMPPJID *friendJID = [XMPPJID jidWithString:jidString];</span><br><span class="line"></span><br><span class="line">    // 添加好友，remarkName 为备注名称</span><br><span class="line">    [self.roster addUser:friendJID withNickname:remarkName];</span><br><span class="line"></span><br><span class="line">    // [self.roster subscribePresenceToUser:friendJID];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>收到添加好友申请</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark XMPPRosterDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 收到添加好友请求</span><br><span class="line">    - (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence &#123;</span><br><span class="line"></span><br><span class="line">        NSString *name = [NSString stringWithFormat:@&quot;添加 %@ 为好友？&quot;, presence.from.user];</span><br><span class="line"></span><br><span class="line">        // 同意并添加对方为好友，YES 存入本地好友存储器</span><br><span class="line">        [self.roster acceptPresenceSubscriptionRequestFrom:presence.from andAddToRoster:YES];</span><br><span class="line"></span><br><span class="line">        // 拒绝添加对方为好友</span><br><span class="line">        [self.roster rejectPresenceSubscriptionRequestFrom:presence.from];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除好友</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/// 删除好友，自定义方法</span><br><span class="line">- (void)removeFriendWithUserName:(NSString *)userName &#123;</span><br><span class="line"></span><br><span class="line">    NSString *jidString = userName;</span><br><span class="line"></span><br><span class="line">    // 判断有没有域名，如果没有域名，自己添加形成完整的 jid</span><br><span class="line">    NSString *domainString = [NSString stringWithFormat:@&quot;@%@&quot;, HOST_DOMAIN];</span><br><span class="line">    if (![jidString containsString:domainString]) &#123;</span><br><span class="line">        jidString = [jidString stringByAppendingString:domainString];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    XMPPJID *friendJID = [XMPPJID jidWithString:jidString];</span><br><span class="line"></span><br><span class="line">    // 删除好友</span><br><span class="line">    [self.roster removeUser:friendJID];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="4-4-文本消息管理"><a href="#4-4-文本消息管理" class="headerlink" title="4.4 文本消息管理"></a>4.4 文本消息管理</h2><ul>
+<li><p>初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/// 遵守协议</span><br><span class="line">&lt;XMPPStreamDelegate&gt;</span><br><span class="line"></span><br><span class="line">/// 定义 XMPP 服务器相关信息</span><br><span class="line">#define HOST_DOMAIN     @&quot;jhq0228-macbookair.local&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送文本消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/// 发送文本消息，自定义方法</span><br><span class="line">- (void)sendMessage:(NSString *)message toUser:(NSString *)userName &#123;</span><br><span class="line"></span><br><span class="line">    // 消息结构</span><br><span class="line">    /*</span><br><span class="line">        &lt;message type=&quot;chat&quot; to=&quot;xiaoming@example.com&quot;&gt;</span><br><span class="line">            &lt;body&gt;Hello World&lt;/body&gt;</span><br><span class="line">        &lt;/message&gt;</span><br><span class="line">    */</span><br><span class="line"></span><br><span class="line">    NSString *jidString = userName;                                             // 设置消息接收者</span><br><span class="line">    NSString *domainString = [NSString stringWithFormat:@&quot;@%@&quot;, HOST_DOMAIN];</span><br><span class="line">    if (![jidString containsString:domainString]) &#123;</span><br><span class="line">        jidString = [jidString stringByAppendingString:domainString];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 构建消息</span><br><span class="line">    NSXMLElement *msg = [NSXMLElement elementWithName:@&quot;message&quot;];</span><br><span class="line">    [msg addAttributeWithName:@&quot;type&quot; stringValue:@&quot;chat&quot;];</span><br><span class="line">    [msg addAttributeWithName:@&quot;to&quot; stringValue:jidString];</span><br><span class="line"></span><br><span class="line">    NSXMLElement *body = [NSXMLElement elementWithName:@&quot;body&quot;];</span><br><span class="line">    [body setStringValue:message];                                              // 设置文本消息内容</span><br><span class="line"></span><br><span class="line">    [msg addChild:body];</span><br><span class="line"></span><br><span class="line">    // 发送</span><br><span class="line">    [self.stream sendElement:msg];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接收文本消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark XMPPStreamDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 接收到消息</span><br><span class="line">    - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message &#123;</span><br><span class="line"></span><br><span class="line">        NSString *msg = [[message elementForName:@&quot;body&quot;] stringValue];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消息回执</p>
+<ul>
+<li><p>这个是 XEP－0184 协议的内容。</p>
+</li>
+<li><p>发送消息时附加回执请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// 消息结构</span><br><span class="line">/*</span><br><span class="line">    &lt;message</span><br><span class="line">        from=&quot;northumberland@shakespeare.lit/westminster&quot;</span><br><span class="line">        id=&quot;richars2-4.1.247&quot;</span><br><span class="line">        to=&quot;kingrichard@royalty.england.lit/throne&quot;&gt;</span><br><span class="line">        &lt;body&gt;Hello World&lt;/body&gt;</span><br><span class="line">        &lt;request xmlns=&quot;urn:xmpp:receipts&quot;/&gt;</span><br><span class="line">    &lt;/message&gt;</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">NSString *jidString = userName;                                             // 设置消息接收者</span><br><span class="line">NSString *domainString = [NSString stringWithFormat:@&quot;@%@&quot;, HOST_DOMAIN];</span><br><span class="line">if (![jidString containsString:domainString]) &#123;</span><br><span class="line">    jidString = [jidString stringByAppendingString:domainString];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 构建消息</span><br><span class="line">NSString *siID = [XMPPStream generateUUID];</span><br><span class="line">XMPPJID *jid = [XMPPJID jidWithString:jidString];</span><br><span class="line"></span><br><span class="line">XMPPMessage *msg = [XMPPMessage messageWithType:@&quot;chat&quot; to:jid elementID:siID];</span><br><span class="line"></span><br><span class="line">NSXMLElement *receipt = [NSXMLElement elementWithName:@&quot;request&quot; xmlns:@&quot;urn:xmpp:receipts&quot;];</span><br><span class="line">[msg addChild:receipt];                                                     // 设置消息回执</span><br><span class="line"></span><br><span class="line">[msg addBody:message];                                                      // 设置消息内容</span><br><span class="line"></span><br><span class="line">// 发送</span><br><span class="line">[self.stream sendElement:msg];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>收到回执请求的消息，发送回执</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">/// 接收到消息，XMPPStreamDelegate 协议方法</span><br><span class="line">- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message &#123;</span><br><span class="line"></span><br><span class="line">    // 消息结构</span><br><span class="line">    /*</span><br><span class="line">        &lt;message</span><br><span class="line">            from=&quot;kingrichard@royalty.england.lit/throne&quot;</span><br><span class="line">            id=&quot;bi29sg183b4v&quot;</span><br><span class="line">            to=&quot;northumberland@shakespeare.lit/westminster&quot;&gt;</span><br><span class="line">            &lt;received xmlns=&quot;urn:xmpp:receipts&quot; id=&quot;richars2-4.1.247&quot;&gt;</span><br><span class="line">        &lt;/message&gt;</span><br><span class="line">     */</span><br><span class="line"></span><br><span class="line">    // 回执判断</span><br><span class="line">    NSXMLElement *request = [message elementForName:@&quot;request&quot;];</span><br><span class="line"></span><br><span class="line">    if (request) &#123;</span><br><span class="line"></span><br><span class="line">        // 消息回执</span><br><span class="line">        if ([request.xmlns isEqualToString:@&quot;urn:xmpp:receipts&quot;]) &#123;</span><br><span class="line"></span><br><span class="line">            // 组装消息回执</span><br><span class="line">            XMPPMessage *msg = [XMPPMessage messageWithType:[message attributeStringValueForName:@&quot;type&quot;]</span><br><span class="line">                                                         to:message.from</span><br><span class="line">                                                  elementID:[message attributeStringValueForName:@&quot;id&quot;]];</span><br><span class="line"></span><br><span class="line">            NSXMLElement *recieved = [NSXMLElement elementWithName:@&quot;received&quot; xmlns:@&quot;urn:xmpp:receipts&quot;];</span><br><span class="line">            [msg addChild:recieved];</span><br><span class="line"></span><br><span class="line">            // 发送回执</span><br><span class="line">            [self.stream sendElement:msg];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; else &#123;</span><br><span class="line"></span><br><span class="line">        NSXMLElement *received = [message elementForName:@&quot;received&quot;];</span><br><span class="line"></span><br><span class="line">        if (received) &#123;</span><br><span class="line"></span><br><span class="line">            // 消息回执</span><br><span class="line">            if ([received.xmlns isEqualToString:@&quot;urn:xmpp:receipts&quot;]) &#123;</span><br><span class="line"></span><br><span class="line">                // 发送成功</span><br><span class="line">                NSLog(@&quot;message send success!&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 消息处理</span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-5-图片消息管理"><a href="#4-5-图片消息管理" class="headerlink" title="4.5 图片消息管理"></a>4.5 图片消息管理</h2><ul>
+<li><p>图片和语音文件发送的基本思路：</p>
+<ul>
+<li>先将图片/语音转化成二进制文件，然后将二进制文件进行 base64 编码，编码成字符串。在即将发送的 message 内添加一个子节点，节点的 stringValue（节点的值）设置这个编码后的字符串。</li>
+<li>然后消息发出后取出消息文件的时候，通过 messageType 先判断是不是图片/语音信息，如果是图片/语音信息先通过自己之前设置的节点名称，把这个子节点的 stringValue 取出来，应该是一个 base64 之后的字符串。</li>
+</ul>
+</li>
+<li><p>选择图片</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/// 遵守协议</span><br><span class="line">&lt;UIImagePickerControllerDelegate, UINavigationControllerDelegate&gt;</span><br><span class="line"></span><br><span class="line">UIImagePickerController *picker = [[UIImagePickerController alloc]init];</span><br><span class="line">picker.delegate = self;</span><br><span class="line">[self presentViewController:picker animated:YES completion:nil];</span><br><span class="line"></span><br><span class="line">#pragma mark - UIImagePickerControllerDelegate 代理方法</span><br><span class="line"></span><br><span class="line">    - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info &#123;</span><br><span class="line"></span><br><span class="line">        UIImage *image = info[UIImagePickerControllerOriginalImage];</span><br><span class="line">        NSData *imageData = UIImagePNGRepresentation(image);</span><br><span class="line"></span><br><span class="line">        // 发送图片消息，自定义方法</span><br><span class="line">        [[XMPPManager defaultManager] sendMessage:imageData msgType:@&quot;image&quot; toUser:self.userName];</span><br><span class="line"></span><br><span class="line">        [self dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送图片消息</p>
+<ul>
+<li>msgType 自定义消息类型，image：图片消息，audio：音频消息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// 发送图片消息</span><br><span class="line">[[XMPPManager defaultManager] sendMessage:imageData msgType:@&quot;image&quot; toUser:self.userName];</span><br><span class="line"></span><br><span class="line">/// 发送图片/音频消息，自定义方法</span><br><span class="line">- (void)sendMessage:(NSData *)msgData msgType:(NSString *)type toUser:(NSString *)userName &#123;</span><br><span class="line"></span><br><span class="line">    NSString *jidString = userName;                                             // 设置消息接收者</span><br><span class="line">    NSString *domainString = [NSString stringWithFormat:@&quot;@%@&quot;, HOST_DOMAIN];</span><br><span class="line">    if (![jidString containsString:domainString]) &#123;</span><br><span class="line">        jidString = [jidString stringByAppendingString:domainString];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    XMPPJID *jid = [XMPPJID jidWithString:jidString];</span><br><span class="line">    XMPPMessage *msg = [XMPPMessage messageWithType:@&quot;chat&quot; to:jid];</span><br><span class="line"></span><br><span class="line">    [msg addBody:type];</span><br><span class="line"></span><br><span class="line">    // 转换成 base64 的编码</span><br><span class="line">    NSString *base64str = [msgData base64EncodedStringWithOptions:0];</span><br><span class="line"></span><br><span class="line">    // 设置节点内容</span><br><span class="line">    XMPPElement *attachment = [XMPPElement elementWithName:@&quot;attachment&quot; stringValue:base64str];</span><br><span class="line"></span><br><span class="line">    // 包含子节点</span><br><span class="line">    [msg addChild:attachment];</span><br><span class="line"></span><br><span class="line">    // 发送消息</span><br><span class="line">    [self.stream sendElement:msg];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接收图片消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark XMPPStreamDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 接收到消息</span><br><span class="line">    - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message &#123;</span><br><span class="line"></span><br><span class="line">        if ([message.body isEqualToString:@&quot;image&quot;]) &#123;</span><br><span class="line"></span><br><span class="line">            for (XMPPElement *node in message.children) &#123;</span><br><span class="line"></span><br><span class="line">                // 取出消息的解码</span><br><span class="line">                NSString *base64str = node.stringValue;</span><br><span class="line">                NSData *data = [[NSData alloc] initWithBase64EncodedString:base64str options:0];</span><br><span class="line"></span><br><span class="line">                UIImage *image = [[UIImage alloc] initWithData:data];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="4-6-语音消息管理"><a href="#4-6-语音消息管理" class="headerlink" title="4.6 语音消息管理"></a>4.6 语音消息管理</h2><ul>
+<li><p>图片和语音文件发送的基本思路：</p>
+<ul>
+<li>先将图片/语音转化成二进制文件，然后将二进制文件进行 base64 编码，编码成字符串。在即将发送的 message 内添加一个子节点，节点的 stringValue（节点的值）设置这个编码后的字符串。</li>
+<li>然后消息发出后取出消息文件的时候，通过 messageType 先判断是不是图片/语音信息，如果是图片/语音信息先通过自己之前设置的节点名称，把这个子节点的 stringValue 取出来，应该是一个 base64 之后的字符串。</li>
+</ul>
+</li>
+<li><p>录制／播放语音</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">/// 包含头文件</span><br><span class="line">#import &lt;AVFoundation/AVFoundation.h&gt;</span><br><span class="line"></span><br><span class="line">/// 录音器</span><br><span class="line">@property(nonatomic, strong) AVAudioRecorder *recorder;</span><br><span class="line"></span><br><span class="line">/// 录音时长</span><br><span class="line">@property(nonatomic, assign) NSTimeInterval recordTime;</span><br><span class="line"></span><br><span class="line">/// 录音地址</span><br><span class="line">@property(nonatomic, strong) NSURL *recordURL;</span><br><span class="line"></span><br><span class="line">/// 播放器</span><br><span class="line">@property(nonatomic, strong) AVAudioPlayer *player;</span><br><span class="line"></span><br><span class="line">/// 开始录音</span><br><span class="line"></span><br><span class="line">    // 自定义方法</span><br><span class="line">    - (IBAction)startRecord:(UIButton *)sender &#123;</span><br><span class="line"></span><br><span class="line">        // 创建录音文件保存路径</span><br><span class="line">        NSString *urlStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];</span><br><span class="line">        self.recordURL = [NSURL URLWithString:[urlStr stringByAppendingPathComponent:@&quot;myRecord.caf&quot;]];</span><br><span class="line"></span><br><span class="line">        // 创建录音格式设置</span><br><span class="line">        NSMutableDictionary *dicM = [NSMutableDictionary dictionary];</span><br><span class="line">        [dicM setObject:@(kAudioFormatLinearPCM) forKey:AVFormatIDKey];     // 设置录音格式</span><br><span class="line">        [dicM setObject:@(8000) forKey:AVSampleRateKey];                    // 设置录音采样率，8000 是电话采样率，对于一般录音已经够了</span><br><span class="line">        [dicM setObject:@(1) forKey:AVNumberOfChannelsKey];                 // 设置通道，这里采用单声道</span><br><span class="line">        [dicM setObject:@(8) forKey:AVLinearPCMBitDepthKey];                // 每个采样点位数，分为 8、16、24、32</span><br><span class="line">        [dicM setObject:@(YES) forKey:AVLinearPCMIsFloatKey];               // 是否使用浮点数采样</span><br><span class="line">        NSDictionary *setting = [dicM copy];</span><br><span class="line"></span><br><span class="line">        // 创建录音机</span><br><span class="line">        self.recorder = [[AVAudioRecorder alloc] initWithURL:self.recordURL settings:setting error:NULL];</span><br><span class="line"></span><br><span class="line">        // 开始录音</span><br><span class="line">        [self.recorder record];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">/// 停止录音</span><br><span class="line"></span><br><span class="line">    // 自定义方法</span><br><span class="line">    - (IBAction)stopRecord:(UIButton *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSTimeInterval time = self.recorder.currentTime;</span><br><span class="line">        [self.recorder stop];</span><br><span class="line"></span><br><span class="line">        if (time &lt; 1.5) &#123;</span><br><span class="line">            NSLog(@&quot;时间太短&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            NSLog(@&quot;录音完成&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">/// 播放录音</span><br><span class="line"></span><br><span class="line">    // 自定义方法</span><br><span class="line">    - (void)playAudioData:(NSData *)data &#123;</span><br><span class="line"></span><br><span class="line">        self.player = [[AVAudioPlayer alloc] initWithData:data error:NULL];</span><br><span class="line">        self.player.numberOfLoops = 0;</span><br><span class="line">        [self.player prepareToPlay];</span><br><span class="line">        [self.player play];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送语音消息</p>
+<ul>
+<li>msgType 自定义消息类型，image：图片消息，audio：音频消息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// 发送语音消息</span><br><span class="line">NSData *audioData = [NSData dataWithContentsOfURL:self.recordURL];</span><br><span class="line">NSString *type = [NSString stringWithFormat:@&quot;audio:%.1f秒&quot;, self.recordTime];</span><br><span class="line">[[XMPPManager defaultManager] sendMessage:audioData msgType:type toUser:self.userName];</span><br><span class="line"></span><br><span class="line">/// 发送图片/音频消息，自定义方法</span><br><span class="line">- (void)sendMessage:(NSData *)msgData msgType:(NSString *)type toUser:(NSString *)userName &#123;</span><br><span class="line"></span><br><span class="line">    NSString *jidString = userName;                                             // 设置消息接收者</span><br><span class="line">    NSString *domainString = [NSString stringWithFormat:@&quot;@%@&quot;, HOST_DOMAIN];</span><br><span class="line">    if (![jidString containsString:domainString]) &#123;</span><br><span class="line">        jidString = [jidString stringByAppendingString:domainString];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    XMPPJID *jid = [XMPPJID jidWithString:jidString];</span><br><span class="line">    XMPPMessage *msg = [XMPPMessage messageWithType:@&quot;chat&quot; to:jid];</span><br><span class="line"></span><br><span class="line">    [msg addBody:type];</span><br><span class="line"></span><br><span class="line">    // 转换成 base64 的编码</span><br><span class="line">    NSString *base64str = [msgData base64EncodedStringWithOptions:0];</span><br><span class="line"></span><br><span class="line">    // 设置节点内容</span><br><span class="line">    XMPPElement *attachment = [XMPPElement elementWithName:@&quot;attachment&quot; stringValue:base64str];</span><br><span class="line"></span><br><span class="line">    // 包含子节点</span><br><span class="line">    [msg addChild:attachment];</span><br><span class="line"></span><br><span class="line">    // 发送消息</span><br><span class="line">    [self.stream sendElement:msg];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接收语音消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark XMPPStreamDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 接收到消息</span><br><span class="line">    - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message &#123;</span><br><span class="line"></span><br><span class="line">        if ([message.body hasPrefix:@&quot;audio&quot;]) &#123;</span><br><span class="line"></span><br><span class="line">            for (XMPPElement *node in message.children) &#123;</span><br><span class="line"></span><br><span class="line">                // 取出消息的解码</span><br><span class="line">                NSString *base64str = node.stringValue;</span><br><span class="line">                NSData *data = [[NSData alloc] initWithBase64EncodedString:base64str options:0];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="4-7-心跳检测"><a href="#4-7-心跳检测" class="headerlink" title="4.7 心跳检测"></a>4.7 心跳检测</h2><ul>
+<li><p>为了监听服务器是否有效，增加心跳监听，用 XEP-0199 协议。</p>
+</li>
+<li><p>在 XMPPFrameWork 框架下，封装了 XMPPAutoPing 和 XMPPPing 两个类都可以使用，因为 XMPPAutoPing 已经组合进了 XMPPPing 类，所以 XMPPAutoPing 使用起来更方便。</p>
+</li>
+<li><p>初始化并启动 ping</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/// 包含头文件</span><br><span class="line">#import &lt;XMPPFramework/XMPPFramework.h&gt;</span><br><span class="line"></span><br><span class="line">/// 遵守协议</span><br><span class="line">&lt;XMPPAutoPingDelegate&gt;&gt;</span><br><span class="line"></span><br><span class="line">/// 心跳检测</span><br><span class="line">@property (nonatomic, strong) XMPPAutoPing *autoPing;</span><br><span class="line"></span><br><span class="line">// 添加心跳检测模块</span><br><span class="line">self.autoPing = [[XMPPAutoPing alloc] init];    // 发送的是一个 stream:ping，对方如果想表示自己是活跃的，应该返回一个 pong</span><br><span class="line">[self.autoPing activate:self.stream];           // 激活</span><br><span class="line">[self.autoPing addDelegate:self delegateQueue:dispatch_get_main_queue()];</span><br><span class="line">self.autoPing.pingInterval = 1000;              // 定时发送 ping 时间</span><br><span class="line">self.autoPing.respondsToQueries = YES;          // 不仅仅是服务器来得响应，如果是普通的用户，一样会响应</span><br><span class="line">self.autoPing.targetJID = [XMPPJID jidWithString:HOST_DOMAIN];      // 设置 ping 目标服务器</span><br><span class="line">                                                                   // 如果为 nil，则监听 stream 当前连接上的那个服务器</span><br><span class="line"></span><br><span class="line">#pragma mark - XMPPAutoPingDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 已经发送 ping</span><br><span class="line">    - (void)xmppAutoPingDidSendPing:(XMPPAutoPing *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;xmppAutoPingDidSendPing&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 接收到 pong</span><br><span class="line">    - (void)xmppAutoPingDidReceivePong:(XMPPAutoPing *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;xmppAutoPingDidReceivePong&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// ping 超时</span><br><span class="line">    - (void)xmppAutoPingDidTimeout:(XMPPAutoPing *)sender &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;xmppAutoPingDidTimeout&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>停止 ping</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 停止 ping</span><br><span class="line">[self.autoPing deactivate];</span><br><span class="line">[self.autoPing removeDelegate:self];</span><br><span class="line">self.autoPing = nil;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="4-8-自动重连"><a href="#4-8-自动重连" class="headerlink" title="4.8 自动重连"></a>4.8 自动重连</h2><ul>
+<li><p>当意外与服务器断开连接，自动重新连接上去，并且将上一次的信息自动加上去。</p>
+</li>
+<li><p>初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">/// 包含头文件</span><br><span class="line">#import &lt;XMPPFramework/XMPPFramework.h&gt;</span><br><span class="line"></span><br><span class="line">/// 遵守协议</span><br><span class="line">&lt;XMPPReconnectDelegate&gt;&gt;</span><br><span class="line"></span><br><span class="line">/// 自动重连</span><br><span class="line">@property (nonatomic, strong) XMPPReconnect *reconnect;</span><br><span class="line"></span><br><span class="line">// 添加自动重连模块</span><br><span class="line">self.reconnect = [[XMPPReconnect alloc] init];</span><br><span class="line">[self.reconnect activate:self.stream];          // 激活</span><br><span class="line">[self.reconnect addDelegate:self delegateQueue:dispatch_get_main_queue()];</span><br><span class="line">self.reconnect.autoReconnect = YES;             // 设置是否自动重新连接</span><br><span class="line"></span><br><span class="line">#pragma mark - XMPPReconnectDelegate 协议方法</span><br><span class="line"></span><br><span class="line">    /// 设置是否自动重新连接</span><br><span class="line">    - (BOOL)xmppReconnect:(XMPPReconnect *)sender shouldAttemptAutoReconnect:(SCNetworkConnectionFlags)connectionFlags &#123;</span><br><span class="line"></span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// 意外断开连接</span><br><span class="line">    - (void)xmppReconnect:(XMPPReconnect *)sender didDetectAccidentalDisconnect:(SCNetworkConnectionFlags)connectionFlags &#123;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;didDetectAccidentalDisconnect&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_labelTop" target="_blank" rel="noopener">回到顶部</a></p>
+<h1 id="5、XMPPFramework-快速登录"><a href="#5、XMPPFramework-快速登录" class="headerlink" title="5、XMPPFramework 快速登录"></a>5、XMPPFramework 快速登录</h1><ul>
+<li>具体讲解<a href="http://www.jianshu.com/p/cb6046376ccf" target="_blank" rel="noopener">链接</a></li>
+</ul>
+<p><a href="http://www.cnblogs.com/QianChia/p/6411914.html#_labelTop" target="_blank" rel="noopener">回到顶部</a></p>
+<h1 id="6、XMPPFramework-重连以及其他问题"><a href="#6、XMPPFramework-重连以及其他问题" class="headerlink" title="6、XMPPFramework 重连以及其他问题"></a>6、XMPPFramework 重连以及其他问题</h1><ul>
+<li>具体讲解<a href="http://www.jianshu.com/p/d9de0267c52a#" target="_blank" rel="noopener">链接</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/XMPP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3026,384 +3541,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/RunLoop详尽总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/17/RunLoop详尽总结/" itemprop="url">
-                  RunLoop详尽总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-09-17 14:22:30 / 修改时间：14:24:43" itemprop="dateCreated datePublished" datetime="2018-09-17T14:22:30+08:00">2018-09-17</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RunLoop/" itemprop="url" rel="index"><span itemprop="name">RunLoop</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://www.bujige.net/blog/iOS-Complete-learning-RunLoop.html" target="_blank" rel="noopener">转自 行走的少年郎</a></p>
-<h2 id="1-RunLoop简介"><a href="#1-RunLoop简介" class="headerlink" title="1. RunLoop简介"></a>1. RunLoop简介</h2><h3 id="1-1-什么是RunLoop？"><a href="#1-1-什么是RunLoop？" class="headerlink" title="1.1 什么是RunLoop？"></a>1.1 什么是RunLoop？</h3><p>可以理解为字面意思：Run表示运行，Loop表示循环。结合在一起就是运行的循环的意思。哈哈，我更愿意翻译为『跑圈』。直观理解就像是不停的跑圈。</p>
-<p>RunLoop实际上是一个对象，这个对象在循环中用来处理程序运行过程中出现的各种事件（比如说触摸事件、UI刷新事件、定时器事件、Selector事件），从而保持程序的持续运行；而且在没有事件处理的时候，会进入睡眠模式，从而节省CPU资源，提高程序性能。</p>
-<h3 id="1-2-RunLoop和线程"><a href="#1-2-RunLoop和线程" class="headerlink" title="1.2 RunLoop和线程"></a>1.2 RunLoop和线程</h3><p>RunLoop和线程是息息相关的，我们知道线程的作用是用来执行特定的一个或多个任务，但是在默认情况下，线程执行完之后就会退出，就不能再执行任务了。这时我们就需要采用一种方式来让线程能够处理任务，并不退出。所以，我们就有了RunLoop。</p>
-<ol>
-<li>一条线程对应一个RunLoop对象，每条线程都有唯一一个与之对应的RunLoop对象。</li>
-<li>我们只能在当前线程中操作当前线程的RunLoop，而不能去操作其他线程的RunLoop。</li>
-<li>RunLoop对象在第一次获取RunLoop时创建，销毁则是在线程结束的时候。</li>
-<li>主线程的RunLoop对象系统自动帮助我们创建好了(原理如下)，而子线程的RunLoop对象需要我们主动创建。</li>
-</ol>
-<h3 id="1-3-默认情况下主线程的RunLoop原理"><a href="#1-3-默认情况下主线程的RunLoop原理" class="headerlink" title="1.3 默认情况下主线程的RunLoop原理"></a>1.3 默认情况下主线程的RunLoop原理</h3><p>我们在启动一个iOS程序的时候，系统会调用创建项目时自动生成的main.m的文件。main.m文件如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其中<code>UIApplicationMain</code>函数内部帮我们开启了主线程的RunLoop，<code>UIApplicationMain</code>内部拥有一个无线循环的代码。上边的代码中开启RunLoop的过程可以简单的理解为如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char * argv[]) &#123;        </span><br><span class="line">    BOOL running = YES;</span><br><span class="line">    do &#123;</span><br><span class="line">        // 执行各种任务，处理各种事件</span><br><span class="line">        // ......</span><br><span class="line">    &#125; while (running);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>从上边可看出，程序一直在do-while循环中执行，所以UIApplicationMain函数一直没有返回，我们在运行程序之后程序不会马上退出，会保持持续运行状态。</p>
-<p>下图是苹果官方给出的RunLoop模型图。</p>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-6ab632fc118e31f3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-6ab632fc118e31f3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="官方RunLoop模型图"></a></p>
-<p>从上图中可以看出，RunLoop就是线程中的一个循环，RunLoop在循环中会不断检测，通过Input sources（输入源）和Timer sources（定时源）两种来源等待接受事件；然后对接受到的事件通知线程进行处理，并在没有事件的时候进行休息。</p>
-<h2 id="2-RunLoop相关类"><a href="#2-RunLoop相关类" class="headerlink" title="2. RunLoop相关类"></a>2. RunLoop相关类</h2><p>下面我们来了解一下Core Foundation框架下关于RunLoop的5个类，只有弄懂这几个类的含义，我们才能深入了解RunLoop运行机制。</p>
-<ol>
-<li>CFRunLoopRef：代表RunLoop的对象</li>
-<li>CFRunLoopModeRef：RunLoop的运行模式</li>
-<li>CFRunLoopSourceRef：就是RunLoop模型图中提到的输入源/事件源</li>
-<li>CFRunLoopTimerRef：就是RunLoop模型图中提到的定时源</li>
-<li>CFRunLoopObserverRef：观察者，能够监听RunLoop的状态改变</li>
-</ol>
-<p>下边详细讲解下几种类的具体含义和关系。</p>
-<p>先来看一张表示这5个类的关系图（来源：<a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">https://blog.ibireme.com/2015/05/18/runloop/</a>）。</p>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-2177aa2828b1ad34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-2177aa2828b1ad34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RunLoop相关类关系图.png"></a></p>
-<p>接着来讲解这5个类的相互关系（来源：<a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">https://blog.ibireme.com/2015/05/18/runloop/</a>），这篇文章总结的特别好，就拿来参考一下，有兴趣的朋友可以去看看，写的很好。</p>
-<p>一个RunLoop对象（CFRunLoopRef）中包含若干个运行模式（CFRunLoopModeRef）。而每一个运行模式下又包含若干个输入源（CFRunLoopSourceRef）、定时源（CFRunLoopTimerRef）、观察者（CFRunLoopObserverRef）。</p>
-<ul>
-<li>每次RunLoop启动时，只能指定其中一个运行模式（CFRunLoopModeRef），这个运行模式（CFRunLoopModeRef）被称作CurrentMode。</li>
-<li>如果需要切换运行模式（CFRunLoopModeRef），只能退出Loop，再重新指定一个运行模式（CFRunLoopModeRef）进入。</li>
-<li>这样做主要是为了分隔开不同组的输入源（CFRunLoopSourceRef）、定时源（CFRunLoopTimerRef）、观察者（CFRunLoopObserverRef），让其互不影响 。</li>
-</ul>
-<p>下边我们来详细讲解下这五个类：</p>
-<h3 id="2-1-CFRunLoopRef"><a href="#2-1-CFRunLoopRef" class="headerlink" title="2.1 CFRunLoopRef"></a>2.1 CFRunLoopRef</h3><p>CFRunLoopRef就是Core Foundation框架下RunLoop对象类。我们可通过以下方式来获取RunLoop对象：</p>
-<ul>
-<li>Core Foundation<ul>
-<li><code>CFRunLoopGetCurrent(); // 获得当前线程的RunLoop对象</code></li>
-<li><code>CFRunLoopGetMain(); // 获得主线程的RunLoop对象</code></li>
-</ul>
-</li>
-</ul>
-<p>当然，在Foundation框架下获取RunLoop对象类的方法如下：</p>
-<ul>
-<li>Foundation<ul>
-<li><code>[NSRunLoop currentRunLoop]; // 获得当前线程的RunLoop对象</code></li>
-<li><code>[NSRunLoop mainRunLoop]; // 获得主线程的RunLoop对象</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="2-2-CFRunLoopModeRef"><a href="#2-2-CFRunLoopModeRef" class="headerlink" title="2.2 CFRunLoopModeRef"></a>2.2 CFRunLoopModeRef</h3><p>系统默认定义了多种运行模式（CFRunLoopModeRef），如下：</p>
-<ol>
-<li><strong>kCFRunLoopDefaultMode</strong>：App的默认运行模式，通常主线程是在这个运行模式下运行</li>
-<li><strong>UITrackingRunLoopMode</strong>：跟踪用户交互事件（用于 ScrollView 追踪触摸滑动，保证界面滑动时不受其他Mode影响）</li>
-<li>UIInitializationRunLoopMode：在刚启动App时第进入的第一个 Mode，启动完成后就不再使用</li>
-<li>GSEventReceiveRunLoopMode：接受系统内部事件，通常用不到</li>
-<li><strong>kCFRunLoopCommonModes</strong>：伪模式，不是一种真正的运行模式（后边会用到）</li>
-</ol>
-<p>其中<strong>kCFRunLoopDefaultMode</strong>、<strong>UITrackingRunLoopMode</strong>、<strong>kCFRunLoopCommonModes</strong>是我们开发中需要用到的模式，具体使用方法我们在 <strong>2.3 CFRunLoopTimerRef</strong> 中结合CFRunLoopTimerRef来演示说明。</p>
-<h3 id="2-3-CFRunLoopTimerRef"><a href="#2-3-CFRunLoopTimerRef" class="headerlink" title="2.3 CFRunLoopTimerRef"></a>2.3 CFRunLoopTimerRef</h3><p>CFRunLoopTimerRef是定时源（RunLoop模型图中提到过），理解为基于时间的触发器，基本上就是NSTimer（哈哈，这个理解就简单了吧）。</p>
-<p>下面我们来演示下CFRunLoopModeRef和CFRunLoopTimerRef结合的使用用法，从而加深理解。</p>
-<ol>
-<li><p>首先我们新建一个iOS项目，在Main.storyboard中拖入一个Text View。</p>
-</li>
-<li><p>在ViewController.m文件中加入以下代码，<a href="https://github.com/lianai911/YSC-RunLoopDemo" target="_blank" rel="noopener">Demo</a>中请调用<code>[self ShowDemo1];</code>来演示。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    // 定义一个定时器，约定两秒之后调用self的run方法</span><br><span class="line">    NSTimer *timer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(run) userInfo:nil repeats:YES];</span><br><span class="line"></span><br><span class="line">    // 将定时器添加到当前RunLoop的NSDefaultRunLoopMode下</span><br><span class="line">    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)run</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;---run&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>然后运行，这时候我们发现如果我们不对模拟器进行任何操作的话，定时器会稳定的每隔2秒调用run方法打印。</p>
-</li>
-<li><p>但是当我们拖动Text View滚动时，我们发现：run方法不打印了，也就是说NSTimer不工作了。而当我们松开鼠标的时候，NSTimer就又开始正常工作了。</p>
-</li>
-</ol>
-<p>这是因为：</p>
-<ul>
-<li>当我们不做任何操作的时候，RunLoop处于NSDefaultRunLoopMode下。</li>
-<li>而当我们拖动Text View的时候，RunLoop就结束NSDefaultRunLoopMode，切换到了UITrackingRunLoopMode模式下，这个模式下没有添加NSTimer，所以我们的NSTimer就不工作了。</li>
-<li>但当我们松开鼠标的时候，RunLoop就结束UITrackingRunLoopMode模式，又切换回NSDefaultRunLoopMode模式，所以NSTimer就又开始正常工作了。</li>
-</ul>
-<p>你可以试着将上述代码中的<code>[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];</code>语句换为<code>[[NSRunLoop currentRunLoop] addTimer:timer forMode:UITrackingRunLoopMode];</code>，也就是将定时器添加到当前RunLoop的UITrackingRunLoopMode下，你就会发现定时器只会在拖动Text View的模式下工作，而不做操作的时候定时器就不工作。</p>
-<p>那难道我们就不能在这两种模式下让NSTimer都能正常工作吗？</p>
-<p>当然可以，这就用到了我们之前说过的<strong>伪模式（kCFRunLoopCommonModes）</strong>，这其实不是一种真实的模式，而是一种标记模式，意思就是可以在打上Common Modes标记的模式下运行。</p>
-<p>那么哪些模式被标记上了Common Modes呢？</p>
-<p><strong>NSDefaultRunLoopMode</strong> 和 <strong>UITrackingRunLoopMode</strong>。</p>
-<p>所以我们只要我们将NSTimer添加到当前RunLoop的kCFRunLoopCommonModes（Foundation框架下为NSRunLoopCommonModes）下，我们就可以让NSTimer在不做操作和拖动Text View两种情况下愉快的正常工作了。</p>
-<p>具体做法就是讲添加语句改为<code>[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];</code></p>
-<p>既然讲到了NSTimer，这里顺便讲下NSTimer中的<code>scheduledTimerWithTimeInterval</code>方法和RunLoop的关系。添加下面的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(run) userInfo:nil repeats:YES];</span><br></pre></td></tr></table></figure>
-<p>这句代码调用了scheduledTimer返回的定时器，NSTimer会自动被加入到了RunLoop的NSDefaultRunLoopMode模式下。这句代码相当于下面两句代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSTimer *timer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(run) userInfo:nil repeats:YES];</span><br><span class="line">[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];</span><br></pre></td></tr></table></figure>
-<h3 id="2-4-CFRunLoopSourceRef"><a href="#2-4-CFRunLoopSourceRef" class="headerlink" title="2.4 CFRunLoopSourceRef"></a>2.4 CFRunLoopSourceRef</h3><p>CFRunLoopSourceRef是事件源（RunLoop模型图中提到过），CFRunLoopSourceRef有两种分类方法。</p>
-<ul>
-<li>第一种按照官方文档来分类（就像RunLoop模型图中那样）：<ul>
-<li>Port-Based Sources（基于端口）</li>
-<li>Custom Input Sources（自定义）</li>
-<li>Cocoa Perform Selector Sources</li>
-</ul>
-</li>
-<li>第二种按照函数调用栈来分类：<ul>
-<li>Source0 ：非基于Port</li>
-<li>Source1：基于Port，通过内核和其他线程通信，接收、分发系统事件</li>
-</ul>
-</li>
-</ul>
-<p>这两种分类方式其实没有区别，只不过第一种是通过官方理论来分类，第二种是在实际应用中通过调用函数来分类。</p>
-<p>下边我们举个例子大致来了解一下函数调用栈和Source。</p>
-<ol>
-<li><p>在我们的项目中的Main.storyboard中添加一个Button按钮，并添加点击动作。</p>
-</li>
-<li><p>然后在点击动作的代码中加入一句输出语句，并打上断点，如下图所示：</p>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-f801715c95de19f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-f801715c95de19f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加Button.png"></a></p>
-</li>
-<li><p>然后运行程序，并点击按钮。</p>
-</li>
-<li><p>然后在项目中单击下下图红色部分。</p>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-970c15ff611d4d6d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-970c15ff611d4d6d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="函数调用栈展示图"></a></p>
-</li>
-<li><p>可以看到如下图所示就是点击事件产生的函数调用栈。</p>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-c014e77adce248c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-c014e77adce248c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="函数调用栈"></a></p>
-</li>
-</ol>
-<p>所以点击事件是这样来的：</p>
-<ol>
-<li>首先程序启动，调用16行的main函数，main函数调用15行UIApplicationMain函数，然后一直往上调用函数，最终调用到0行的BtnClick函数，即点击函数。</li>
-<li>同时我们可以看到11行中有Sources0，也就是说我们点击事件是属于Sources0函数的，点击事件就是在Sources0中处理的。</li>
-<li>而至于Sources1，则是用来接收、分发系统事件，然后再分发到Sources0中处理的。</li>
-</ol>
-<h3 id="2-5-CFRunLoopObserverRef"><a href="#2-5-CFRunLoopObserverRef" class="headerlink" title="2.5 CFRunLoopObserverRef"></a>2.5 CFRunLoopObserverRef</h3><p>CFRunLoopObserverRef是观察者，用来监听RunLoop的状态改变</p>
-<p>CFRunLoopObserverRef可以监听的状态改变有以下几种：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">typedef CF_OPTIONS(CFOptionFlags, CFRunLoopActivity) &#123;</span><br><span class="line">    kCFRunLoopEntry = (1UL &lt;&lt; 0),               // 即将进入Loop：1</span><br><span class="line">    kCFRunLoopBeforeTimers = (1UL &lt;&lt; 1),        // 即将处理Timer：2    </span><br><span class="line">    kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),       // 即将处理Source：4</span><br><span class="line">    kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),       // 即将进入休眠：32</span><br><span class="line">    kCFRunLoopAfterWaiting = (1UL &lt;&lt; 6),        // 即将从休眠中唤醒：64</span><br><span class="line">    kCFRunLoopExit = (1UL &lt;&lt; 7),                // 即将从Loop中退出：128</span><br><span class="line">    kCFRunLoopAllActivities = 0x0FFFFFFFU       // 监听全部状态改变  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>下边我们通过代码来监听下RunLoop中的状态改变。</p>
-<ol>
-<li><p>在ViewController.m中添加如下代码，<a href="https://github.com/lianai911/YSC-RunLoopDemo" target="_blank" rel="noopener">Demo</a>中请调用<code>[self showDemo2];</code>方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    // 创建观察者</span><br><span class="line">    CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(CFAllocatorGetDefault(), kCFRunLoopAllActivities, YES, 0, ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) &#123;</span><br><span class="line">        NSLog(@&quot;监听到RunLoop发生改变---%zd&quot;,activity);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // 添加观察者到当前RunLoop中</span><br><span class="line">    CFRunLoopAddObserver(CFRunLoopGetCurrent(), observer, kCFRunLoopDefaultMode);</span><br><span class="line"></span><br><span class="line">    // 释放observer，最后添加完需要释放掉</span><br><span class="line">    CFRelease(observer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>然后运行，看下打印结果，如下图。</p>
-</li>
-</ol>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-2005e92565b30e68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-2005e92565b30e68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="打印结果"></a></p>
-<p>可以看到RunLoop的状态在不断的改变，最终变成了状态 32，也就是即将进入睡眠状态，说明RunLoop之后就会进入睡眠状态。</p>
-<h2 id="3-RunLoop原理"><a href="#3-RunLoop原理" class="headerlink" title="3. RunLoop原理"></a>3. RunLoop原理</h2><p>好了，五个类都讲解完了，下边开始放大招了。这下我们就可以来理解RunLoop的运行逻辑了。</p>
-<p>下边上一张之前提到的文章中博主提供的运行逻辑图（来源：<a href="https://blog.ibireme.com/2015/05/18/runloop/%EF%BC%89" target="_blank" rel="noopener">https://blog.ibireme.com/2015/05/18/runloop/）</a></p>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-94c6cdb3a7864593.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-94c6cdb3a7864593.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RunLoop运行逻辑图"></a></p>
-<p>这张图对于我们理解RunLoop来说太有帮助了，下边我们可以来说下官方文档给我们的RunLoop逻辑。</p>
-<p>在每次运行开启RunLoop的时候，所在线程的RunLoop会自动处理之前未处理的事件，并且通知相关的观察者。</p>
-<p>具体的顺序如下：</p>
-<ol>
-<li>通知观察者RunLoop已经启动</li>
-<li>通知观察者即将要开始的定时器</li>
-<li>通知观察者任何即将启动的非基于端口的源</li>
-<li>启动任何准备好的非基于端口的源</li>
-<li>如果基于端口的源准备好并处于等待状态，立即启动；并进入步骤9</li>
-<li>通知观察者线程进入休眠状态</li>
-<li>将线程置于休眠知道任一下面的事件发生：<ul>
-<li>某一事件到达基于端口的源</li>
-<li>定时器启动</li>
-<li>RunLoop设置的时间已经超时</li>
-<li>RunLoop被显示唤醒</li>
-</ul>
-</li>
-<li>通知观察者线程将被唤醒</li>
-<li>处理未处理的事件<ul>
-<li>如果用户定义的定时器启动，处理定时器事件并重启RunLoop。进入步骤2</li>
-<li>如果输入源启动，传递相应的消息</li>
-<li>如果RunLoop被显示唤醒而且时间还没超时，重启RunLoop。进入步骤2</li>
-</ul>
-</li>
-<li>通知观察者RunLoop结束。</li>
-</ol>
-<h2 id="4-RunLoop实战应用"><a href="#4-RunLoop实战应用" class="headerlink" title="4. RunLoop实战应用"></a>4. RunLoop实战应用</h2><p>哈哈，讲了这么多云里雾里的原理知识，下边终于到了实战应用环节。</p>
-<p>光弄懂是没啥用的，能够实战应用才是硬道理。下面讲解一下RunLoop的几种应用。</p>
-<h3 id="4-1-NSTimer的使用"><a href="#4-1-NSTimer的使用" class="headerlink" title="4.1 NSTimer的使用"></a>4.1 NSTimer的使用</h3><p>NSTimer的使用方法在讲解<code>CFRunLoopTimerRef</code>类的时候详细讲解过，具体参考上边 <strong>2.3 CFRunLoopTimerRef</strong>。</p>
-<h3 id="4-2-ImageView推迟显示"><a href="#4-2-ImageView推迟显示" class="headerlink" title="4.2 ImageView推迟显示"></a>4.2 ImageView推迟显示</h3><p>有时候，我们会遇到这种情况：<br>当界面中含有UITableView，而且每个UITableViewCell里边都有图片。这时候当我们滚动UITableView的时候，如果有一堆的图片需要显示，那么可能会出现卡顿的现象。</p>
-<p>怎么解决这个问题呢？</p>
-<p>这时候，我们应该推迟图片的显示，也就是ImageView推迟显示图片。有两种方法：</p>
-<h4 id="1-监听UIScrollView的滚动"><a href="#1-监听UIScrollView的滚动" class="headerlink" title="1. 监听UIScrollView的滚动"></a>1. 监听UIScrollView的滚动</h4><p>因为UITableView继承自UIScrollView，所以我们可以通过监听UIScrollView的滚动，实现UIScrollView相关delegate即可。</p>
-<h4 id="2-利用PerformSelector设置当前线程的RunLoop的运行模式"><a href="#2-利用PerformSelector设置当前线程的RunLoop的运行模式" class="headerlink" title="2. 利用PerformSelector设置当前线程的RunLoop的运行模式"></a>2. 利用PerformSelector设置当前线程的RunLoop的运行模式</h4><p>利用<code>performSelector</code>方法为UIImageView调用<code>setImage:</code>方法，并利用<code>inModes</code>将其设置为RunLoop下NSDefaultRunLoopMode运行模式。代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.imageView performSelector:@selector(setImage:) withObject:[UIImage imageNamed:@&quot;tupian&quot;] afterDelay:4.0 inModes:NSDefaultRunLoopMode];</span><br></pre></td></tr></table></figure>
-<p>下边利用Demo演示一下该方法。</p>
-<ol>
-<li><p>在项目中的Main.storyboard中添加一个UIImageView，并添加属性，并简单添加一下约束（不然无法显示）如下图所示。</p>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-8253c4b57f1b674e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-8253c4b57f1b674e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加UIImageView"></a></p>
-</li>
-<li><p>在项目中拖入一张图片，比如下图。</p>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-b4777f945878a0b9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-b4777f945878a0b9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="tupian.jpg"></a></p>
-</li>
-<li><p>然后我们在<code>touchesBegan</code>方法中添加下面的代码，在<a href="https://github.com/lianai911/YSC-RunLoopDemo" target="_blank" rel="noopener">Demo</a>中请在<code>touchesBegan</code>中调用<code>[self showDemo3];</code>方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</span><br><span class="line">&#123;</span><br><span class="line">    [self.imageView performSelector:@selector(setImage:) withObject:[UIImage imageNamed:@&quot;tupian&quot;] afterDelay:4.0 inModes:@[NSDefaultRunLoopMode]];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>运行程序，点击一下屏幕，然后拖动UIText View，拖动4秒以上，发现过了4秒之后，UIImageView还没有显示图片，当我们松开的时候，则显示图片，效果如下：</p>
-</li>
-</ol>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-13880540c8c89552.gif?imageMogr2/auto-orient/strip" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-13880540c8c89552.gif?imageMogr2/auto-orient/strip" alt="UIImageView延迟显示效果.gif"></a></p>
-<p>这样我们就实现了在拖动完之后，在延迟显示UIImageView。</p>
-<h3 id="4-3-后台常驻线程（很常用）"><a href="#4-3-后台常驻线程（很常用）" class="headerlink" title="4.3 后台常驻线程（很常用）"></a>4.3 后台常驻线程（很常用）</h3><p>我们在开发应用程序的过程中，如果后台操作特别频繁，经常会在子线程做一些耗时操作（下载文件、后台播放音乐等），我们最好能让这条线程永远常驻内存。</p>
-<p>那么怎么做呢？</p>
-<p>添加一条用于常驻内存的强引用的子线程，在该线程的RunLoop下添加一个Sources，开启RunLoop。</p>
-<p>具体实现过程如下：</p>
-<ol>
-<li><p>在项目的ViewController.m中添加一条强引用的thread线程属性，如下图：</p>
-<p><a href="https://upload-images.jianshu.io/upload_images/1877784-ffce8301e3bd4736.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/1877784-ffce8301e3bd4736.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加thread属性"></a></p>
-</li>
-<li><p>在viewDidLoad中创建线程self.thread，使线程启动并执行run1方法，代码如下。在<a href="https://github.com/lianai911/YSC-RunLoopDemo" target="_blank" rel="noopener">Demo</a>中，请在viewDidLoad调用<code>[self showDemo4];</code>方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    // 创建线程，并调用run1方法执行任务</span><br><span class="line">    self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(run1) object:nil];</span><br><span class="line">    // 开启线程</span><br><span class="line">    [self.thread start];    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void) run1</span><br><span class="line">&#123;</span><br><span class="line">    // 这里写任务</span><br><span class="line">    NSLog(@&quot;----run1-----&quot;);</span><br><span class="line"></span><br><span class="line">    // 添加下边两句代码，就可以开启RunLoop，之后self.thread就变成了常驻线程，可随时添加任务，并交于RunLoop处理</span><br><span class="line">    [[NSRunLoop currentRunLoop] addPort:[NSPort port] forMode:NSDefaultRunLoopMode];</span><br><span class="line">    [[NSRunLoop currentRunLoop] run];</span><br><span class="line"></span><br><span class="line">    // 测试是否开启了RunLoop，如果开启RunLoop，则来不了这里，因为RunLoop开启了循环。</span><br><span class="line">    NSLog(@&quot;未开启RunLoop&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>运行之后发现打印了<strong>—-run1—–</strong>，而<strong>未开启RunLoop</strong>则未打印。</p>
-</li>
-</ol>
-<p>这时，我们就开启了一条常驻线程，下边我们来试着添加其他任务，除了之前创建的时候调用了run1方法，我们另外在点击的时候调用run2方法。</p>
-<p>那么，我们在touchesBegan中调用PerformSelector，从而实现在点击屏幕的时候调用run2方法。<a href="https://github.com/lianai911/YSC-RunLoopDemo" target="_blank" rel="noopener">Demo地址</a>。具体代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</span><br><span class="line">&#123;   </span><br><span class="line">    // 利用performSelector，在self.thread的线程中调用run2方法执行任务</span><br><span class="line">    [self performSelector:@selector(run2) onThread:self.thread withObject:nil waitUntilDone:NO];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void) run2</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;----run2------&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>经过运行测试，除了之前打印的<strong>—-run1—–</strong>，每当我们点击屏幕，都能调用<strong>—-run2——</strong>。<br>这样我们就实现了常驻线程的需求。</p>
-<hr>
-<p>彻底学会多线程系列其他文章：</p>
-<ul>
-<li><a href="https://bujige.net/blog/iOS-Complete-learning-pthread-and-NSThread.html" target="_blank" rel="noopener">iOS多线程–彻底学会多线程之『pthread、NSThread』</a></li>
-<li><a href="https://bujige.net/blog/iOS-Complete-learning-GCD.html" target="_blank" rel="noopener">iOS多线程–彻底学会多线程之『GCD』</a></li>
-<li><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">iOS多线程–彻底学会多线程之『NSOperation』</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3451,7 +3588,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
