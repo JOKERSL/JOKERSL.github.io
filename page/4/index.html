@@ -111,7 +111,7 @@
   <meta name="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Man Tou Pu&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/iOS面试/archives/2018/09/page/3/index.html">
+<meta property="og:url" content="http://yoursite.com/iOS面试/page/4/index.html">
 <meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
 <meta property="og:description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
 <meta property="og:locale" content="zh-CN">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/iOS面试/archives/2018/09/page/3/"/>
+  <link rel="canonical" href="http://yoursite.com/iOS面试/page/4/"/>
 
 
 
@@ -134,7 +134,7 @@
   };
 </script>
 
-  <title>归档 | Man Tou Pu's Blog</title>
+  <title>Man Tou Pu's Blog</title>
   
 
 
@@ -181,7 +181,8 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -238,7 +239,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
   </li>
@@ -250,22 +251,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -290,375 +275,192 @@
           
           <div id="content" class="content">
             
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
 
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/01/15/iOS-DES总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/15/iOS-DES总结/" itemprop="url">
+                  iOS DES总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-01-15 11:54:15" itemprop="dateCreated datePublished" datetime="2018-01-15T11:54:15+08:00">2018-01-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-09-11 17:27:23" itemprop="dateModified" datetime="2018-09-11T17:27:23+08:00">2018-09-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/加密/" itemprop="url" rel="index"><span itemprop="name">加密</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        还行! 目前共计 31 篇日志。 继续努力。
-      </span>
       
 
       
-
-        
-        
-        
-
         
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
+            <p>iOS中使用DES加密总结</p>
+<p>常见的对称加密有:DES、3DES、RC4、AES等；<br>加密算法都有几个共同的特点：<br>1.秘钥长度；<br>2.加密模式；<br>3.块加密算法里的填充区分；<br>以下是我对做项目时遇到的问题所做的小结</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ccStatus = CCCrypt(encryptOperation,</span><br><span class="line">                       kCCAlgorithmDES,</span><br><span class="line">                       kCCOptionPKCS7Padding|kCCOptionECBMode,</span><br><span class="line">                       vkey, </span><br><span class="line">                       kCCKeySizeDES,</span><br><span class="line">                       iv, </span><br><span class="line">                       dataIn, </span><br><span class="line">                       dataInLength,</span><br><span class="line">                       (void *)dataOut,</span><br><span class="line">                       dataOutAvailable,</span><br><span class="line">                       &amp;dataOutMoved);</span><br></pre></td></tr></table></figure>
+<p>第一个参数encryptOperation：告诉函数加密还是解密 第二个参数kCCAlgorithmDES：使用DES加密 第三个参数 kCCOptionPKCS7Padding|kCCOptionECBMode使用ECB加密模式和PKCS7Padding填充模式，如果使用kCCOptionPKCS7Padding就代表使用CBC加密模式并且使用PKCS7Padding的填充模式。 在DES中加密数据包单位长度是8字节，在8自己的情况下PKCS7Padding等价于PKCS5Padding。</p>
+<p>后台大哥给了一个线上加密的地址让我对。</p>
+<p><a href="http://tool.chacuo.net/cryptdes" target="_blank" rel="noopener">http://tool.chacuo.net/cryptdes</a></p>
+<p>调试了半天原来是我自己的加密模式不对，使用了CBC模式，而后台用的是ECB。</p>
+<p>参考资料：</p>
+<p><a href="http://blog.csdn.net/u010184533/article/details/38975871" target="_blank" rel="noopener">http://blog.csdn.net/u010184533/article/details/38975871</a></p>
+
+          
         
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/13/通知/" itemprop="url">
-              
-                <span itemprop="name">通知</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-13T17:18:02+08:00"
-              content="2018-09-13" >
-          09-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/13/iOS分类/" itemprop="url">
-              
-                <span itemprop="name">iOS分类</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-13T14:39:45+08:00"
-              content="2018-09-13" >
-          09-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/13/Runtime全方位装逼指南/" itemprop="url">
-              
-                <span itemprop="name">Runtime全方位装逼指南</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-13T12:16:02+08:00"
-              content="2018-09-13" >
-          09-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/13/RunTime应用实例-关于埋点的思考/" itemprop="url">
-              
-                <span itemprop="name">RunTime应用实例--关于埋点的思考</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-13T11:54:41+08:00"
-              content="2018-09-13" >
-          09-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/13/Objective-C-isa-指针-与-runtime-机制/" itemprop="url">
-              
-                <span itemprop="name">Objective-C isa 指针 与 runtime 机制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-13T11:49:08+08:00"
-              content="2018-09-13" >
-          09-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/13/Objective-C-消息发送与转发机制原理/" itemprop="url">
-              
-                <span itemprop="name">Objective-C-消息发送与转发机制原理</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-13T11:43:31+08:00"
-              content="2018-09-13" >
-          09-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/13/runtime理解/" itemprop="url">
-              
-                <span itemprop="name">runtime理解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-13T11:09:34+08:00"
-              content="2018-09-13" >
-          09-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/12/事件的传递和响应机制/" itemprop="url">
-              
-                <span itemprop="name">事件的传递和响应机制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-12T14:39:25+08:00"
-              content="2018-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/11/UITableView相关/" itemprop="url">
-              
-                <span itemprop="name">UITableView相关</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-11T17:11:06+08:00"
-              content="2018-09-11" >
-          09-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
   
   
   
+  </article>
+
+
+    
+  </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2018/09/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2018/09/">1</a><a class="page-number" href="/archives/2018/09/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
   </nav>
-
 
 
 

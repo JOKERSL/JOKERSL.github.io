@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="[转自 涂耀辉]https://www.jianshu.com/p/f32bd79233da  接着上一篇的内容往下讲，如果没看过上一篇内容可以点这：AFNetworking到底做了什么? 之前我们讲到NSUrlSession代理这一块: 代理8：12345678910111213141516171819202122232425/* task完成之后的回调，成功和失败都会回调这里 函数讨论： 注意">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AFNetworking（二）">
+<meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/17/AFNetworking（二）/index.html">
+<meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
+<meta property="og:description" content="[转自 涂耀辉]https://www.jianshu.com/p/f32bd79233da  接着上一篇的内容往下讲，如果没看过上一篇内容可以点这：AFNetworking到底做了什么? 之前我们讲到NSUrlSession代理这一块: 代理8：12345678910111213141516171819202122232425/* task完成之后的回调，成功和失败都会回调这里 函数讨论： 注意">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-426b7ad3b6d4e3ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/850">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-1a1e7b3d10278aa1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-42735957ecdeb831.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-0cef773849aea454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/956">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-30cfe7414b8e5db3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-eabe0311bc1077f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:updated_time" content="2018-09-17T08:10:11.260Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AFNetworking（二）">
+<meta name="twitter:description" content="[转自 涂耀辉]https://www.jianshu.com/p/f32bd79233da  接着上一篇的内容往下讲，如果没看过上一篇内容可以点这：AFNetworking到底做了什么? 之前我们讲到NSUrlSession代理这一块: 代理8：12345678910111213141516171819202122232425/* task完成之后的回调，成功和失败都会回调这里 函数讨论： 注意">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2702646-426b7ad3b6d4e3ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/850">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/iOS面试/2018/09/17/AFNetworking（二）/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>AFNetworking（二） | Man Tou Pu's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Man Tou Pu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">技术、生活个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/AFNetworking（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AFNetworking（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-17 16:08:54 / 修改时间：16:10:11" itemprop="dateCreated datePublished" datetime="2018-09-17T16:08:54+08:00">2018-09-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/第三方源码/" itemprop="url" rel="index"><span itemprop="name">第三方源码</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[转自 <a href="https://www.jianshu.com/u/14431e509ae8" target="_blank" rel="noopener">涂耀辉</a>]<a href="https://www.jianshu.com/p/f32bd79233da" target="_blank" rel="noopener">https://www.jianshu.com/p/f32bd79233da</a></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-426b7ad3b6d4e3ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/850" alt="img"></p>
+<h6 id="接着上一篇的内容往下讲，如果没看过上一篇内容可以点这："><a href="#接着上一篇的内容往下讲，如果没看过上一篇内容可以点这：" class="headerlink" title="接着上一篇的内容往下讲，如果没看过上一篇内容可以点这："></a>接着上一篇的内容往下讲，如果没看过上一篇内容可以点这：</h6><p><a href="https://www.jianshu.com/p/856f0e26279d" target="_blank" rel="noopener">AFNetworking到底做了什么?</a></p>
+<p>之前我们讲到NSUrlSession代理这一块:</p>
+<h6 id="代理8："><a href="#代理8：" class="headerlink" title="代理8："></a>代理8：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> task完成之后的回调，成功和失败都会回调这里</span><br><span class="line"> 函数讨论：</span><br><span class="line"> 注意这里的error不会报告服务期端的error，他表示的是客户端这边的eroor，比如无法解析hostname或者连不上host主机。</span><br><span class="line"> */</span><br><span class="line">- (void)URLSession:(NSURLSession *)session</span><br><span class="line">              task:(NSURLSessionTask *)task</span><br><span class="line">didCompleteWithError:(NSError *)error</span><br><span class="line">&#123;   </span><br><span class="line">    //根据task去取我们一开始创建绑定的delegate</span><br><span class="line">    AFURLSessionManagerTaskDelegate *delegate = [self delegateForTask:task];</span><br><span class="line"></span><br><span class="line">    // delegate may be nil when completing a task in the background</span><br><span class="line">    if (delegate) &#123;</span><br><span class="line">        //把代理转发给我们绑定的delegate</span><br><span class="line">        [delegate URLSession:session task:task didCompleteWithError:error];</span><br><span class="line">        //转发完移除delegate</span><br><span class="line">        [self removeDelegateForTask:task];</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    //自定义Block回调</span><br><span class="line">    if (self.taskDidComplete) &#123;</span><br><span class="line">        self.taskDidComplete(session, task, error);</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个代理就是task完成了的回调，方法内做了下面这几件事：</p>
+<ul>
+<li>在这里我们拿到了之前和这个task对应绑定的AF的delegate:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> - (AFURLSessionManagerTaskDelegate *)delegateForTask:(NSURLSessionTask *)task &#123;</span><br><span class="line">    NSParameterAssert(task);</span><br><span class="line"></span><br><span class="line">    AFURLSessionManagerTaskDelegate *delegate = nil;</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    delegate = self.mutableTaskDelegatesKeyedByTaskIdentifier[@(task.taskIdentifier)];</span><br><span class="line">    [self.lock unlock];</span><br><span class="line"></span><br><span class="line">    return delegate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>去转发了调用了AF代理的方法。这个等我们下面讲完NSUrlSession的代理之后会详细说。</li>
+<li>然后把这个AF的代理和task的绑定解除了，并且移除了相关的progress和通知：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> - (void)removeDelegateForTask:(NSURLSessionTask *)task &#123;</span><br><span class="line">    NSParameterAssert(task);</span><br><span class="line">    //移除跟AF代理相关的东西</span><br><span class="line">    AFURLSessionManagerTaskDelegate *delegate = [self delegateForTask:task];</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    [delegate cleanUpProgressForTask:task];</span><br><span class="line">    [self removeNotificationObserverForTask:task];</span><br><span class="line">    [self.mutableTaskDelegatesKeyedByTaskIdentifier removeObjectForKey:@(task.taskIdentifier)];</span><br><span class="line">    [self.lock unlock];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>调用了自定义的Blcok:<code>self.taskDidComplete(session, task, error);</code><br>代码还是很简单的，至于这个通知，我们等会再来补充吧。</li>
+</ul>
+<h6 id="NSURLSessionDataDelegate"><a href="#NSURLSessionDataDelegate" class="headerlink" title="NSURLSessionDataDelegate:"></a>NSURLSessionDataDelegate:</h6><h6 id="代理9："><a href="#代理9：" class="headerlink" title="代理9："></a>代理9：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//收到服务器响应后调用</span><br><span class="line">- (void)URLSession:(NSURLSession *)session</span><br><span class="line">          dataTask:(NSURLSessionDataTask *)dataTask</span><br><span class="line">didReceiveResponse:(NSURLResponse *)response</span><br><span class="line"> completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler</span><br><span class="line">&#123;</span><br><span class="line">    //设置默认为继续进行</span><br><span class="line">    NSURLSessionResponseDisposition disposition = NSURLSessionResponseAllow;</span><br><span class="line"></span><br><span class="line">    //自定义去设置</span><br><span class="line">    if (self.dataTaskDidReceiveResponse) &#123;</span><br><span class="line">        disposition = self.dataTaskDidReceiveResponse(session, dataTask, response);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (completionHandler) &#123;</span><br><span class="line">        completionHandler(disposition);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>官方文档翻译如下：</p>
+<blockquote>
+<p>函数作用：<br>告诉代理，该data task获取到了服务器端传回的最初始回复（response）。注意其中的completionHandler这个block，通过传入一个类型为NSURLSessionResponseDisposition的变量来决定该传输任务接下来该做什么：<br>NSURLSessionResponseAllow 该task正常进行<br>NSURLSessionResponseCancel 该task会被取消<br>NSURLSessionResponseBecomeDownload 会调用URLSession:dataTask:didBecomeDownloadTask:方法来新建一个download task以代替当前的data task<br>NSURLSessionResponseBecomeStream 转成一个StreamTask</p>
+<p>函数讨论：<br>该方法是可选的，除非你必须支持“multipart/x-mixed-replace”类型的content-type。因为如果你的request中包含了这种类型的content-type，服务器会将数据分片传回来，而且每次传回来的数据会覆盖之前的数据。每次返回新的数据时，session都会调用该函数，你应该在这个函数中合理地处理先前的数据，否则会被新数据覆盖。如果你没有提供该方法的实现，那么session将会继续任务，也就是说会覆盖之前的数据。</p>
+</blockquote>
+<p>总结一下：</p>
+<ul>
+<li>当你把添加<code>content-type</code>的类型为<code>multipart/x-mixed-replace</code>那么服务器的数据会分片的传回来。然后这个方法是每次接受到对应片响应的时候会调被调用。你可以去设置上述4种对这个task的处理。</li>
+<li>如果我们实现了自定义Block，则调用一下，不然就用默认的<code>NSURLSessionResponseAllow</code>方式。</li>
+</ul>
+<h6 id="代理10："><a href="#代理10：" class="headerlink" title="代理10："></a>代理10：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//上面的代理如果设置为NSURLSessionResponseBecomeDownload，则会调用这个方法</span><br><span class="line">- (void)URLSession:(NSURLSession *)session</span><br><span class="line">          dataTask:(NSURLSessionDataTask *)dataTask</span><br><span class="line">didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask</span><br><span class="line">&#123;</span><br><span class="line">    //因为转变了task，所以要对task做一个重新绑定</span><br><span class="line">    AFURLSessionManagerTaskDelegate *delegate = [self delegateForTask:dataTask];</span><br><span class="line">    if (delegate) &#123;</span><br><span class="line">        [self removeDelegateForTask:dataTask];</span><br><span class="line">        [self setDelegate:delegate forTask:downloadTask];</span><br><span class="line">    &#125;</span><br><span class="line">    //执行自定义Block</span><br><span class="line">    if (self.dataTaskDidBecomeDownloadTask) &#123;</span><br><span class="line">        self.dataTaskDidBecomeDownloadTask(session, dataTask, downloadTask);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这个代理方法是被上面的代理方法触发的，作用就是新建一个downloadTask，替换掉当前的dataTask。所以我们在这里做了AF自定义代理的重新绑定操作。</li>
+<li>调用自定义Block。</li>
+</ul>
+<p>按照顺序来，其实还有个AF没有去实现的代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//AF没实现的代理</span><br><span class="line">- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask</span><br><span class="line">didBecomeStreamTask:(NSURLSessionStreamTask *)streamTask;</span><br></pre></td></tr></table></figure>
+<p>这个也是之前的那个代理，设置为<code>NSURLSessionResponseBecomeStream</code>则会调用到这个代理里来。会新生成一个<code>NSURLSessionStreamTask</code>来替换掉之前的dataTask。</p>
+<h6 id="代理11："><a href="#代理11：" class="headerlink" title="代理11："></a>代理11：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//当我们获取到数据就会调用，会被反复调用，请求到的数据就在这被拼装完整</span><br><span class="line">- (void)URLSession:(NSURLSession *)session</span><br><span class="line">          dataTask:(NSURLSessionDataTask *)dataTask</span><br><span class="line">    didReceiveData:(NSData *)data</span><br><span class="line">&#123;</span><br><span class="line">    AFURLSessionManagerTaskDelegate *delegate = [self delegateForTask:dataTask];</span><br><span class="line">    [delegate URLSession:session dataTask:dataTask didReceiveData:data];</span><br><span class="line">    if (self.dataTaskDidReceiveData) &#123;</span><br><span class="line">        self.dataTaskDidReceiveData(session, dataTask, data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这个方法和上面<code>didCompleteWithError</code>算是NSUrlSession的代理中最重要的两个方法了。</li>
+<li>我们转发了这个方法到AF的代理中去，所以数据的拼接都是在AF的代理中进行的。这也是情理中的，毕竟每个响应数据都是对应各个task，各个AF代理的。在AFURLSessionManager都只是做一些公共的处理。</li>
+</ul>
+<h6 id="代理12："><a href="#代理12：" class="headerlink" title="代理12："></a>代理12：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/*当task接收到所有期望的数据后，session会调用此代理方法。</span><br><span class="line">*/</span><br><span class="line">- (void)URLSession:(NSURLSession *)session</span><br><span class="line">          dataTask:(NSURLSessionDataTask *)dataTask</span><br><span class="line"> willCacheResponse:(NSCachedURLResponse *)proposedResponse</span><br><span class="line"> completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler</span><br><span class="line">&#123;</span><br><span class="line">    NSCachedURLResponse *cachedResponse = proposedResponse;</span><br><span class="line"></span><br><span class="line">    if (self.dataTaskWillCacheResponse) &#123;</span><br><span class="line">        cachedResponse = self.dataTaskWillCacheResponse(session, dataTask, proposedResponse);</span><br><span class="line">    &#125;</span><br><span class="line">    if (completionHandler) &#123;</span><br><span class="line">        completionHandler(cachedResponse);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>官方文档翻译如下：</p>
+<blockquote>
+<p>函数作用：<br>询问data task或上传任务（upload task）是否缓存response。</p>
+<p>函数讨论：<br>当task接收到所有期望的数据后，session会调用此代理方法。如果你没有实现该方法，那么就会使用创建session时使用的configuration对象决定缓存策略。这个代理方法最初的目的是为了阻止缓存特定的URLs或者修改NSCacheURLResponse对象相关的userInfo字典。<br>该方法只会当request决定缓存response时候调用。作为准则，responses只会当以下条件都成立的时候返回缓存：<br>该request是HTTP或HTTPS URL的请求（或者你自定义的网络协议，并且确保该协议支持缓存）<br>确保request请求是成功的（返回的status code为200-299）<br>返回的response是来自服务器端的，而非缓存中本身就有的<br>提供的NSURLRequest对象的缓存策略要允许进行缓存<br>服务器返回的response中与缓存相关的header要允许缓存<br>该response的大小不能比提供的缓存空间大太多（比如你提供了一个磁盘缓存，那么response大小一定不能比磁盘缓存空间还要大5%）</p>
+</blockquote>
+<ul>
+<li>总结一下就是一个用来缓存response的方法，方法中调用了我们自定义的Block，自定义一个response用来缓存。</li>
+</ul>
+<h6 id="NSURLSessionDownloadDelegate"><a href="#NSURLSessionDownloadDelegate" class="headerlink" title="NSURLSessionDownloadDelegate"></a>NSURLSessionDownloadDelegate</h6><h6 id="代理13："><a href="#代理13：" class="headerlink" title="代理13："></a>代理13：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">//下载完成的时候调用</span><br><span class="line"></span><br><span class="line">- (void)URLSession:(NSURLSession *)session</span><br><span class="line">      downloadTask:(NSURLSessionDownloadTask *)downloadTask</span><br><span class="line">didFinishDownloadingToURL:(NSURL *)location</span><br><span class="line">&#123;</span><br><span class="line">    AFURLSessionManagerTaskDelegate *delegate = [self delegateForTask:downloadTask];</span><br><span class="line">    //这个是session的，也就是全局的，后面的个人代理也会做同样的这件事</span><br><span class="line">    if (self.downloadTaskDidFinishDownloading) &#123;</span><br><span class="line">        </span><br><span class="line">        //调用自定义的block拿到文件存储的地址</span><br><span class="line">        NSURL *fileURL = self.downloadTaskDidFinishDownloading(session, downloadTask, location);</span><br><span class="line">        if (fileURL) &#123;</span><br><span class="line">            delegate.downloadFileURL = fileURL;</span><br><span class="line">            NSError *error = nil;</span><br><span class="line">            //从临时的下载路径移动至我们需要的路径</span><br><span class="line">            [[NSFileManager defaultManager] moveItemAtURL:location toURL:fileURL error:&amp;error];</span><br><span class="line">            //如果移动出错</span><br><span class="line">            if (error) &#123;</span><br><span class="line">                [[NSNotificationCenter defaultCenter] postNotificationName:AFURLSessionDownloadTaskDidFailToMoveFileNotification object:downloadTask userInfo:error.userInfo];</span><br><span class="line">            &#125;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //转发代理</span><br><span class="line">    if (delegate) &#123;</span><br><span class="line">        [delegate URLSession:session downloadTask:downloadTask didFinishDownloadingToURL:location];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这个方法和之前的两个方法：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)taskdidCompleteWithError:(NSError *)error;</span><br><span class="line">- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;</span><br></pre></td></tr></table></figure>
+<p>总共就这3个方法，被转调到AF自定义delegate中。</p>
+<ul>
+<li>方法做了什么看注释应该很简单，就不赘述了。</li>
+</ul>
+<h6 id="代理14："><a href="#代理14：" class="headerlink" title="代理14："></a>代理14：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//周期性地通知下载进度调用</span><br><span class="line">- (void)URLSession:(NSURLSession *)session</span><br><span class="line">      downloadTask:(NSURLSessionDownloadTask *)downloadTask</span><br><span class="line">      didWriteData:(int64_t)bytesWritten</span><br><span class="line"> totalBytesWritten:(int64_t)totalBytesWritten</span><br><span class="line">totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite</span><br><span class="line">&#123;</span><br><span class="line">    if (self.downloadTaskDidWriteData) &#123;</span><br><span class="line">        self.downloadTaskDidWriteData(session, downloadTask, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单说一下这几个参数:<br><code>bytesWritten</code> 表示自上次调用该方法后，接收到的数据字节数<br><code>totalBytesWritten</code>表示目前已经接收到的数据字节数<br><code>totalBytesExpectedToWrite</code> 表示期望收到的文件总字节数，是由Content-Length header提供。如果没有提供，默认是NSURLSessionTransferSizeUnknown。</p>
+<h6 id="代理15："><a href="#代理15：" class="headerlink" title="代理15："></a>代理15：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//当下载被取消或者失败后重新恢复下载时调用</span><br><span class="line">- (void)URLSession:(NSURLSession *)session</span><br><span class="line">      downloadTask:(NSURLSessionDownloadTask *)downloadTask</span><br><span class="line"> didResumeAtOffset:(int64_t)fileOffset</span><br><span class="line">expectedTotalBytes:(int64_t)expectedTotalBytes</span><br><span class="line">&#123;</span><br><span class="line">    //交给自定义的Block去调用</span><br><span class="line">    if (self.downloadTaskDidResume) &#123;</span><br><span class="line">        self.downloadTaskDidResume(session, downloadTask, fileOffset, expectedTotalBytes);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>官方文档翻译：</p>
+<blockquote>
+<p>函数作用：<br>告诉代理，下载任务重新开始下载了。</p>
+<p>函数讨论：<br>如果一个正在下载任务被取消或者失败了，你可以请求一个resumeData对象（比如在userInfo字典中通过NSURLSessionDownloadTaskResumeData这个键来获取到resumeData）并使用它来提供足够的信息以重新开始下载任务。<br>随后，你可以使用resumeData作为downloadTaskWithResumeData:或downloadTaskWithResumeData:completionHandler:的参数。当你调用这些方法时，你将开始一个新的下载任务。一旦你继续下载任务，session会调用它的代理方法URLSession:downloadTask:didResumeAtOffset:expectedTotalBytes:其中的downloadTask参数表示的就是新的下载任务，这也意味着下载重新开始了。</p>
+</blockquote>
+<p>总结一下：</p>
+<ul>
+<li><strong>其实这个就是用来做断点续传的代理方法。</strong>可以在下载失败的时候，拿到我们失败的拼接的部分<code>resumeData</code>，然后用去调用<code>downloadTaskWithResumeData：</code>就会调用到这个代理方法来了。</li>
+<li>其中注意：<code>fileOffset</code>这个参数，如果文件缓存策略或者最后文件更新日期阻止重用已经存在的文件内容，那么该值为0。否则，该值表示当前已经下载data的偏移量。</li>
+<li>方法中仅仅调用了<code>downloadTaskDidResume</code>自定义Block。</li>
+</ul>
+<p>至此NSUrlSesssion的delegate讲完了。大概总结下：</p>
+<ul>
+<li>每个代理方法对应一个我们自定义的Block,如果Block被赋值了，那么就调用它。</li>
+<li>在这些代理方法里，我们做的处理都是相对于这个sessionManager所有的request的。<strong>是公用的处理。</strong></li>
+<li>转发了3个代理方法到AF的deleagate中去了，AF中的deleagate是需要对应每个task去<strong>私有化处理的</strong>。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-1a1e7b3d10278aa1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>分割图.png</p>
+<p>接下来我们来看转发到AF的deleagate，一共3个方法：</p>
+<h6 id="AF代理1："><a href="#AF代理1：" class="headerlink" title="AF代理1："></a>AF代理1：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">//AF实现的代理！被从urlsession那转发到这</span><br><span class="line"></span><br><span class="line">- (void)URLSession:(__unused NSURLSession *)session</span><br><span class="line">              task:(NSURLSessionTask *)task</span><br><span class="line">didCompleteWithError:(NSError *)error</span><br><span class="line">&#123;</span><br><span class="line"> </span><br><span class="line">#pragma clang diagnostic push</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Wgnu&quot;</span><br><span class="line">    </span><br><span class="line">    //1）强引用self.manager，防止被提前释放；因为self.manager声明为weak,类似Block</span><br><span class="line"></span><br><span class="line">    __strong AFURLSessionManager *manager = self.manager;</span><br><span class="line"></span><br><span class="line">    __block id responseObject = nil;</span><br><span class="line"></span><br><span class="line">    //用来存储一些相关信息，来发送通知用的</span><br><span class="line">    __block NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];</span><br><span class="line">    //存储responseSerializer响应解析对象</span><br><span class="line">    userInfo[AFNetworkingTaskDidCompleteResponseSerializerKey] = manager.responseSerializer;</span><br><span class="line"></span><br><span class="line">    //Performance Improvement from #2672</span><br><span class="line">    </span><br><span class="line">    //注意这行代码的用法，感觉写的很Nice...把请求到的数据data传出去，然后就不要这个值了释放内存</span><br><span class="line">    NSData *data = nil;</span><br><span class="line">    if (self.mutableData) &#123;</span><br><span class="line">        data = [self.mutableData copy];</span><br><span class="line">        //We no longer need the reference, so nil it out to gain back some memory.</span><br><span class="line">        self.mutableData = nil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //继续给userinfo填数据</span><br><span class="line">    if (self.downloadFileURL) &#123;</span><br><span class="line">        userInfo[AFNetworkingTaskDidCompleteAssetPathKey] = self.downloadFileURL;</span><br><span class="line">    &#125; else if (data) &#123;</span><br><span class="line">        userInfo[AFNetworkingTaskDidCompleteResponseDataKey] = data;</span><br><span class="line">    &#125;</span><br><span class="line">    //错误处理</span><br><span class="line">    if (error) &#123;</span><br><span class="line">        </span><br><span class="line">        userInfo[AFNetworkingTaskDidCompleteErrorKey] = error;</span><br><span class="line">        </span><br><span class="line">        //可以自己自定义完成组 和自定义完成queue,完成回调</span><br><span class="line">        dispatch_group_async(manager.completionGroup ?: url_session_manager_completion_group(), manager.completionQueue ?: dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            if (self.completionHandler) &#123;</span><br><span class="line">                self.completionHandler(task.response, responseObject, error);</span><br><span class="line">            &#125;</span><br><span class="line">            //主线程中发送完成通知</span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingTaskDidCompleteNotification object:task userInfo:userInfo];</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        //url_session_manager_processing_queue AF的并行队列</span><br><span class="line">        dispatch_async(url_session_manager_processing_queue(), ^&#123;</span><br><span class="line">            NSError *serializationError = nil;</span><br><span class="line">            </span><br><span class="line">            //解析数据</span><br><span class="line">            responseObject = [manager.responseSerializer responseObjectForResponse:task.response data:data error:&amp;serializationError];</span><br><span class="line">            </span><br><span class="line">            //如果是下载文件，那么responseObject为下载的路径</span><br><span class="line">            if (self.downloadFileURL) &#123;</span><br><span class="line">                responseObject = self.downloadFileURL;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            //写入userInfo</span><br><span class="line">            if (responseObject) &#123;</span><br><span class="line">                userInfo[AFNetworkingTaskDidCompleteSerializedResponseKey] = responseObject;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            //如果解析错误</span><br><span class="line">            if (serializationError) &#123;</span><br><span class="line">                userInfo[AFNetworkingTaskDidCompleteErrorKey] = serializationError;</span><br><span class="line">            &#125;</span><br><span class="line">            //回调结果</span><br><span class="line">            dispatch_group_async(manager.completionGroup ?: url_session_manager_completion_group(), manager.completionQueue ?: dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                if (self.completionHandler) &#123;</span><br><span class="line">                    self.completionHandler(task.response, responseObject, serializationError);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                    [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingTaskDidCompleteNotification object:task userInfo:userInfo];</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">#pragma clang diagnostic pop</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法是NSUrlSession任务完成的代理方法中，主动调用过来的。配合注释，应该代码很容易读，这个方法大概做了以下几件事：</p>
+<ol>
+<li>生成了一个存储这个task相关信息的字典：<code>userInfo</code>，这个字典是用来作为发送任务完成的通知的参数。</li>
+</ol>
+<ul>
+<li>判断了参数<code>error</code>的值，来区分请求成功还是失败。</li>
+<li>如果成功则在一个AF的并行queue中，去做数据解析等后续操作：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_queue_t url_session_manager_processing_queue() &#123;</span><br><span class="line">    static dispatch_queue_t af_url_session_manager_processing_queue;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        af_url_session_manager_processing_queue = dispatch_queue_create(&quot;com.alamofire.networking.session.manager.processing&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return af_url_session_manager_processing_queue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意AF的优化的点，虽然代理回调是串行的(不明白可以见本文最后)。但是数据解析这种费时操作，确是用并行线程来做的。</p>
+<ul>
+<li>然后根据我们一开始设置的<code>responseSerializer</code>来解析data。如果解析成功，调用成功的回调，否则调用失败的回调。<br>我们重点来看看返回数据解析这行：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">responseObject = [manager.responseSerializer responseObjectForResponse:task.response data:data error:&amp;serializationError];</span><br></pre></td></tr></table></figure>
+<p>我们点进去看看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  @protocol AFURLResponseSerialization &lt;NSObject, NSSecureCoding, NSCopying&gt;</span><br><span class="line"></span><br><span class="line">  - (nullable id)responseObjectForResponse:(nullable NSURLResponse *)response</span><br><span class="line">                           data:(nullable NSData *)data</span><br><span class="line">                          error:(NSError * _Nullable __autoreleasing *)error NS_SWIFT_NOTHROW;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>原来就是这么一个协议方法，各种类型的responseSerializer类，都是遵守这个协议方法，实现了一个把我们请求到的data转换为我们需要的类型的数据的方法。至于各种类型的responseSerializer如何解析数据，我们到代理讲完再来补充。</p>
+<ul>
+<li>这边还做了一个判断，如果自定义了GCD完成组<code>completionGroup</code>和完成队列的话<code>completionQueue</code>，会在加入这个组和在队列中回调Block。否则默认的是AF的创建的组：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_group_t url_session_manager_completion_group() &#123;</span><br><span class="line">    static dispatch_group_t af_url_session_manager_completion_group;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        af_url_session_manager_completion_group = dispatch_group_create();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return af_url_session_manager_completion_group;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和主队列回调。<strong>AF没有用这个GCD组做任何处理，只是提供这个接口，让我们有需求的自行调用处理。</strong>如果有对多个任务完成度的监听，可以自行处理。<br>而队列的话，如果你不需要回调主线程，可以自己设置一个回调队列。</p>
+<ul>
+<li>回到主线程，发送了任务完成的通知：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingTaskDidCompleteNotification object:task userInfo:userInfo];</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+<p>这个通知这回AF有用到了，在我们对UIKit的扩展中，用到了这个通知。</p>
+<h6 id="AF代理2："><a href="#AF代理2：" class="headerlink" title="AF代理2："></a>AF代理2：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)URLSession:(__unused NSURLSession *)session</span><br><span class="line">          dataTask:(__unused NSURLSessionDataTask *)dataTask</span><br><span class="line">    didReceiveData:(NSData *)data</span><br><span class="line">&#123;</span><br><span class="line">    //拼接数据</span><br><span class="line">    [self.mutableData appendData:data];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样被NSUrlSession代理转发到这里，拼接了需要回调的数据。</p>
+<h6 id="AF代理3："><a href="#AF代理3：" class="headerlink" title="AF代理3："></a>AF代理3：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">- (void)URLSession:(NSURLSession *)session</span><br><span class="line">      downloadTask:(NSURLSessionDownloadTask *)downloadTask</span><br><span class="line">didFinishDownloadingToURL:(NSURL *)location</span><br><span class="line">&#123;</span><br><span class="line">    NSError *fileManagerError = nil;</span><br><span class="line">    self.downloadFileURL = nil;</span><br><span class="line"></span><br><span class="line">    //AF代理的自定义Block</span><br><span class="line">    if (self.downloadTaskDidFinishDownloading) &#123;</span><br><span class="line">        //得到自定义下载路径</span><br><span class="line">        self.downloadFileURL = self.downloadTaskDidFinishDownloading(session, downloadTask, location);</span><br><span class="line">        </span><br><span class="line">        if (self.downloadFileURL) &#123;</span><br><span class="line">            //把下载路径移动到我们自定义的下载路径</span><br><span class="line">            [[NSFileManager defaultManager] moveItemAtURL:location toURL:self.downloadFileURL error:&amp;fileManagerError];</span><br><span class="line">            </span><br><span class="line">            //错误发通知</span><br><span class="line">            if (fileManagerError) &#123;</span><br><span class="line">                [[NSNotificationCenter defaultCenter] postNotificationName:AFURLSessionDownloadTaskDidFailToMoveFileNotification object:downloadTask userInfo:fileManagerError.userInfo];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下载成功了被NSUrlSession代理转发到这里，这里有个地方需要注意下：</p>
+<ul>
+<li>之前的NSUrlSession代理和这里都移动了文件到下载路径，而NSUrlSession代理的下载路径是所有request公用的下载路径，一旦设置，所有的request都会下载到之前那个路径。</li>
+<li>而这个是对应的每个task的，每个task可以设置各自下载路径,还记得AFHttpManager的download方法么</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> [manager downloadTaskWithRequest:resquest progress:nil destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) &#123;</span><br><span class="line">    return path;</span><br><span class="line">&#125; completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) &#123;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>这个地方return的path就是对应的这个代理方法里的path，我们调用最终会走到这么一个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">  - (void)addDelegateForDownloadTask:(NSURLSessionDownloadTask *)downloadTask</span><br><span class="line">                          progress:(void (^)(NSProgress *downloadProgress)) downloadProgressBlock</span><br><span class="line">                       destination:(NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination</span><br><span class="line">                 completionHandler:(void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler</span><br><span class="line">&#123;</span><br><span class="line">    AFURLSessionManagerTaskDelegate *delegate = [[AFURLSessionManagerTaskDelegate alloc] init];</span><br><span class="line">    delegate.manager = self;</span><br><span class="line">    delegate.completionHandler = completionHandler;</span><br><span class="line"></span><br><span class="line">    //返回地址的Block</span><br><span class="line">    if (destination) &#123;</span><br><span class="line">        </span><br><span class="line">        //有点绕，就是把一个block赋值给我们代理的downloadTaskDidFinishDownloading，这个Block里的内部返回也是调用Block去获取到的，这里面的参数都是AF代理传过去的。</span><br><span class="line">        delegate.downloadTaskDidFinishDownloading = ^NSURL * (NSURLSession * __unused session, NSURLSessionDownloadTask *task, NSURL *location) &#123;</span><br><span class="line">            //把Block返回的地址返回</span><br><span class="line">            return destination(location, task.response);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    downloadTask.taskDescription = self.taskDescriptionForSessionTasks;</span><br><span class="line"></span><br><span class="line">    [self setDelegate:delegate forTask:downloadTask];</span><br><span class="line"></span><br><span class="line">    delegate.downloadProgressBlock = downloadProgressBlock;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>清楚的可以看到地址被赋值给AF的Block了。</p>
+<p>至此AF的代理也讲完了，<strong>数据或错误信息随着AF代理成功失败回调，回到了用户的手中。</strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-42735957ecdeb831.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>分割图.png</p>
+<p>接下来我们来补充之前<code>AFURLResponseSerialization</code>这一块是如何解析数据的：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-0cef773849aea454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/956" alt="img"></p>
+<p>AFURLResponseSerialization.png</p>
+<p>如图所示，AF用来解析数据的一共上述这些方法。第一个实际是一个协议方法，协议方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@protocol AFURLResponseSerialization &lt;NSObject, NSSecureCoding, NSCopying&gt;</span><br><span class="line"></span><br><span class="line">- (nullable id)responseObjectForResponse:(nullable NSURLResponse *)response</span><br><span class="line">                           data:(nullable NSData *)data</span><br><span class="line">                          error:(NSError * _Nullable __autoreleasing *)error;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>而后面6个类都是遵守这个协议方法，去做数据解析。<strong>这地方可以再次感受一下AF的设计模式…</strong>接下来我们就来主要看看这些类对这个协议方法的实现：</p>
+<h6 id="AFHTTPResponseSerializer："><a href="#AFHTTPResponseSerializer：" class="headerlink" title="AFHTTPResponseSerializer："></a>AFHTTPResponseSerializer：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (id)responseObjectForResponse:(NSURLResponse *)response</span><br><span class="line">                           data:(NSData *)data</span><br><span class="line">                          error:(NSError *__autoreleasing *)error</span><br><span class="line">&#123;</span><br><span class="line">    [self validateResponse:(NSHTTPURLResponse *)response data:data error:error];</span><br><span class="line">    return data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法调用了一个另外的方法之后，就把data返回来了，我们继续往里看这个方法：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">// 判断是不是可接受类型和可接受code，不是则填充error</span><br><span class="line">- (BOOL)validateResponse:(NSHTTPURLResponse *)response</span><br><span class="line">                    data:(NSData *)data</span><br><span class="line">                   error:(NSError * __autoreleasing *)error</span><br><span class="line">&#123;</span><br><span class="line">    //response是否合法标识</span><br><span class="line">    BOOL responseIsValid = YES;</span><br><span class="line">    //验证的error</span><br><span class="line">    NSError *validationError = nil;</span><br><span class="line"></span><br><span class="line">    //如果存在且是NSHTTPURLResponse</span><br><span class="line">    if (response &amp;&amp; [response isKindOfClass:[NSHTTPURLResponse class]]) &#123;</span><br><span class="line">        </span><br><span class="line">        //主要判断自己能接受的数据类型和response的数据类型是否匹配，</span><br><span class="line">        //如果有接受数据类型，如果不匹配response，而且响应类型不为空，数据长度不为0</span><br><span class="line">        if (self.acceptableContentTypes &amp;&amp; ![self.acceptableContentTypes containsObject:[response MIMEType]] &amp;&amp;</span><br><span class="line">            !([response MIMEType] == nil &amp;&amp; [data length] == 0)) &#123;</span><br><span class="line">            </span><br><span class="line">            //进入If块说明解析数据肯定是失败的，这时候要把解析错误信息放到error里。</span><br><span class="line">            //如果数据长度大于0，而且有响应url</span><br><span class="line">            if ([data length] &gt; 0 &amp;&amp; [response URL]) &#123;</span><br><span class="line">                </span><br><span class="line">                //错误信息字典，填充一些错误信息</span><br><span class="line">                NSMutableDictionary *mutableUserInfo = [@&#123;</span><br><span class="line">                                                          NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedStringFromTable(@&quot;Request failed: unacceptable content-type: %@&quot;, @&quot;AFNetworking&quot;, nil), [response MIMEType]],</span><br><span class="line">                                                          NSURLErrorFailingURLErrorKey:[response URL],</span><br><span class="line">                                                          AFNetworkingOperationFailingURLResponseErrorKey: response,</span><br><span class="line">                                                        &#125; mutableCopy];</span><br><span class="line">                if (data) &#123;</span><br><span class="line">                    mutableUserInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] = data;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                //生成错误</span><br><span class="line">                validationError = AFErrorWithUnderlyingError([NSError errorWithDomain:AFURLResponseSerializationErrorDomain code:NSURLErrorCannotDecodeContentData userInfo:mutableUserInfo], validationError);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            //返回标识</span><br><span class="line">            responseIsValid = NO;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //判断自己可接受的状态吗</span><br><span class="line">        //如果和response的状态码不匹配，则进入if块</span><br><span class="line">        if (self.acceptableStatusCodes &amp;&amp; ![self.acceptableStatusCodes containsIndex:(NSUInteger)response.statusCode] &amp;&amp; [response URL]) &#123;</span><br><span class="line">            //填写错误信息字典</span><br><span class="line">            NSMutableDictionary *mutableUserInfo = [@&#123;</span><br><span class="line">                                               NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedStringFromTable(@&quot;Request failed: %@ (%ld)&quot;, @&quot;AFNetworking&quot;, nil), [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode], (long)response.statusCode],</span><br><span class="line">                                               NSURLErrorFailingURLErrorKey:[response URL],</span><br><span class="line">                                               AFNetworkingOperationFailingURLResponseErrorKey: response,</span><br><span class="line">                                       &#125; mutableCopy];</span><br><span class="line"></span><br><span class="line">            if (data) &#123;</span><br><span class="line">                mutableUserInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] = data;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            //生成错误</span><br><span class="line">            validationError = AFErrorWithUnderlyingError([NSError errorWithDomain:AFURLResponseSerializationErrorDomain code:NSURLErrorBadServerResponse userInfo:mutableUserInfo], validationError);</span><br><span class="line">            //返回标识</span><br><span class="line">            responseIsValid = NO;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //给我们传过来的错误指针赋值</span><br><span class="line">    if (error &amp;&amp; !responseIsValid) &#123;</span><br><span class="line">        *error = validationError;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //返回是否错误标识</span><br><span class="line">    return responseIsValid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>看注释应该很容易明白这个方法有什么作用。简单来说，<strong>这个方法就是来判断返回数据与咱们使用的解析器是否匹配，需要解析的状态码是否匹配。</strong>如果错误，则填充错误信息，并且返回NO，否则返回YES，错误信息为nil。</li>
+<li>其中里面出现了两个属性值，一个<code>acceptableContentTypes</code>，一个<code>acceptableStatusCodes</code>，两者在初始化的时候有给默认值，我们也可以去自定义，但是如果给acceptableContentTypes定义了不匹配的类型，那么数据仍旧会解析错误。</li>
+<li>而AFHTTPResponseSerializer仅仅是调用验证方法，然后就返回了data。</li>
+</ul>
+<h6 id="AFJSONResponseSerializer："><a href="#AFJSONResponseSerializer：" class="headerlink" title="AFJSONResponseSerializer："></a>AFJSONResponseSerializer：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">- (id)responseObjectForResponse:(NSURLResponse *)response</span><br><span class="line">                           data:(NSData *)data</span><br><span class="line">                          error:(NSError *__autoreleasing *)error</span><br><span class="line">&#123;</span><br><span class="line">    //先判断是不是可接受类型和可接受code</span><br><span class="line">    if (![self validateResponse:(NSHTTPURLResponse *)response data:data error:error]) &#123;</span><br><span class="line">        //error为空，或者有错误，去函数里判断。</span><br><span class="line">        if (!error || AFErrorOrUnderlyingErrorHasCodeInDomain(*error, NSURLErrorCannotDecodeContentData, AFURLResponseSerializationErrorDomain)) &#123;</span><br><span class="line">            //返回空</span><br><span class="line">            return nil;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    id responseObject = nil;</span><br><span class="line">    NSError *serializationError = nil;</span><br><span class="line">    // Workaround for behavior of Rails to return a single space for `head :ok` (a workaround for a bug in Safari), which is not interpreted as valid input by NSJSONSerialization.</span><br><span class="line">    // See https://github.com/rails/rails/issues/1742</span><br><span class="line">    </span><br><span class="line">    //如果数据为空</span><br><span class="line">    BOOL isSpace = [data isEqualToData:[NSData dataWithBytes:&quot; &quot; length:1]];</span><br><span class="line">    //不空则去json解析</span><br><span class="line">    if (data.length &gt; 0 &amp;&amp; !isSpace) &#123;</span><br><span class="line">        responseObject = [NSJSONSerialization JSONObjectWithData:data options:self.readingOptions error:&amp;serializationError];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //判断是否需要移除Null值</span><br><span class="line">    if (self.removesKeysWithNullValues &amp;&amp; responseObject) &#123;</span><br><span class="line">        responseObject = AFJSONObjectByRemovingKeysWithNullValues(responseObject, self.readingOptions);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //拿着json解析的error去填充错误信息</span><br><span class="line">    if (error) &#123;</span><br><span class="line">        *error = AFErrorWithUnderlyingError(serializationError, *error);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //返回解析结果</span><br><span class="line">    return responseObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释写的很清楚，大概需要讲一下的是以下几个函数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//1</span><br><span class="line">AFErrorOrUnderlyingErrorHasCodeInDomain(*error, NSURLErrorCannotDecodeContentData, AFURLResponseSerializationErrorDomain))</span><br><span class="line">//2</span><br><span class="line">AFJSONObjectByRemovingKeysWithNullValues(responseObject, self.readingOptions);</span><br><span class="line">//3</span><br><span class="line">AFErrorWithUnderlyingError(serializationError, *error);</span><br></pre></td></tr></table></figure>
+<p>之前注释已经写清楚了这些函数的作用，首先来看第1个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//判断是不是我们自己之前生成的错误信息，是的话返回YES</span><br><span class="line">static BOOL AFErrorOrUnderlyingErrorHasCodeInDomain(NSError *error, NSInteger code, NSString *domain) &#123;</span><br><span class="line">    //判断错误域名和传过来的域名是否一致，错误code是否一致</span><br><span class="line">    if ([error.domain isEqualToString:domain] &amp;&amp; error.code == code) &#123;</span><br><span class="line">        return YES;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    //如果userInfo的NSUnderlyingErrorKey有值，则在判断一次。</span><br><span class="line">    else if (error.userInfo[NSUnderlyingErrorKey]) &#123;</span><br><span class="line">        return AFErrorOrUnderlyingErrorHasCodeInDomain(error.userInfo[NSUnderlyingErrorKey], code, domain);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里可以注意，我们这里传过去的code和domain两个参数分别为<code>NSURLErrorCannotDecodeContentData</code>、<code>AFURLResponseSerializationErrorDomain</code>，这两个参数是我们之前判断response可接受类型和code时候自己去生成错误的时候填写的。</p>
+<p>第二个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions readingOptions) &#123;</span><br><span class="line">    //分数组和字典</span><br><span class="line">    if ([JSONObject isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">        </span><br><span class="line">        //生成一个数组，只需要JSONObject.count个，感受到大神写代码的严谨态度了吗...</span><br><span class="line">        NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:[(NSArray *)JSONObject count]];</span><br><span class="line">        for (id value in (NSArray *)JSONObject) &#123;</span><br><span class="line">            //调用自己</span><br><span class="line">            [mutableArray addObject:AFJSONObjectByRemovingKeysWithNullValues(value, readingOptions)];</span><br><span class="line">        &#125;</span><br><span class="line">        //看我们解析类型是mutable还是非muatable,返回mutableArray或者array</span><br><span class="line">        return (readingOptions &amp; NSJSONReadingMutableContainers) ? mutableArray : [NSArray arrayWithArray:mutableArray];</span><br><span class="line">        </span><br><span class="line">    &#125; else if ([JSONObject isKindOfClass:[NSDictionary class]]) &#123;</span><br><span class="line">        NSMutableDictionary *mutableDictionary = [NSMutableDictionary dictionaryWithDictionary:JSONObject];</span><br><span class="line">        for (id &lt;NSCopying&gt; key in [(NSDictionary *)JSONObject allKeys]) &#123;</span><br><span class="line">            id value = (NSDictionary *)JSONObject[key];</span><br><span class="line">            //value空则移除</span><br><span class="line">            if (!value || [value isEqual:[NSNull null]]) &#123;</span><br><span class="line">                [mutableDictionary removeObjectForKey:key];</span><br><span class="line">            &#125; else if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]]) &#123;</span><br><span class="line">                //如果数组还是去调用自己</span><br><span class="line">                mutableDictionary[key] = AFJSONObjectByRemovingKeysWithNullValues(value, readingOptions);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return (readingOptions &amp; NSJSONReadingMutableContainers) ? mutableDictionary : [NSDictionary dictionaryWithDictionary:mutableDictionary];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return JSONObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法主要还是通过递归的形式实现。比较简单。</p>
+<p>第三个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">static NSError * AFErrorWithUnderlyingError(NSError *error, NSError *underlyingError) &#123;</span><br><span class="line">    if (!error) &#123;</span><br><span class="line">        return underlyingError;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!underlyingError || error.userInfo[NSUnderlyingErrorKey]) &#123;</span><br><span class="line">        return error;</span><br><span class="line">    &#125;</span><br><span class="line">    NSMutableDictionary *mutableUserInfo = [error.userInfo mutableCopy];</span><br><span class="line">    mutableUserInfo[NSUnderlyingErrorKey] = underlyingError;</span><br><span class="line"></span><br><span class="line">    return [[NSError alloc] initWithDomain:error.domain code:error.code userInfo:mutableUserInfo];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法主要是把json解析的错误，赋值给我们需要返回给用户的<code>error</code>上。比较简单，小伙伴们自己看看就好。</p>
+<p>至此，AFJSONResponseSerializer就讲完了。<br>而我们ResponseSerialize还有一些其他的类型解析，大家可以自行去阅读，代码还是很容易读的，在这里就不浪费篇幅去讲了。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-30cfe7414b8e5db3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>分割图.png</p>
+<p>在AFURLSessionManager中，有这么一个类：<code>_AFURLSessionTaskSwizzling</code>。这个类大概的作用就是替换掉<code>NSUrlSession</code>中的<code>resume</code>和<code>suspend</code>方法。正常处理原有逻辑的同时，多发送一个通知，以下是我们需要替换的新方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//被替换掉的方法，只要有TASK开启或者暂停，都会执行</span><br><span class="line">- (void)af_resume &#123;</span><br><span class="line">    NSAssert([self respondsToSelector:@selector(state)], @&quot;Does not respond to state&quot;);</span><br><span class="line">    NSURLSessionTaskState state = [self state];</span><br><span class="line">    [self af_resume];</span><br><span class="line">    </span><br><span class="line">    if (state != NSURLSessionTaskStateRunning) &#123;</span><br><span class="line">        [[NSNotificationCenter defaultCenter] postNotificationName:AFNSURLSessionTaskDidResumeNotification object:self];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">- (void)af_suspend &#123;</span><br><span class="line">    </span><br><span class="line">    NSAssert([self respondsToSelector:@selector(state)], @&quot;Does not respond to state&quot;);</span><br><span class="line">    NSURLSessionTaskState state = [self state];</span><br><span class="line">    [self af_suspend];</span><br><span class="line">    </span><br><span class="line">    if (state != NSURLSessionTaskStateSuspended) &#123;</span><br><span class="line">        [[NSNotificationCenter defaultCenter] postNotificationName:AFNSURLSessionTaskDidSuspendNotification object:self];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这块知识是关于OC的Runtime:<code>method swizzling</code>的，如果有不清楚的地方，可以看看这里<a href="https://www.jianshu.com/p/db6dc23834e3" target="_blank" rel="noopener">method swizzling–by冰霜</a>或者自行查阅。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">+ (void)load &#123;</span><br><span class="line"> </span><br><span class="line">    if (NSClassFromString(@&quot;NSURLSessionTask&quot;)) &#123;</span><br><span class="line">        </span><br><span class="line">        // 1) 首先构建一个NSURLSession对象session，再通过session构建出一个_NSCFLocalDataTask变量</span><br><span class="line"></span><br><span class="line">        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];</span><br><span class="line">        NSURLSession * session = [NSURLSession sessionWithConfiguration:configuration];</span><br><span class="line">#pragma GCC diagnostic push</span><br><span class="line">#pragma GCC diagnostic ignored &quot;-Wnonnull&quot;</span><br><span class="line">        NSURLSessionDataTask *localDataTask = [session dataTaskWithURL:nil];</span><br><span class="line">#pragma clang diagnostic pop</span><br><span class="line">        // 2) 获取到af_resume实现的指针</span><br><span class="line">        IMP originalAFResumeIMP = method_getImplementation(class_getInstanceMethod([self class], @selector(af_resume)));</span><br><span class="line">        Class currentClass = [localDataTask class];</span><br><span class="line">        </span><br><span class="line">        // 3) 检查当前class是否实现了resume。如果实现了，继续第4步。</span><br><span class="line">        while (class_getInstanceMethod(currentClass, @selector(resume))) &#123;</span><br><span class="line">            </span><br><span class="line">            // 4) 获取到当前class的父类（superClass）</span><br><span class="line">            Class superClass = [currentClass superclass];</span><br><span class="line">            </span><br><span class="line">            // 5) 获取到当前class对于resume实现的指针</span><br><span class="line">            IMP classResumeIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(resume)));</span><br><span class="line">            </span><br><span class="line">            //  6) 获取到父类对于resume实现的指针</span><br><span class="line">            IMP superclassResumeIMP = method_getImplementation(class_getInstanceMethod(superClass, @selector(resume)));</span><br><span class="line"> </span><br><span class="line">               // 7) 如果当前class对于resume的实现和父类不一样（类似iOS7上的情况），并且当前class的resume实现和af_resume不一样，才进行method swizzling。</span><br><span class="line">            if (classResumeIMP != superclassResumeIMP &amp;&amp;</span><br><span class="line">                originalAFResumeIMP != classResumeIMP) &#123;</span><br><span class="line">                //执行交换的函数</span><br><span class="line">                [self swizzleResumeAndSuspendMethodForClass:currentClass];</span><br><span class="line">            &#125;</span><br><span class="line">            // 8) 设置当前操作的class为其父类class，重复步骤3~8</span><br><span class="line">            currentClass = [currentClass superclass];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        [localDataTask cancel];</span><br><span class="line">        [session finishTasksAndInvalidate];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原方法中有大量的英文注释，我把它翻译过来如下：</p>
+<blockquote>
+<p>iOS 7和iOS 8在NSURLSessionTask实现上有些许不同，这使得下面的代码实现略显trick<br>关于这个问题，大家做了很多Unit Test，足以证明这个方法是可行的<br>目前我们所知的：</p>
+</blockquote>
+<ul>
+<li>NSURLSessionTasks是一组class的统称，如果你仅仅使用提供的API来获取NSURLSessionTask的class，并不一定返回的是你想要的那个（获取NSURLSessionTask的class目的是为了获取其resume方法）</li>
+<li>简单地使用[NSURLSessionTask class]并不起作用。你需要新建一个NSURLSession，并根据创建的session再构建出一个NSURLSessionTask对象才行。</li>
+<li>iOS 7上，localDataTask（下面代码构造出的NSURLSessionDataTask类型的变量，为了获取对应Class）的类型是 <strong>NSCFLocalDataTask，</strong>NSCFLocalDataTask继承自<strong>NSCFLocalSessionTask，</strong>NSCFLocalSessionTask继承自__NSCFURLSessionTask。</li>
+<li>iOS 8上，localDataTask的类型为<strong>NSCFLocalDataTask，</strong>NSCFLocalDataTask继承自<strong>NSCFLocalSessionTask，</strong>NSCFLocalSessionTask继承自NSURLSessionTask</li>
+<li>iOS 7上，<strong>NSCFLocalSessionTask和</strong>NSCFURLSessionTask是仅有的两个实现了resume和suspend方法的类，另外<strong>NSCFLocalSessionTask中的resume和suspend并没有调用其父类（即</strong>NSCFURLSessionTask）方法，这也意味着两个类的方法都需要进行method swizzling。</li>
+<li>iOS 8上，NSURLSessionTask是唯一实现了resume和suspend方法的类。这也意味着其是唯一需要进行method swizzling的类</li>
+<li>因为NSURLSessionTask并不是在每个iOS版本中都存在，所以把这些放在此处（即load函数中），比如给一个dummy class添加swizzled方法都会变得很方便，管理起来也方便。</li>
+</ul>
+<blockquote>
+<p>一些假设前提:</p>
+</blockquote>
+<ul>
+<li>目前iOS中resume和suspend的方法实现中并没有调用对应的父类方法。如果日后iOS改变了这种做法，我们还需要重新处理。</li>
+<li>没有哪个后台task会重写resume和suspend函数</li>
+</ul>
+<p>其余的一部分翻译在注释中，对应那一行代码。大概总结下这个注释：</p>
+<ul>
+<li>其实这是被社区大量讨论的一个bug，之前AF因为这个替换方法，会导致偶发性的crash，如果不要这个swizzle则问题不会再出现，但是这样会导致AF中很多UIKit的扩展都不能正常使用。</li>
+<li><strong>原来这是因为iOS7和iOS8的NSURLSessionTask的继承链不同导致的，</strong>而且在iOS7继承链中会有两个类都实现了<code>resume</code>和<code>suspend</code>方法。而且子类没有调用父类的方法，我们则需要对着两个类都进行方法替换。而iOS8只需要对一个类进行替换。</li>
+<li>对着注释看，上述方法代码不难理解，用一个while循环，一级一级去获取父类，如果实现了<code>resume</code>方法，则进行替换。</li>
+</ul>
+<p>但是有几个点大家可能会觉得疑惑的，我们先把这个方法调用的替换的函数一块贴出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//其引用的交换的函数：</span><br><span class="line">+ (void)swizzleResumeAndSuspendMethodForClass:(Class)theClass &#123;</span><br><span class="line">    Method afResumeMethod = class_getInstanceMethod(self, @selector(af_resume));</span><br><span class="line">    Method afSuspendMethod = class_getInstanceMethod(self, @selector(af_suspend));</span><br><span class="line"></span><br><span class="line">    if (af_addMethod(theClass, @selector(af_resume), afResumeMethod)) &#123;</span><br><span class="line">        af_swizzleSelector(theClass, @selector(resume), @selector(af_resume));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (af_addMethod(theClass, @selector(af_suspend), afSuspendMethod)) &#123;</span><br><span class="line">        af_swizzleSelector(theClass, @selector(suspend), @selector(af_suspend));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">static inline void af_swizzleSelector(Class theClass, SEL originalSelector, SEL swizzledSelector) &#123;</span><br><span class="line">    Method originalMethod = class_getInstanceMethod(theClass, originalSelector);</span><br><span class="line">    Method swizzledMethod = class_getInstanceMethod(theClass, swizzledSelector);</span><br><span class="line">    method_exchangeImplementations(originalMethod, swizzledMethod);</span><br><span class="line">&#125;</span><br><span class="line">static inline BOOL af_addMethod(Class theClass, SEL selector, Method method) &#123;</span><br><span class="line">    return class_addMethod(theClass, selector,  method_getImplementation(method),  method_getTypeEncoding(method));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为有小伙伴问到过，所以我们来分析分析大家可能会觉得疑惑的地方：</p>
+<ol>
+<li>首先可以注意<code>class_getInstanceMethod</code>这个方法，它会获取到当前类继承链逐级往上，第一个实现的该方法。所以说它获取到的方法不能确定是当前类还是父类的。而且这里也没有用dispatch_once_t来保证一个方法只交换一次，那万一这是父类的方法，当前类换一次，父类又换一次，不是等于没交换么？…请注意这行判断：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 7) 如果当前class对于resume的实现和父类不一样（类似iOS7上的情况），并且当前class的resume实现和af_resume不一样，才进行method swizzling。</span><br><span class="line">if (classResumeIMP != superclassResumeIMP &amp;&amp; originalAFResumeIMP != classResumeIMP) &#123; </span><br><span class="line">          //执行交换的函数</span><br><span class="line">         [self swizzleResumeAndSuspendMethodForClass:currentClass]; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个条件就杜绝了这种情况的发生，只有当前类实现了这个方法，才可能进入这个if块。</p>
+<p>2.那iOS7两个类都交换了<code>af_resume</code>，那岂不是父类换到子类方法了?…只能说又是没仔细看代码的…注意AF是去向当前类添加<code>af_resume</code>方法，然后去交换当前类的<code>af_resume</code>。所以说根本不会出现这种情况…</p>
+<p><code>AFUrlSessionManager</code> 基本上就这么多内容了。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-eabe0311bc1077f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>分割图.png</p>
+<p>现在我们回到一开始初始化的这行代码上:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.operationQueue.maxConcurrentOperationCount = 1;</span><br></pre></td></tr></table></figure>
+<p>1）首先我们要明确一个概念，这里的并发数仅仅是回调代理的线程并发数。而不是请求网络的线程并发数。请求网络是由NSUrlSession来做的，它内部维护了一个线程池，用来做网络请求。它调度线程,基于底层的CFSocket去发送请求和接收数据。这些<strong>线程是并发的</strong>。</p>
+<p>2）明确了这个概念之后，我们来梳理一下AF3.x的整个流程和线程的关系：</p>
+<ul>
+<li>我们一开始初始化<code>sessionManager</code>的时候，一般都是在主线程，（当然不排除有些人喜欢在分线程初始化…）</li>
+<li>然后我们调用<code>get</code>或者<code>post</code>等去请求数据，接着会进行<code>request</code>拼接，AF代理的字典映射，<code>progress</code>的<code>KVO</code>添加等等，到<code>NSUrlSession</code>的<code>resume</code>之前这些准备工作，仍旧是在主线程中的。</li>
+<li>然后我们调用<code>NSUrlSession</code>的<code>resume</code>，接着就跑到<code>NSUrlSession</code>内部去对网络进行数据请求了,在它内部是多线程并发的去请求数据的。</li>
+<li>紧接着数据请求完成后，回调回来在我们一开始生成的并发数为1的<code>NSOperationQueue</code>中，这个时候会是多线程串行的回调回来的。（注：不明白的朋友可以看看雷纯峰大神这篇<a href="https://link.jianshu.com/?t=http://blog.leichunfeng.com/blog/2015/07/29/ios-concurrency-programming-operation-queues/" target="_blank" rel="noopener">iOS 并发编程之 Operation Queues</a>）</li>
+<li>然后我们到返回数据解析那一块，我们自己又创建了并发的多线程，去对这些数据进行了各种类型的解析。</li>
+<li>最后我们如果有自定义的<code>completionQueue</code>，则在自定义的<code>queue</code>中回调回来，也就是分线程回调回来，否则就是主队列，主线程中回调结束。</li>
+</ul>
+<p>3）最后我们来解释解释为什么回调Queue要设置并发数为1：</p>
+<ul>
+<li>我认为AF这么做有以下两点原因：<br>1）众所周知，AF2.x所有的回调是在一条线程，这条线程是AF的常驻线程，而这一条线程正是AF调度request的思想精髓所在，所以第一个目的就是为了和之前版本保持一致。<br>2）因为跟代理相关的一些操作AF都使用了NSLock。所以就算Queue的并发数设置为n，因为多线程回调，锁的等待，导致所提升的程序速度也并不明显。<strong>反而多task回调导致的多线程并发，平白浪费了部分性能。</strong><br>而设置Queue的并发数为1，（注：这里虽然回调Queue的并发数为1，仍然会有不止一条线程，但是因为是串行回调，所以同一时间，只会有一条线程在操作AFUrlSessionManager的那些方法。）至少回调的事件，是不需要多线程并发的。<strong>回调没有了NSLock的等待时间，所以对时间并没有多大的影响。</strong>（注：但是还是会有多线程的操作的，因为设置刚开始调起请求的时候，是在主线程的，而回调则是串行分线程。）</li>
+</ul>
+<p>当然这仅仅是我个人的看法，如果有不同意见的欢迎交流~</p>
+<p>至此我们AF3.X业务层的逻辑，基本上结束了。小伙伴们，看到这你明白了AF做了什么了吗？可能很多朋友要扔鸡蛋了…可能你还是没觉得AF到底有什么用，我用NSUrlSession不也一样，我干嘛要用AF，在这里，我暂时卖个关子，等我们下篇讲完<code>AFSecurityPolicy</code>和部分<code>UIKit</code>的扩展，以及AF2.x的核心类源码实现之后，我们再好好总结。</p>
+<h6 id="后续文章："><a href="#后续文章：" class="headerlink" title="后续文章："></a>后续文章：</h6><p><a href="https://www.jianshu.com/p/a84237b07611" target="_blank" rel="noopener">AFNetworking之于https认证</a><br><a href="https://www.jianshu.com/p/4ffeb1ba3046" target="_blank" rel="noopener">AFNetworking之UIKit扩展与缓存实现</a><br><a href="https://www.jianshu.com/p/7ed7c0be15b4" target="_blank" rel="noopener">AFNetworking到底做了什么？(终)</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/17/AFNetworking/" rel="next" title="AFNetworking">
+                <i class="fa fa-chevron-left"></i> AFNetworking
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sun Lei</p>
+              <p class="site-description motion-element" itemprop="description">只有用心才能看清楚·真正重要的东西·用眼睛是看不见的</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#接着上一篇的内容往下讲，如果没看过上一篇内容可以点这："><span class="nav-number">1.</span> <span class="nav-text">接着上一篇的内容往下讲，如果没看过上一篇内容可以点这：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代理8："><span class="nav-number">2.</span> <span class="nav-text">代理8：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NSURLSessionDataDelegate"><span class="nav-number">3.</span> <span class="nav-text">NSURLSessionDataDelegate:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代理9："><span class="nav-number">4.</span> <span class="nav-text">代理9：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代理10："><span class="nav-number">5.</span> <span class="nav-text">代理10：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代理11："><span class="nav-number">6.</span> <span class="nav-text">代理11：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代理12："><span class="nav-number">7.</span> <span class="nav-text">代理12：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NSURLSessionDownloadDelegate"><span class="nav-number">8.</span> <span class="nav-text">NSURLSessionDownloadDelegate</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代理13："><span class="nav-number">9.</span> <span class="nav-text">代理13：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代理14："><span class="nav-number">10.</span> <span class="nav-text">代理14：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代理15："><span class="nav-number">11.</span> <span class="nav-text">代理15：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AF代理1："><span class="nav-number">12.</span> <span class="nav-text">AF代理1：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AF代理2："><span class="nav-number">13.</span> <span class="nav-text">AF代理2：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AF代理3："><span class="nav-number">14.</span> <span class="nav-text">AF代理3：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AFHTTPResponseSerializer："><span class="nav-number">15.</span> <span class="nav-text">AFHTTPResponseSerializer：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AFJSONResponseSerializer："><span class="nav-number">16.</span> <span class="nav-text">AFJSONResponseSerializer：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#后续文章："><span class="nav-number">17.</span> <span class="nav-text">后续文章：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sun Lei</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.4.4</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
