@@ -108,22 +108,22 @@
 
 
 
-  <meta name="description" content="本文用来介绍 iOS 多线程中 GCD 的相关知识以及使用方法。这大概是史上最详细、清晰的关于 GCD 的详细讲解+总结的文章了。通过本文，您将了解到：1. GCD 简介2. GCD 任务和队列3. GCD 的使用步骤4. GCD 的基本使用（6种不同组合区别）5. GCD 线程间的通信6. GCD 的其他方法（栅栏方法：dispatch_barrier_async、延时执行方法：dispat">
+  <meta name="description" content="转自 行走的少年郎   本文用来介绍 iOS 多线程中 GCD 的相关知识以及使用方法。这大概是史上最详细、清晰的关于 GCD 的详细讲解+总结的文章了。通过本文，您将了解到：1. GCD 简介2. GCD 任务和队列3. GCD 的使用步骤4. GCD 的基本使用（6种不同组合区别）5. GCD 线程间的通信6. GCD 的其他方法（栅栏方法：dispatch_barrier_async、延时执">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GCD">
 <meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/17/GCD/index.html">
 <meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
-<meta property="og:description" content="本文用来介绍 iOS 多线程中 GCD 的相关知识以及使用方法。这大概是史上最详细、清晰的关于 GCD 的详细讲解+总结的文章了。通过本文，您将了解到：1. GCD 简介2. GCD 任务和队列3. GCD 的使用步骤4. GCD 的基本使用（6种不同组合区别）5. GCD 线程间的通信6. GCD 的其他方法（栅栏方法：dispatch_barrier_async、延时执行方法：dispat">
+<meta property="og:description" content="转自 行走的少年郎   本文用来介绍 iOS 多线程中 GCD 的相关知识以及使用方法。这大概是史上最详细、清晰的关于 GCD 的详细讲解+总结的文章了。通过本文，您将了解到：1. GCD 简介2. GCD 任务和队列3. GCD 的使用步骤4. GCD 的基本使用（6种不同组合区别）5. GCD 线程间的通信6. GCD 的其他方法（栅栏方法：dispatch_barrier_async、延时执">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-background.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-DispatchQueue.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-SerialDispatchQueue.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-ConcurrentDispatchQueue.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-barrier.png">
-<meta property="og:updated_time" content="2018-09-17T04:12:16.601Z">
+<meta property="og:updated_time" content="2018-09-17T06:28:49.094Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GCD">
-<meta name="twitter:description" content="本文用来介绍 iOS 多线程中 GCD 的相关知识以及使用方法。这大概是史上最详细、清晰的关于 GCD 的详细讲解+总结的文章了。通过本文，您将了解到：1. GCD 简介2. GCD 任务和队列3. GCD 的使用步骤4. GCD 的基本使用（6种不同组合区别）5. GCD 线程间的通信6. GCD 的其他方法（栅栏方法：dispatch_barrier_async、延时执行方法：dispat">
+<meta name="twitter:description" content="转自 行走的少年郎   本文用来介绍 iOS 多线程中 GCD 的相关知识以及使用方法。这大概是史上最详细、清晰的关于 GCD 的详细讲解+总结的文章了。通过本文，您将了解到：1. GCD 简介2. GCD 任务和队列3. GCD 的使用步骤4. GCD 的基本使用（6种不同组合区别）5. GCD 线程间的通信6. GCD 的其他方法（栅栏方法：dispatch_barrier_async、延时执">
 <meta name="twitter:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-background.png">
 
 
@@ -340,7 +340,7 @@
                 
               
 
-              <time title="创建时间：2018-09-17 12:01:23 / 修改时间：12:12:16" itemprop="dateCreated datePublished" datetime="2018-09-17T12:01:23+08:00">2018-09-17</time>
+              <time title="创建时间：2018-09-17 12:01:23 / 修改时间：14:28:49" itemprop="dateCreated datePublished" datetime="2018-09-17T12:01:23+08:00">2018-09-17</time>
             
 
             
@@ -396,7 +396,8 @@
       
 
       
-        <p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-background.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-background.png" alt="img"></a></p>
+        <p><a href="https://juejin.im/post/5a90de68f265da4e9b592b40" target="_blank" rel="noopener">转自 <a href="https://juejin.im/user/5a43aed3f265da4318770885" target="_blank" rel="noopener">行走的少年郎</a></a></p>
+<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-background.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-GCD-demo-background.png" alt="img"></a></p>
 <blockquote>
 <p>本文用来介绍 iOS 多线程中 GCD 的相关知识以及使用方法。这大概是史上最详细、清晰的关于 GCD 的详细讲解+总结的文章了。通过本文，您将了解到：<br><strong>1. GCD 简介</strong><br><strong>2. GCD 任务和队列</strong><br><strong>3. GCD 的使用步骤</strong><br><strong>4. GCD 的基本使用</strong>（6种不同组合区别）<br><strong>5. GCD 线程间的通信</strong><br><strong>6. GCD 的其他方法</strong>（栅栏方法：dispatch_barrier_async、延时执行方法：dispatch_after、一次性代码（只执行一次）：dispatch_once、快速迭代方法：dispatch_apply、队列组：dispatch_group、信号量：dispatch_semaphore）</p>
 <p>文中 Demo 我已放在了 Github 上，Demo 链接：<a href="https://github.com/bujige/YSC-GCD-demo" target="_blank" rel="noopener">传送门</a></p>
@@ -767,7 +768,6 @@
 <li><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">iOS多线程：『NSOperation』详解总结</a></li>
 <li><a href="https://bujige.net/blog/iOS-Complete-learning-RunLoop.html" target="_blank" rel="noopener">iOS多线程：『RunLoop』详解总结</a></li>
 </ul>
-<p><a href="https://juejin.im/post/5a90de68f265da4e9b592b40" target="_blank" rel="noopener">转自 <a href="https://juejin.im/user/5a43aed3f265da4318770885" target="_blank" rel="noopener">行走的少年郎</a></a></p>
 
       
     </div>
@@ -877,7 +877,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -904,7 +904,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

@@ -108,12 +108,12 @@
 
 
 
-  <meta name="description" content="本文用来介绍 iOS 多线程中，pthread、NSThread 的使用方法及实现。第一部分：pthread 的使用、其他相关方法。第二部分：NSThread 的使用、线程相关用法、线程状态控制方法、线程之间的通信、线程安全和线程同步，以及线程的状态转换相关知识。 文中 Demo 我已放在了 Github 上，Demo 链接：传送门  1. pthread1.1 pthread 简介pthre">
+  <meta name="description" content="转自 行走的少年郎   本文用来介绍 iOS 多线程中，pthread、NSThread 的使用方法及实现。第一部分：pthread 的使用、其他相关方法。第二部分：NSThread 的使用、线程相关用法、线程状态控制方法、线程之间的通信、线程安全和线程同步，以及线程的状态转换相关知识。 文中 Demo 我已放在了 Github 上，Demo 链接：传送门  1. pthread1.1 pthre">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pthread、NSThread">
 <meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/17/pthread、NSThread/index.html">
 <meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
-<meta property="og:description" content="本文用来介绍 iOS 多线程中，pthread、NSThread 的使用方法及实现。第一部分：pthread 的使用、其他相关方法。第二部分：NSThread 的使用、线程相关用法、线程状态控制方法、线程之间的通信、线程安全和线程同步，以及线程的状态转换相关知识。 文中 Demo 我已放在了 Github 上，Demo 链接：传送门  1. pthread1.1 pthread 简介pthre">
+<meta property="og:description" content="转自 行走的少年郎   本文用来介绍 iOS 多线程中，pthread、NSThread 的使用方法及实现。第一部分：pthread 的使用、其他相关方法。第二部分：NSThread 的使用、线程相关用法、线程状态控制方法、线程之间的通信、线程安全和线程同步，以及线程的状态转换相关知识。 文中 Demo 我已放在了 Github 上，Demo 链接：传送门  1. pthread1.1 pthre">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-background.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-NotSave.png">
@@ -123,10 +123,10 @@
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange1.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange2.png">
 <meta property="og:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange3.png">
-<meta property="og:updated_time" content="2018-09-17T04:25:44.323Z">
+<meta property="og:updated_time" content="2018-09-17T06:28:05.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pthread、NSThread">
-<meta name="twitter:description" content="本文用来介绍 iOS 多线程中，pthread、NSThread 的使用方法及实现。第一部分：pthread 的使用、其他相关方法。第二部分：NSThread 的使用、线程相关用法、线程状态控制方法、线程之间的通信、线程安全和线程同步，以及线程的状态转换相关知识。 文中 Demo 我已放在了 Github 上，Demo 链接：传送门  1. pthread1.1 pthread 简介pthre">
+<meta name="twitter:description" content="转自 行走的少年郎   本文用来介绍 iOS 多线程中，pthread、NSThread 的使用方法及实现。第一部分：pthread 的使用、其他相关方法。第二部分：NSThread 的使用、线程相关用法、线程状态控制方法、线程之间的通信、线程安全和线程同步，以及线程的状态转换相关知识。 文中 Demo 我已放在了 Github 上，Demo 链接：传送门  1. pthread1.1 pthre">
 <meta name="twitter:image" content="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-background.png">
 
 
@@ -343,7 +343,7 @@
                 
               
 
-              <time title="创建时间：2018-09-17 12:24:19 / 修改时间：12:25:44" itemprop="dateCreated datePublished" datetime="2018-09-17T12:24:19+08:00">2018-09-17</time>
+              <time title="创建时间：2018-09-17 12:24:19 / 修改时间：14:28:05" itemprop="dateCreated datePublished" datetime="2018-09-17T12:24:19+08:00">2018-09-17</time>
             
 
             
@@ -399,7 +399,8 @@
       
 
       
-        <p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-background.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-background.png" alt="img"></a></p>
+        <p><a href="https://www.bujige.net/blog/iOS-Complete-learning-pthread-and-NSThread.html" target="_blank" rel="noopener">转自 行走的少年郎</a></p>
+<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-background.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-background.png" alt="img"></a></p>
 <blockquote>
 <p>本文用来介绍 iOS 多线程中，<strong>pthread、NSThread</strong> 的使用方法及实现。<br>第一部分：pthread 的使用、其他相关方法。<br>第二部分：NSThread 的使用、线程相关用法、线程状态控制方法、线程之间的通信、线程安全和线程同步，以及线程的状态转换相关知识。</p>
 <p>文中 Demo 我已放在了 Github 上，Demo 链接：<a href="https://github.com/bujige/YSC-pthread-NSThread-demo" target="_blank" rel="noopener">传送门</a></p>
@@ -510,7 +511,6 @@
 <li><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">iOS多线程：『NSOperation』详解总结</a></li>
 <li><a href="https://bujige.net/blog/iOS-Complete-learning-RunLoop.html" target="_blank" rel="noopener">iOS多线程：『RunLoop』详解总结</a></li>
 </ul>
-<p><a href="https://bujige.net/blog/iOS-Complete-learning-pthread-and-NSThread.html" target="_blank" rel="noopener">转自 行走的少年郎</a></p>
 
       
     </div>
@@ -547,6 +547,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/17/RunLoop详尽总结/" rel="prev" title="RunLoop详尽总结">
+                RunLoop详尽总结 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -616,7 +620,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -643,7 +647,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
