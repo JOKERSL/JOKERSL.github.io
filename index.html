@@ -292,6 +292,358 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/XMPP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/17/XMPP/" itemprop="url">
+                  XMPP
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-17 16:43:44 / 修改时间：16:45:17" itemprop="dateCreated datePublished" datetime="2018-09-17T16:43:44+08:00">2018-09-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/网络相关/" itemprop="url" rel="index"><span itemprop="name">网络相关</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[转自 <a href="https://www.jianshu.com/u/19f68e4b47ce" target="_blank" rel="noopener">iOS_成才录</a>]（<a href="https://www.jianshu.com/p/561224d0e91d）" target="_blank" rel="noopener">https://www.jianshu.com/p/561224d0e91d）</a></p>
+<h2 id="一、即时通讯技术"><a href="#一、即时通讯技术" class="headerlink" title="一、即时通讯技术"></a>一、即时通讯技术</h2><ul>
+<li><code>即时通讯技术</code>（<code>IM</code>– Instant Messaging）-&gt; 支持用户在线实时交谈</li>
+<li>有许多的IM系统，如AOL、Yahoo IM、 MSN以及QQ，它们<code>最大的区别在于各自通讯协议的实现</code>，所以<code>n即时通讯技术的核心在于它的传输协议</code></li>
+<li><code>协议</code>-&gt; 用来说明信息在网络上如何传输<ul>
+<li>如果有了统一的传输协议，那么应当可以实现各个IM之间的直接通讯</li>
+<li>为了创建即时通讯的统一标准，目前已经出现过的IM协议包括：<ul>
+<li>IETF的对话初始协议（SIP）: SIP是建立VOIP连接的IETF标准，而VOIP就是网络电话</li>
+<li>即时通讯对话初始协议和表示扩展协议（SIMPLE）</li>
+<li>应用交换协议（APEX）、显示和即时通讯协议（PRIM）</li>
+<li><code>基于XML且开放的可扩展通讯和表示协议（XMPP）协议</code>（常称为 Jabber 协议）</li>
+</ul>
+</li>
+<li>人们多次努力，试图统一各大主要IM供应商的标准（AOL、Yahoo 及 Microsoft），但无一成功，且每一种IM仍然继续使用自己所拥有的协议</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、XMPP简介"><a href="#二、XMPP简介" class="headerlink" title="二、XMPP简介"></a>二、XMPP简介</h2><blockquote>
+<p>XMPP诞生的由来</p>
+</blockquote>
+<ul>
+<li>都是遵守XMPP即时通讯协议<ul>
+<li>设计一款全世界都使用的即时通讯协议，无论使用什么即时通讯软件，都可以互联互通</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>XMPP起源</p>
+</blockquote>
+<ul>
+<li><p><code>XMPP是基于XML的协议</code>，用于即时消息（IM）以及在线现场探测。最初，XMPP作为一个框架开发，目标是支持企业环境内的即时消息传递和联机状态应用程序。</p>
+</li>
+<li><p>XMPP的<code>前身是Jabber</code>（1998年），是一个开源组织定义的网络即时通信协议</p>
+</li>
+<li><p>XMPP是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个分散型通信网络</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这意味着，只要网络基础设施允许，任何XMPP用户都可以向其他任何XMPP用户传递消息。</li>
+<li>多个XMPP服务器也可以通过一个专门的“服务器-服务器”协议相互通信，提供了创建分散型社交网络和协作框架的可能性</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/831339-66b057beede52e52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/567" alt="img"></p>
+<p>XMPP工作原理示意图.png</p>
+<blockquote>
+<p>XMPP概述</p>
+</blockquote>
+<ul>
+<li><code>XMPP是一种基于XML的协议</code><ul>
+<li>它继承了在XML(可扩展标记语言)环境中灵活的发展性。这表明<code>XMPP是可扩展的</code>。</li>
+<li><code>XMPP包含了针对服务器端的软件协议</code>，使之能与另一个进行通话，这使得开发者更容易建立客户应用程序或给一个配置好的系统添加功能</li>
+</ul>
+</li>
+<li>XMPP的核心<code>XML流</code>传输协议的定义<ul>
+<li>使得XMPP能够在一个比以往网络通信协议更规范的平台上。借助于XML易于解析和阅读的特性，使得XMPP的协议能够非常漂亮</li>
+</ul>
+</li>
+<li>XMPP的扩展协议Jingle使得其支持语音和视频，目前iOS尚不支持</li>
+<li>XMPP的官方文档是RFC 3920</li>
+<li>XMPP协议曾经是Google力推的即时通信协议，<code>其代表作品是GTalk</code></li>
+</ul>
+<blockquote>
+<p>Google Talk（GTalk）</p>
+</blockquote>
+<ul>
+<li>Google Talk是Google的IM工具，除了具有IM功能外，另外还加上了Voip功能，“界面清新大方”，可直接链接Gmail，接受查看邮件</li>
+<li>由于Google Talk是<code>基于Jabber开源标准，这种标准允许用户和其它的即时讯息系统相连</code>，比如苹果电脑的iChat，GAIM，Trillian Pro以及Psi。<code>Google Talk只能够在Windows平台上运行</code></li>
+<li>Google Talk的用户无法使用这种软件与AIM，MSN Messenger或者雅虎Messenger的用户进行互通</li>
+<li>2013年5月，在Google I/O大会上，Google推出统一跨平台聊天应用<code>Hangouts（环聊）取代Google Talk</code></li>
+<li><code>Google Hangouts不支持XMPP协议</code>，Google Hangouts用户与如XMPP协议的强有力支持者jabber.org之间的交流无法进行</li>
+<li>Hangouts目前在中国大陆无法使用，尚不支持iOS7.0</li>
+<li><code>目前，Google Wave是基于XMPP协议的</code>，并且Google还开发Jingle扩展进行基于XMPP协议的视频聊天。尽管Google尚未宣布Talk的关闭日期，不过从Google关闭Reader和iCal支持来看，Talk关闭之日不会太远</li>
+</ul>
+<h1 id="三、XMPP定义"><a href="#三、XMPP定义" class="headerlink" title="三、XMPP定义"></a>三、XMPP定义</h1><ul>
+<li>XMPP：<ul>
+<li>The Extensible Messaging and Presence Protocol（<code>可扩展通讯和表示协议</code>）</li>
+</ul>
+</li>
+<li>XMPP可用于服务类<code>实时通讯、表示和需求响应</code>服务中的XML数据元<code>流式传输</code>。<ul>
+<li>XMPP以Jabber协议为基础，而Jabber是即时通讯中常用的开放式协议</li>
+</ul>
+</li>
+<li>XMPP是基于XML的协议，<code>用于即时消息（IM）以及在线现场探测</code>。<ul>
+<li>促进服务器之间的准即时操作。这个协议可能最终允许因特网用户向因特网上的其他任何人发送即时消息，即使其操作系统和浏览器不同</li>
+</ul>
+</li>
+</ul>
+<h1 id="四、XMPP的基本结构：典型的C-S架构"><a href="#四、XMPP的基本结构：典型的C-S架构" class="headerlink" title="四、XMPP的基本结构：典型的C/S架构"></a>四、XMPP的基本结构：典型的C/S架构</h1><ul>
+<li><p>XMPP是一个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">典型的C/S架构</span><br></pre></td></tr></table></figure>
+<ul>
+<li>而不是像大多数即时通讯软件一样，使用P2P客户端到客户端的架构</li>
+<li>也就是说在大多数情况下，当两个客户端进行通讯时， 他们的消息都是通过服务器传递的。</li>
+<li>优点：采用这种架构，主要是为了简化客户端，将大多数工作放在服务器端进行</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/831339-20820e713477b568.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/944" alt="img"></p>
+<p>架构.png</p>
+<ul>
+<li>XMPP中定义了三个角色：客户端，服务器，网关<ul>
+<li>通信能够在这三者的任意两个之间双向发生</li>
+<li>服务器 ： 同时承担了客户端信息记录，连接管理和信息的路由功能</li>
+<li>网关 ： 承担着与异构即时通信系统的互联互通，异构系统可以包括SMS（短信），MSN，ICQ等</li>
+</ul>
+</li>
+<li>基本的网络形式：<ul>
+<li><code>单客户端通过TCP/IP连接到单服务器</code>，然后在之上<code>传输XML流</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="五、XMPP工作原理"><a href="#五、XMPP工作原理" class="headerlink" title="五、XMPP工作原理"></a>五、XMPP工作原理</h1><ul>
+<li>节点连接到服务器</li>
+<li>服务器利用本地目录系统中的证书对其认证</li>
+<li>节点指定目标地址，让服务器告知目标状态</li>
+<li>服务器查找、连接并进行相互认证</li>
+<li>节点之间进行交互</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/831339-66b057beede52e52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/567" alt="img"></p>
+<p>XMPP工作原理示意图.png</p>
+<h1 id="六、传输内容"><a href="#六、传输内容" class="headerlink" title="六、传输内容"></a>六、传输内容</h1><ul>
+<li><p>XMPP应用传输的是与<code>即时通讯相关的指令</code></p>
+</li>
+<li><p>而XMPP传输的即时通讯指令的逻辑与以往相仿，只是协议的形式变成了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XML格式的纯文本</span><br></pre></td></tr></table></figure>
+<p>。</p>
+<ul>
+<li>这不但使得解析容易了，人也容易阅读了，方便了开发和查错</li>
+</ul>
+</li>
+<li><p>而XMPP的核心部分就是一个<code>在网络上分片段发送XML的流协议</code>。这个流协议是XMPP的即时通讯指令的传递基础，也是一个非常重要的可以被进一步利用的网络基础协议，可以说<code>XMPP用TCP传的是XML流</code></p>
+</li>
+</ul>
+<h1 id="七、XMPP的优缺点"><a href="#七、XMPP的优缺点" class="headerlink" title="七、XMPP的优缺点"></a>七、XMPP的优缺点</h1><blockquote>
+<p>优点</p>
+</blockquote>
+<ul>
+<li>开放</li>
+<li>标准（XMPP的技术规格已被定义在RFC 3920及RFC 3921）</li>
+<li>证实可用，谷歌证实了GTalk</li>
+<li>分散</li>
+<li>安全</li>
+<li>可扩展</li>
+</ul>
+<blockquote>
+<p>缺点</p>
+</blockquote>
+<ul>
+<li>数据负载过重XML</li>
+<li>没有二进制传输</li>
+</ul>
+<h1 id="八、XMPP的传输小结"><a href="#八、XMPP的传输小结" class="headerlink" title="八、XMPP的传输小结"></a>八、XMPP的传输小结</h1><ul>
+<li><p>XMPP是一种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类似于HTTP协议</span><br></pre></td></tr></table></figure>
+<p>的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一种数据传输协议</span><br></pre></td></tr></table></figure>
+<p>，</p>
+<ul>
+<li>其过程就如同“解包装–〉包装”的过程。只需要理解其接收的类型及返回的类型，便可以很好的利用XMPP来进行数据通讯</li>
+</ul>
+</li>
+<li><p>XMPP官方网站——<a href="https://link.jianshu.com/?t=http://xmpp.org" target="_blank" rel="noopener">http://xmpp.org</a></p>
+</li>
+</ul>
+<h1 id="九、XMPP——JID"><a href="#九、XMPP——JID" class="headerlink" title="九、XMPP——JID"></a>九、XMPP——JID</h1><ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">每个 XMPP客户端用户必须拥有一个全局惟一标识符。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>基于历史原因，这些标识符称为<code>Jabber ID或JID</code>。鉴于协议的分布式特征，JID应包含联系用户所需的所有信息，JID的结构类似于电子邮件地址，但不要求 JID同时也是有效的电子邮件收件人</li>
+</ul>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">客户端和服务器节点，被统称为XMPP实体，都拥有JID</span><br></pre></td></tr></table></figure>
+<p>。例如：SomeCorp公司的员工 John Doe可能拥有JID：用户名@服务器名称</p>
+<ul>
+<li>John.Doe@somecorp.com<ul>
+<li>其中somecorp.com是 SomeCorp公司的<code>XMPP服务器的地址</code></li>
+<li>John.Doe是John Doe的<code>用户名</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="十、环境搭建"><a href="#十、环境搭建" class="headerlink" title="十、环境搭建"></a>十、环境搭建</h1><ul>
+<li><p>开发客户端：ios 、Xcode开发选择</p>
+</li>
+<li><p>服务器：Openfire选择</p>
+</li>
+<li><p>数据库：MySql选择</p>
+<p>​</p>
+<p>​</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/831339-8b20b7aea3780565.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/936" alt="img"></p>
+<p>环境选择.png</p>
+</li>
+<li><p>安装MySQL管理工具——mysql-workbench</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/Socket/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3052,275 +3404,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/pthread、NSThread/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/17/pthread、NSThread/" itemprop="url">
-                  pthread、NSThread
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-09-17 12:24:19 / 修改时间：14:28:05" itemprop="dateCreated datePublished" datetime="2018-09-17T12:24:19+08:00">2018-09-17</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/多线程/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://www.bujige.net/blog/iOS-Complete-learning-pthread-and-NSThread.html" target="_blank" rel="noopener">转自 行走的少年郎</a></p>
-<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-background.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-background.png" alt="img"></a></p>
-<blockquote>
-<p>本文用来介绍 iOS 多线程中，<strong>pthread、NSThread</strong> 的使用方法及实现。<br>第一部分：pthread 的使用、其他相关方法。<br>第二部分：NSThread 的使用、线程相关用法、线程状态控制方法、线程之间的通信、线程安全和线程同步，以及线程的状态转换相关知识。</p>
-<p>文中 Demo 我已放在了 Github 上，Demo 链接：<a href="https://github.com/bujige/YSC-pthread-NSThread-demo" target="_blank" rel="noopener">传送门</a></p>
-</blockquote>
-<h1 id="1-pthread"><a href="#1-pthread" class="headerlink" title="1. pthread"></a>1. pthread</h1><h2 id="1-1-pthread-简介"><a href="#1-1-pthread-简介" class="headerlink" title="1.1 pthread 简介"></a>1.1 pthread 简介</h2><p>pthread 是一套通用的多线程的 API，可以在Unix / Linux / Windows 等系统跨平台使用，使用 C 语言编写，需要程序员自己管理线程的生命周期，使用难度较大，我们在 iOS 开发中几乎不使用 pthread，但是还是来可以了解一下的。</p>
-<blockquote>
-<p>引自 <a href="https://baike.baidu.com/item/Pthread" target="_blank" rel="noopener">百度百科</a><br>POSIX 线程（POSIX threads），简称 Pthreads，是线程的 POSIX 标准。该标准定义了创建和操纵线程的一整套 API。在类Unix操作系统（Unix、Linux、Mac OS X等）中，都使用 Pthreads 作为操作系统的线程。Windows 操作系统也有其移植版 pthreads-win32。</p>
-<p>引自 <a href="https://zh.wikipedia.org/wiki/POSIX%E7%BA%BF%E7%A8%8B" target="_blank" rel="noopener">维基百科</a><br>POSIX 线程（英语：POSIX Threads，常被缩写 为 Pthreads）是 POSIX 的线程标准，定义了创建和操纵线程的一套 API。<br>实现 POSIX 线程标准的库常被称作 Pthreads，一般用于 Unix-like POSIX 系统，如 Linux、Solaris。但是 Microsoft Windows 上的实现也存在，例如直接使用 Windows API 实现的第三方库 pthreads-w32；而利用 Windows 的 SFU/SUA 子系统，则可以使用微软提供的一部分原生 POSIX API。</p>
-</blockquote>
-<h2 id="1-2-pthread-使用方法"><a href="#1-2-pthread-使用方法" class="headerlink" title="1.2 pthread 使用方法"></a>1.2 pthread 使用方法</h2><ol>
-<li>首先要包含头文件<code>#import &lt;pthread.h&gt;</code></li>
-<li>其次要创建线程，并开启线程执行任务</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 1. 创建线程: 定义一个pthread_t类型变量</span><br><span class="line">pthread_t thread;</span><br><span class="line">// 2. 开启线程: 执行任务</span><br><span class="line">pthread_create(&amp;thread, NULL, run, NULL);</span><br><span class="line">// 3. 设置子线程的状态设置为 detached，该线程运行结束后会自动释放所有资源</span><br><span class="line">pthread_detach(thread);</span><br><span class="line"></span><br><span class="line">void * run(void *param)    // 新线程调用方法，里边为需要执行的任务</span><br><span class="line">&#123;</span><br><span class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">return NULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>pthread_create(&amp;thread, NULL, run, NULL);</code> 中各项参数含义：</li>
-<li>第一个参数<code>&amp;thread</code>是线程对象，指向线程标识符的指针</li>
-<li>第二个是线程属性，可赋值<code>NULL</code></li>
-<li>第三个<code>run</code>表示指向函数的指针(run对应函数里是需要在新线程中执行的任务)</li>
-<li>第四个是运行函数的参数，可赋值<code>NULL</code></li>
-</ul>
-<h2 id="1-3-pthread-其他相关方法"><a href="#1-3-pthread-其他相关方法" class="headerlink" title="1.3 pthread 其他相关方法"></a>1.3 pthread 其他相关方法</h2><ul>
-<li><code>pthread_create()</code> 创建一个线程</li>
-<li><code>pthread_exit()</code> 终止当前线程</li>
-<li><code>pthread_cancel()</code> 中断另外一个线程的运行</li>
-<li><code>pthread_join()</code> 阻塞当前的线程，直到另外一个线程运行结束</li>
-<li><code>pthread_attr_init()</code> 初始化线程的属性</li>
-<li><code>pthread_attr_setdetachstate()</code> 设置脱离状态的属性（决定这个线程在终止时是否可以被结合）</li>
-<li><code>pthread_attr_getdetachstate()</code> 获取脱离状态的属性</li>
-<li><code>pthread_attr_destroy()</code> 删除线程的属性</li>
-<li><code>pthread_kill()</code> 向线程发送一个信号</li>
-</ul>
-<hr>
-<h1 id="2-NSThread"><a href="#2-NSThread" class="headerlink" title="2. NSThread"></a>2. NSThread</h1><p>NSThread 是苹果官方提供的，使用起来比 pthread 更加面向对象，简单易用，可以直接操作线程对象。不过也需要需要程序员自己管理线程的生命周期(主要是创建)，我们在开发的过程中偶尔使用 NSThread。比如我们会经常调用<code>[NSThread currentThread]</code>来显示当前的进程信息。</p>
-<p>下边我们说说 NSThread 如何使用。</p>
-<h2 id="2-1-创建、启动线程"><a href="#2-1-创建、启动线程" class="headerlink" title="2.1 创建、启动线程"></a>2.1 创建、启动线程</h2><ul>
-<li>先创建线程，再启动线程</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 1. 创建线程</span><br><span class="line">NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(run) object:nil];</span><br><span class="line">// 2. 启动线程</span><br><span class="line">[thread start];    // 线程一启动，就会在线程thread中执行self的run方法</span><br><span class="line"></span><br><span class="line">// 新线程调用方法，里边为需要执行的任务</span><br><span class="line">- (void)run &#123;</span><br><span class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建线程后自动启动线程</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 1. 创建线程后自动启动线程</span><br><span class="line">[NSThread detachNewThreadSelector:@selector(run) toTarget:self withObject:nil];</span><br><span class="line"></span><br><span class="line">// 新线程调用方法，里边为需要执行的任务</span><br><span class="line">- (void)run &#123;</span><br><span class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>隐式创建并启动线程</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 1. 隐式创建并启动线程</span><br><span class="line">[self performSelectorInBackground:@selector(run) withObject:nil];</span><br><span class="line"></span><br><span class="line">// 新线程调用方法，里边为需要执行的任务</span><br><span class="line">- (void)run &#123;</span><br><span class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="2-2-线程相关用法"><a href="#2-2-线程相关用法" class="headerlink" title="2.2 线程相关用法"></a>2.2 线程相关用法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 获得主线程</span><br><span class="line">+ (NSThread *)mainThread;</span><br><span class="line"></span><br><span class="line">// 判断是否为主线程(对象方法)</span><br><span class="line">- (BOOL)isMainThread;</span><br><span class="line"></span><br><span class="line">// 判断是否为主线程(类方法)</span><br><span class="line">+ (BOOL)isMainThread;</span><br><span class="line"></span><br><span class="line">// 获得当前线程</span><br><span class="line">NSThread *current = [NSThread currentThread];</span><br><span class="line"></span><br><span class="line">// 线程的名字——setter方法</span><br><span class="line">- (void)setName:(NSString *)n;</span><br><span class="line"></span><br><span class="line">// 线程的名字——getter方法</span><br><span class="line">- (NSString *)name;</span><br></pre></td></tr></table></figure>
-<h2 id="2-3-线程状态控制方法"><a href="#2-3-线程状态控制方法" class="headerlink" title="2.3 线程状态控制方法"></a>2.3 线程状态控制方法</h2><ul>
-<li>启动线程方法</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)start;</span><br><span class="line">// 线程进入就绪状态 -&gt; 运行状态。当线程任务执行完毕，自动进入死亡状态</span><br></pre></td></tr></table></figure>
-<ul>
-<li>阻塞（暂停）线!程方法</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (void)sleepUntilDate:(NSDate *)date;</span><br><span class="line">+ (void)sleepForTimeInterval:(NSTimeInterval)ti;</span><br><span class="line">// 线程进入阻塞状态</span><br></pre></td></tr></table></figure>
-<ul>
-<li>强制停止线程</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ (void)exit;</span><br><span class="line">// 线程进入死亡状态</span><br></pre></td></tr></table></figure>
-<h2 id="2-4-线程之间的通信"><a href="#2-4-线程之间的通信" class="headerlink" title="2.4 线程之间的通信"></a>2.4 线程之间的通信</h2><p>在开发中，我们经常会在子线程进行耗时操作，操作结束后再回到主线程去刷新 UI。这就涉及到了子线程和主线程之间的通信。我们先来了解一下官方关于 NSThread 的线程间通信的方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 在主线程上执行操作</span><br><span class="line">- (void)performSelectorOnMainThread:(SEL)aSelector withObject:(id)arg waitUntilDone:(BOOL)wait;</span><br><span class="line">- (void)performSelectorOnMainThread:(SEL)aSelector withObject:(id)arg waitUntilDone:(BOOL)wait modes:(NSArray&lt;NSString *&gt; *)array;</span><br><span class="line">// equivalent to the first method with kCFRunLoopCommonModes</span><br><span class="line"></span><br><span class="line">// 在指定线程上执行操作</span><br><span class="line">- (void)performSelector:(SEL)aSelector onThread:(NSThread *)thr withObject:(id)arg waitUntilDone:(BOOL)wait modes:(NSArray *)array NS_AVAILABLE(10_5, 2_0);</span><br><span class="line">- (void)performSelector:(SEL)aSelector onThread:(NSThread *)thr withObject:(id)arg waitUntilDone:(BOOL)wait NS_AVAILABLE(10_5, 2_0);</span><br><span class="line"></span><br><span class="line">// 在当前线程上执行操作，调用 NSObject 的 performSelector:相关方法</span><br><span class="line">- (id)performSelector:(SEL)aSelector;</span><br><span class="line">- (id)performSelector:(SEL)aSelector withObject:(id)object;</span><br><span class="line">- (id)performSelector:(SEL)aSelector withObject:(id)object1 withObject:(id)object2;</span><br></pre></td></tr></table></figure>
-<p>下面通过一个经典的下载图片 DEMO 来展示线程之间的通信。具体步骤如下：</p>
-<ol>
-<li>开启一个子线程，在子线程中下载图片。</li>
-<li>回到主线程刷新 UI，将图片展示在 UIImageView 中。</li>
-</ol>
-<p>DEMO 代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* 创建一个线程下载图片</span><br><span class="line">*/</span><br><span class="line">- (void)downloadImageOnSubThread &#123;</span><br><span class="line">// 在创建的子线程中调用downloadImage下载图片</span><br><span class="line">[NSThread detachNewThreadSelector:@selector(downloadImage) toTarget:self withObject:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* 下载图片，下载完之后回到主线程进行 UI 刷新</span><br><span class="line">*/</span><br><span class="line">- (void)downloadImage &#123;</span><br><span class="line">NSLog(@&quot;current thread -- %@&quot;, [NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">// 1. 获取图片 imageUrl</span><br><span class="line">NSURL *imageUrl = [NSURL URLWithString:@&quot;https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-icon.jpg&quot;];</span><br><span class="line"></span><br><span class="line">// 2. 从 imageUrl 中读取数据(下载图片) -- 耗时操作</span><br><span class="line">NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];</span><br><span class="line">// 通过二进制 data 创建 image</span><br><span class="line">UIImage *image = [UIImage imageWithData:imageData];</span><br><span class="line"></span><br><span class="line">// 3. 回到主线程进行图片赋值和界面刷新</span><br><span class="line">[self performSelectorOnMainThread:@selector(refreshOnMainThread:) withObject:image waitUntilDone:YES];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* 回到主线程进行图片赋值和界面刷新</span><br><span class="line">*/</span><br><span class="line">- (void)refreshOnMainThread:(UIImage *)image &#123;</span><br><span class="line">NSLog(@&quot;current thread -- %@&quot;, [NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">// 赋值图片到imageview</span><br><span class="line">self.imageView.image = image;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="2-5-NSThread-线程安全和线程同步"><a href="#2-5-NSThread-线程安全和线程同步" class="headerlink" title="2.5 NSThread 线程安全和线程同步"></a>2.5 NSThread 线程安全和线程同步</h2><p><strong>线程安全</strong>：如果你的代码所在的进程中有多个线程在同时运行，而这些线程可能会同时运行这段代码。如果每次运行结果和单线程运行的结果是一样的，而且其他的变量的值也和预期的是一样的，就是线程安全的。</p>
-<p>若每个线程中对全局变量、静态变量只有读操作，而无写操作，一般来说，这个全局变量是线程安全的；若有多个线程同时执行写操作（更改变量），一般都需要考虑线程同步，否则的话就可能影响线程安全。</p>
-<p><strong>线程同步</strong>：可理解为线程 A 和 线程 B 一块配合，A 执行到一定程度时要依靠线程 B 的某个结果，于是停下来，示意 B 运行；B 依言执行，再将结果给 A；A 再继续操作。</p>
-<p>举个简单例子就是：两个人在一起聊天。两个人不能同时说话，避免听不清(操作冲突)。等一个人说完(一个线程结束操作)，另一个再说(另一个线程再开始操作)。</p>
-<p>下面，我们模拟火车票售卖的方式，实现 NSThread 线程安全和解决线程同步问题。</p>
-<p>场景：总共有50张火车票，有两个售卖火车票的窗口，一个是北京火车票售卖窗口，另一个是上海火车票售卖窗口。两个窗口同时售卖火车票，卖完为止。</p>
-<h3 id="2-5-1-NSThread-非线程安全"><a href="#2-5-1-NSThread-非线程安全" class="headerlink" title="2.5.1 NSThread 非线程安全"></a>2.5.1 NSThread 非线程安全</h3><p>先来看看不考虑线程安全的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* 初始化火车票数量、卖票窗口(非线程安全)、并开始卖票</span><br><span class="line">*/</span><br><span class="line">- (void)initTicketStatusNotSave &#123;</span><br><span class="line">// 1. 设置剩余火车票为 50</span><br><span class="line">self.ticketSurplusCount = 50;</span><br><span class="line"></span><br><span class="line">// 2. 设置北京火车票售卖窗口的线程</span><br><span class="line">self.ticketSaleWindow1 = [[NSThread alloc]initWithTarget:self selector:@selector(saleTicketNotSafe) object:nil];</span><br><span class="line">self.ticketSaleWindow1.name = @&quot;北京火车票售票窗口&quot;;</span><br><span class="line"></span><br><span class="line">// 3. 设置上海火车票售卖窗口的线程</span><br><span class="line">self.ticketSaleWindow2 = [[NSThread alloc]initWithTarget:self selector:@selector(saleTicketNotSafe) object:nil];</span><br><span class="line">self.ticketSaleWindow2.name = @&quot;上海火车票售票窗口&quot;;</span><br><span class="line"></span><br><span class="line">// 4. 开始售卖火车票</span><br><span class="line">[self.ticketSaleWindow1 start];</span><br><span class="line">[self.ticketSaleWindow2 start];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* 售卖火车票(非线程安全)</span><br><span class="line">*/</span><br><span class="line">- (void)saleTicketNotSafe &#123;</span><br><span class="line">while (1) &#123;</span><br><span class="line">//如果还有票，继续售卖</span><br><span class="line">if (self.ticketSurplusCount &gt; 0) &#123;</span><br><span class="line">self.ticketSurplusCount --;</span><br><span class="line">NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;剩余票数：%ld 窗口：%@&quot;, self.ticketSurplusCount, [NSThread currentThread].name]);</span><br><span class="line">[NSThread sleepForTimeInterval:0.2];</span><br><span class="line">&#125;</span><br><span class="line">//如果已卖完，关闭售票窗口</span><br><span class="line">else &#123;</span><br><span class="line">NSLog(@&quot;所有火车票均已售完&quot;);</span><br><span class="line">break;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行后部分结果为：</p>
-<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-NotSave.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-NotSave.png" alt="YSC-phread-NSThread-demo-NotSave.png"></a></p>
-<p>可以看到在不考虑线程安全的情况下，得到票数是错乱的，这样显然不符合我们的需求，所以我们需要考虑线程安全问题。</p>
-<h3 id="2-5-2-NSThread-线程安全"><a href="#2-5-2-NSThread-线程安全" class="headerlink" title="2.5.2 NSThread 线程安全"></a>2.5.2 NSThread 线程安全</h3><p>线程安全解决方案：可以给线程加锁，在一个线程执行该操作的时候，不允许其他线程进行操作。iOS 实现线程加锁有很多种方式。@synchronized、 NSLock、NSRecursiveLock、NSCondition、NSConditionLock、pthread_mutex、dispatch_semaphore、OSSpinLock、atomic(property) set/ge等等各种方式。为了简单起见，这里不对各种锁的解决方案和性能做分析，只用最简单的<code>@synchronized</code>来保证线程安全，从而解决线程同步问题。</p>
-<p>考虑线程安全的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* 初始化火车票数量、卖票窗口(线程安全)、并开始卖票</span><br><span class="line">*/</span><br><span class="line">- (void)initTicketStatusSave &#123;</span><br><span class="line">// 1. 设置剩余火车票为 50</span><br><span class="line">self.ticketSurplusCount = 50;</span><br><span class="line"></span><br><span class="line">// 2. 设置北京火车票售卖窗口的线程</span><br><span class="line">self.ticketSaleWindow1 = [[NSThread alloc]initWithTarget:self selector:@selector(saleTicketSafe) object:nil];</span><br><span class="line">self.ticketSaleWindow1.name = @&quot;北京火车票售票窗口&quot;;</span><br><span class="line"></span><br><span class="line">// 3. 设置上海火车票售卖窗口的线程</span><br><span class="line">self.ticketSaleWindow2 = [[NSThread alloc]initWithTarget:self selector:@selector(saleTicketSafe) object:nil];</span><br><span class="line">self.ticketSaleWindow2.name = @&quot;上海火车票售票窗口&quot;;</span><br><span class="line"></span><br><span class="line">// 4. 开始售卖火车票</span><br><span class="line">[self.ticketSaleWindow1 start];</span><br><span class="line">[self.ticketSaleWindow2 start];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* 售卖火车票(线程安全)</span><br><span class="line">*/</span><br><span class="line">- (void)saleTicketSafe &#123;</span><br><span class="line">while (1) &#123;</span><br><span class="line">// 互斥锁</span><br><span class="line">@synchronized (self) &#123;</span><br><span class="line">//如果还有票，继续售卖</span><br><span class="line">if (self.ticketSurplusCount &gt; 0) &#123;</span><br><span class="line">self.ticketSurplusCount --;</span><br><span class="line">NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;剩余票数：%ld 窗口：%@&quot;, self.ticketSurplusCount, [NSThread currentThread].name]);</span><br><span class="line">[NSThread sleepForTimeInterval:0.2];</span><br><span class="line">&#125;</span><br><span class="line">//如果已卖完，关闭售票窗口</span><br><span class="line">else &#123;</span><br><span class="line">NSLog(@&quot;所有火车票均已售完&quot;);</span><br><span class="line">break;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行后结果为：</p>
-<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-Save.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-Save.png" alt="YSC-phread-NSThread-demo-Save.png"></a></p>
-<p>省略一部分结果图。。。</p>
-<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-Save1.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-Save1.png" alt="YSC-phread-NSThread-demo-Save1.png"></a></p>
-<p>可以看出，在考虑了线程安全的情况下，加锁之后，得到的票数是正确的，没有出现混乱的情况。我们也就解决了多个线程同步的问题。</p>
-<h2 id="2-6-线程的状态转换"><a href="#2-6-线程的状态转换" class="headerlink" title="2.6 线程的状态转换"></a>2.6 线程的状态转换</h2><p>当我们新建一条线程<code>NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(run) object:nil];</code>，在内存中的表现为：</p>
-<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange.png" alt="YSC-phread-NSThread-demo-StatusChange.png"></a></p>
-<p>当调用<code>[thread start];</code>后，系统把线程对象放入可调度线程池中，线程对象进入就绪状态，如下图所示。</p>
-<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange1.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange1.png" alt="YSC-phread-NSThread-demo-StatusChange1.png"></a></p>
-<p>当然，可调度线程池中，会有其他的线程对象，如下图所示。在这里我们只关心左边的线程对象。</p>
-<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange2.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange2.png" alt="YSC-phread-NSThread-demo-StatusChange2.png"></a></p>
-<p><strong>下边我们来看看当前线程的状态转换。</strong></p>
-<ul>
-<li>如果CPU现在调度当前线程对象，则当前线程对象进入运行状态，如果CPU调度其他线程对象，则当前线程对象回到就绪状态。</li>
-<li>如果CPU在运行当前线程对象的时候调用了sleep方法\等待同步锁，则当前线程对象就进入了阻塞状态，等到sleep到时\得到同步锁，则回到就绪状态。</li>
-<li>如果CPU在运行当前线程对象的时候线程任务执行完毕\异常强制退出，则当前线程对象进入死亡状态。</li>
-</ul>
-<p>只看文字可能不太好理解，具体当前线程对象的状态变化如下图所示。</p>
-<p><a href="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange3.png" target="_blank" rel="noopener"><img src="https://ysc-demo-1254961422.file.myqcloud.com/YSC-phread-NSThread-demo-StatusChange3.png" alt="YSC-phread-NSThread-demo-StatusChange3.png"></a></p>
-<hr>
-<p>iOS多线程详尽总结系列文章：</p>
-<ul>
-<li><a href="https://bujige.net/blog/iOS-Complete-learning-pthread-and-NSThread.html" target="_blank" rel="noopener">iOS多线程：『pthread、NSThread』详尽总结</a></li>
-<li><a href="https://bujige.net/blog/iOS-Complete-learning-GCD.html" target="_blank" rel="noopener">iOS多线程：『GCD』详解总结</a></li>
-<li><a href="https://bujige.net/blog/iOS-Complete-learning-NSOperation.html" target="_blank" rel="noopener">iOS多线程：『NSOperation』详解总结</a></li>
-<li><a href="https://bujige.net/blog/iOS-Complete-learning-RunLoop.html" target="_blank" rel="noopener">iOS多线程：『RunLoop』详解总结</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3368,7 +3451,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
