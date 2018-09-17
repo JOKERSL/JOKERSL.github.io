@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="转自 涂耀辉  写在开头： 大概回忆下，之前我们讲了AFNetworking整个网络请求的流程，包括request的拼接，session代理的转发，response的解析。以及对一些bug的适配，如果你还没有看过，可以点这里：AFNetworking到底做了什么?AFNetworking到底做了什么（二）? 除此之外我们还单独的开了一篇讲了AF对https的处理：AFNetworking之于htt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AFNetworking（终）">
+<meta property="og:url" content="http://yoursite.com/iOS面试/2018/09/17/AFNetworking（终）/index.html">
+<meta property="og:site_name" content="Man Tou Pu&#39;s Blog">
+<meta property="og:description" content="转自 涂耀辉  写在开头： 大概回忆下，之前我们讲了AFNetworking整个网络请求的流程，包括request的拼接，session代理的转发，response的解析。以及对一些bug的适配，如果你还没有看过，可以点这里：AFNetworking到底做了什么?AFNetworking到底做了什么（二）? 除此之外我们还单独的开了一篇讲了AF对https的处理：AFNetworking之于htt">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-426b7ad3b6d4e3ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/850">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-8c760bc6c51943f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-7b6d90f1e5106673.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-189b9c6e86564129.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-814a8ae5225854f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-eb8527a94ca620f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2702646-1e041546f1129535.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:updated_time" content="2018-09-17T08:18:58.753Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AFNetworking（终）">
+<meta name="twitter:description" content="转自 涂耀辉  写在开头： 大概回忆下，之前我们讲了AFNetworking整个网络请求的流程，包括request的拼接，session代理的转发，response的解析。以及对一些bug的适配，如果你还没有看过，可以点这里：AFNetworking到底做了什么?AFNetworking到底做了什么（二）? 除此之外我们还单独的开了一篇讲了AF对https的处理：AFNetworking之于htt">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2702646-426b7ad3b6d4e3ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/850">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/iOS面试/2018/09/17/AFNetworking（终）/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>AFNetworking（终） | Man Tou Pu's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Man Tou Pu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">技术、生活个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/17/AFNetworking（终）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AFNetworking（终）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-17 16:13:41 / 修改时间：16:18:58" itemprop="dateCreated datePublished" datetime="2018-09-17T16:13:41+08:00">2018-09-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/第三方源码/" itemprop="url" rel="index"><span itemprop="name">第三方源码</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://www.jianshu.com/p/7ed7c0be15b4" target="_blank" rel="noopener">转自 <a href="https://www.jianshu.com/u/14431e509ae8" target="_blank" rel="noopener">涂耀辉</a></a></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-426b7ad3b6d4e3ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/850" alt="img"></p>
+<h6 id="写在开头："><a href="#写在开头：" class="headerlink" title="写在开头："></a>写在开头：</h6><ul>
+<li>大概回忆下，之前我们讲了<code>AFNetworking</code>整个网络请求的流程，包括<code>request</code>的拼接，<code>session</code>代理的转发，<code>response</code>的解析。以及对一些<code>bug</code>的适配，如果你还没有看过，可以点这里：<br><a href="https://www.jianshu.com/p/856f0e26279d" target="_blank" rel="noopener">AFNetworking到底做了什么?</a><br><a href="https://www.jianshu.com/p/f32bd79233da" target="_blank" rel="noopener">AFNetworking到底做了什么（二）?</a></li>
+<li>除此之外我们还单独的开了一篇讲了AF对<code>https</code>的处理：<br><a href="https://www.jianshu.com/p/a84237b07611" target="_blank" rel="noopener">AFNetworking之于https认证</a></li>
+<li>还有一篇讲了讲AF对UIKit的扩展：<br><a href="https://www.jianshu.com/p/4ffeb1ba3046" target="_blank" rel="noopener">AFNetworking之UIKit扩展与缓存实现</a></li>
+<li>本文将<strong>涉及AF2.x的核心实现，与AF3.x最新版本之间的对比，以及本系列的一个最终总结：AFNetworking到底做了什么？</strong></li>
+</ul>
+<h6 id="开始正文"><a href="#开始正文" class="headerlink" title="开始正文"></a>开始正文</h6><p>首先我们来看看AF2.x的项目目录:</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-8c760bc6c51943f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>AF2.X源码结构图.png</p>
+<p>除了UIKit扩展外，大概就是上述这么多类，其中最重要的有3个类：</p>
+<p>1)<code>AFURLConnectionOperation</code><br>2)<code>AFHTTPRequestOperation</code><br>3)<code>AFHTTPRequestOperationManager</code></p>
+<ul>
+<li>大家都知道，AF2.x是基于<code>NSURLConnection</code>来封装的，而<code>NSURLConnection</code>的创建以及数据请求，就被封装在<code>AFURLConnectionOperation</code>这个类中。所以这个类基本上是AF2.x最底层也是最核心的类。</li>
+<li>而<code>AFHTTPRequestOperation</code>是继承自<code>AFURLConnectionOperation</code>，对它父类一些方法做了些封装。</li>
+<li><code>AFHTTPRequestOperationManager</code>则是一个管家，去管理这些这些<code>operation</code>。</li>
+</ul>
+<h6 id="我们接下来按照网络请求的流程去看看AF2-x的实现："><a href="#我们接下来按照网络请求的流程去看看AF2-x的实现：" class="headerlink" title="我们接下来按照网络请求的流程去看看AF2.x的实现："></a>我们接下来按照网络请求的流程去看看AF2.x的实现：</h6><p>注：本文会涉及一些<code>NSOperationQueue</code>、<code>NSOperation</code>方面的知识，如果对这方面的内容不了解的话，可以先看看雷纯峰的这篇：<br><a href="https://link.jianshu.com/?t=http://blog.leichunfeng.com/blog/2015/07/29/ios-concurrency-programming-operation-queues/" target="_blank" rel="noopener">iOS 并发编程之 Operation Queues</a></p>
+<h6 id="首先，我们来写一个get或者post请求："><a href="#首先，我们来写一个get或者post请求：" class="headerlink" title="首先，我们来写一个get或者post请求："></a>首先，我们来写一个get或者post请求：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];</span><br><span class="line">[manager GET:url parameters:params</span><br><span class="line">     success:^(AFHTTPRequestOperation *operation, id responseObject) &#123;</span><br><span class="line">         </span><br><span class="line">     &#125; failure:^(AFHTTPRequestOperation *operation, NSError *error) &#123;</span><br><span class="line">         </span><br><span class="line">     &#125;];</span><br></pre></td></tr></table></figure>
+<p>就这么简单的几行代码，完成了一个网络请求。</p>
+<p>接着我们来看看<code>AFHTTPRequestOperationManager</code>的初始化方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)manager &#123;</span><br><span class="line">    return [[self alloc] initWithBaseURL:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    return [self initWithBaseURL:nil];    </span><br><span class="line">&#125;</span><br><span class="line">- (instancetype)initWithBaseURL:(NSURL *)url &#123;</span><br><span class="line">    self = [super init];</span><br><span class="line">    if (!self) &#123;</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    // Ensure terminal slash for baseURL path, so that NSURL +URLWithString:relativeToURL: works as expected</span><br><span class="line">    if ([[url path] length] &gt; 0 &amp;&amp; ![[url absoluteString] hasSuffix:@&quot;/&quot;]) &#123;</span><br><span class="line">        url = [url URLByAppendingPathComponent:@&quot;&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    self.baseURL = url;</span><br><span class="line">    self.requestSerializer = [AFHTTPRequestSerializer serializer];</span><br><span class="line">    self.responseSerializer = [AFJSONResponseSerializer serializer];</span><br><span class="line">    self.securityPolicy = [AFSecurityPolicy defaultPolicy];</span><br><span class="line">    self.reachabilityManager = [AFNetworkReachabilityManager sharedManager];</span><br><span class="line">    //用来调度所有请求的queue</span><br><span class="line">    self.operationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">    //是否做证书验证</span><br><span class="line">    self.shouldUseCredentialStorage = YES;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>初始化方法很简单，基本和AF3.x类似，除了一下两点：<br>1)设置了一个<code>operationQueue</code>，这个队列，用来调度里面所有的<code>operation</code>，在AF2.x中，每一个<code>operation</code>就是一个网络请求。<br>2)设置<code>shouldUseCredentialStorage</code>为YES，这个后面会传给<code>operation</code>，<code>operation</code>会根据这个值，去返回给代理，系统是否做https的证书验证。</p>
+<h6 id="然后我们来看看get方法："><a href="#然后我们来看看get方法：" class="headerlink" title="然后我们来看看get方法："></a>然后我们来看看get方法：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (AFHTTPRequestOperation *)GET:(NSString *)URLString</span><br><span class="line">                     parameters:(id)parameters</span><br><span class="line">                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success</span><br><span class="line">                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure</span><br><span class="line">&#123;</span><br><span class="line">    //拿到request</span><br><span class="line">    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@&quot;GET&quot; URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters error:nil];</span><br><span class="line">    </span><br><span class="line">    AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:success failure:failure];</span><br><span class="line"></span><br><span class="line">    [self.operationQueue addOperation:operation];</span><br><span class="line">    return operation;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法很简单，如下：<br>1）用<code>self.requestSerializer</code>生成了一个request，至于如何生成，可以参考之前的文章，这里就不赘述了。<br>2）生成了一个<code>AFHTTPRequestOperation</code>，然后把这个<code>operation</code>加到我们一开始创建的<code>queue</code>中。</p>
+<p>其中创建<code>AFHTTPRequestOperation</code>方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)request</span><br><span class="line">                                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success</span><br><span class="line">                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure</span><br><span class="line">&#123;</span><br><span class="line">    //创建自定义的AFHTTPRequestOperation</span><br><span class="line">    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];</span><br><span class="line">    operation.responseSerializer = self.responseSerializer;</span><br><span class="line">    operation.shouldUseCredentialStorage = self.shouldUseCredentialStorage;</span><br><span class="line">    operation.credential = self.credential;</span><br><span class="line">    //设置自定义的安全策略</span><br><span class="line">    operation.securityPolicy = self.securityPolicy;</span><br><span class="line"></span><br><span class="line">    [operation setCompletionBlockWithSuccess:success failure:failure];</span><br><span class="line">    operation.completionQueue = self.completionQueue;</span><br><span class="line">    operation.completionGroup = self.completionGroup;</span><br><span class="line">    return operation;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法创建了一个<code>AFHTTPRequestOperation</code>，并把自己的一些参数交给了这个<code>operation</code>处理。</p>
+<h6 id="接着往里看："><a href="#接着往里看：" class="headerlink" title="接着往里看："></a>接着往里看：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithRequest:(NSURLRequest *)urlRequest &#123;</span><br><span class="line">    self = [super initWithRequest:urlRequest];</span><br><span class="line">    if (!self) &#123;</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    self.responseSerializer = [AFHTTPResponseSerializer serializer];</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了设置了一个<code>self.responseSerializer</code>，实际上是调用了父类，也是我们最核心的类<code>AFURLConnectionOperation</code>的初始化方法，首先我们要明确<strong>这个类是继承自NSOperation的</strong>，然后我们接着往下看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//初始化</span><br><span class="line">- (instancetype)initWithRequest:(NSURLRequest *)urlRequest &#123;</span><br><span class="line">    NSParameterAssert(urlRequest);</span><br><span class="line"></span><br><span class="line">    self = [super init];</span><br><span class="line">    if (!self) &#123;</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //设置为ready</span><br><span class="line">    _state = AFOperationReadyState;</span><br><span class="line">    //递归锁</span><br><span class="line">    self.lock = [[NSRecursiveLock alloc] init];</span><br><span class="line">    self.lock.name = kAFNetworkingLockName;</span><br><span class="line">    self.runLoopModes = [NSSet setWithObject:NSRunLoopCommonModes];</span><br><span class="line">    self.request = urlRequest;</span><br><span class="line">    </span><br><span class="line">    //是否应该咨询证书存储连接</span><br><span class="line">    self.shouldUseCredentialStorage = YES;</span><br><span class="line"></span><br><span class="line">    //https认证策略</span><br><span class="line">    self.securityPolicy = [AFSecurityPolicy defaultPolicy];</span><br><span class="line"></span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>初始化方法中，初始化了一些属性，下面我们来简单的介绍一下这些属性：</p>
+<ol>
+<li><code>_state</code>设置为<code>AFOperationReadyState</code> 准备就绪状态，这是个枚举：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef NS_ENUM(NSInteger, AFOperationState) &#123;</span><br><span class="line">    AFOperationPausedState      = -1,  //停止</span><br><span class="line">    AFOperationReadyState       = 1,   //准备就绪</span><br><span class="line">    AFOperationExecutingState   = 2,  //正在进行中</span><br><span class="line">    AFOperationFinishedState    = 3,  //完成</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这个<code>_state</code>标志着这个网络请求的状态，一共如上4种状态。这些状态其实对应着<code>operation</code>如下的状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//映射这个operation的各个状态</span><br><span class="line">static inline NSString * AFKeyPathFromOperationState(AFOperationState state) &#123;</span><br><span class="line">    switch (state) &#123;</span><br><span class="line">        case AFOperationReadyState:</span><br><span class="line">            return @&quot;isReady&quot;;</span><br><span class="line">        case AFOperationExecutingState:</span><br><span class="line">            return @&quot;isExecuting&quot;;</span><br><span class="line">        case AFOperationFinishedState:</span><br><span class="line">            return @&quot;isFinished&quot;;</span><br><span class="line">        case AFOperationPausedState:</span><br><span class="line">            return @&quot;isPaused&quot;;</span><br><span class="line">        default: &#123;</span><br><span class="line">#pragma clang diagnostic push</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Wunreachable-code&quot;</span><br><span class="line">            return @&quot;state&quot;;</span><br><span class="line">#pragma clang diagnostic pop</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>并且还复写了这些属性的get方法，用来和自定义的state一一对应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//复写这些方法，与自己的定义的state对应</span><br><span class="line"> - (BOOL)isReady &#123;</span><br><span class="line">    return self.state == AFOperationReadyState &amp;&amp; [super isReady];</span><br><span class="line">&#125;</span><br><span class="line"> - (BOOL)isExecuting &#123;</span><br><span class="line">    return self.state == AFOperationExecutingState;</span><br><span class="line">&#125;</span><br><span class="line"> - (BOOL)isFinished &#123;</span><br><span class="line">    return self.state == AFOperationFinishedState;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>self.lock</code>这个锁是用来提供给本类一些数据操作的线程安全，至于为什么要用递归锁，是因为有些方法可能会存在递归调用的情况，例如有些需要锁的方法可能会在一个大的操作环中，形成递归。<strong>而AF使用了递归锁，避免了这种情况下死锁的发生</strong>。</li>
+<li>初始化了<code>self.runLoopModes</code>，默认为<code>NSRunLoopCommonModes</code>。</li>
+<li>生成了一个默认的 <code>self.securityPolicy</code>,关于这个policy执行的https认证，可以见楼主之前的文章。</li>
+</ol>
+<p>这个类为了自定义<code>operation</code>的各种状态，而且更好的掌控它的生命周期，复写了<code>operation</code>的<code>start</code>方法，当这个<code>operation</code>在一个新线程被调度执行的时候，首先就调入这个<code>start</code>方法中，接下来我们它的实现看看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (void)start &#123;</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    </span><br><span class="line">    //如果被取消了就调用取消的方法</span><br><span class="line">    if ([self isCancelled]) &#123;</span><br><span class="line">        //在AF常驻线程中去执行</span><br><span class="line">        [self performSelector:@selector(cancelConnection) onThread:[[self class] networkRequestThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];</span><br><span class="line">    &#125;</span><br><span class="line">    //准备好了，才开始</span><br><span class="line">    else if ([self isReady]) &#123;</span><br><span class="line">        //改变状态，开始执行</span><br><span class="line">        self.state = AFOperationExecutingState;</span><br><span class="line">        [self performSelector:@selector(operationDidStart) onThread:[[self class] networkRequestThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];</span><br><span class="line">    &#125;</span><br><span class="line">    //注意，发起请求和取消请求都是在同一个线程！！包括回调都是在一个线程</span><br><span class="line">    </span><br><span class="line">    [self.lock unlock];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法判断了当前的状态，是取消还是准备就绪，然后去调用了各自对应的方法。</p>
+<ul>
+<li>注意这些方法都是在另外一个线程中去调用的，我们来看看这个线程：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> + (void)networkRequestThreadEntryPoint:(id)__unused object &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        [[NSThread currentThread] setName:@&quot;AFNetworking&quot;];</span><br><span class="line"></span><br><span class="line">        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];</span><br><span class="line">        //添加端口，防止runloop直接退出</span><br><span class="line">        [runLoop addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];</span><br><span class="line">        [runLoop run];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> + (NSThread *)networkRequestThread &#123;</span><br><span class="line">    static NSThread *_networkRequestThread = nil;</span><br><span class="line">    static dispatch_once_t oncePredicate;</span><br><span class="line">    dispatch_once(&amp;oncePredicate, ^&#123;</span><br><span class="line">        _networkRequestThread = [[NSThread alloc] initWithTarget:self selector:@selector(networkRequestThreadEntryPoint:) object:nil];</span><br><span class="line">        [_networkRequestThread start];</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    return _networkRequestThread;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这两个方法基本上是被许多人举例用过无数次了…</p>
+<ul>
+<li>这是一个单例，用<code>NSThread</code>创建了一个线程，并且为这个线程添加了一个<code>runloop</code>，并且加了一个<code>NSMachPort</code>，来防止<code>runloop</code>直接退出。</li>
+<li><strong>这条线程就是AF用来发起网络请求，并且接受网络请求回调的线程，仅仅就这一条线程</strong>（到最后我们来讲为什么要这么做）。和我们之前讲的AF3.x发起请求，并且接受请求回调时的处理方式，遥相呼应。</li>
+</ul>
+<p>我们接着来看如果准备就绪，start调用的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//改变状态，开始执行</span><br><span class="line">self.state = AFOperationExecutingState;</span><br><span class="line">[self performSelector:@selector(operationDidStart) onThread:[[self class] networkRequestThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];</span><br></pre></td></tr></table></figure>
+<p>接着在常驻线程中,并且不阻塞的方式，在我们<code>self.runLoopModes</code>的模式下调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">- (void)operationDidStart &#123;</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    //如果没取消</span><br><span class="line">    if (![self isCancelled]) &#123;</span><br><span class="line">        //设置为startImmediately YES 请求发出，回调会加入到主线程的 Runloop 下，RunloopMode 会默认为 NSDefaultRunLoopMode</span><br><span class="line">        self.connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:NO];</span><br><span class="line">        </span><br><span class="line">        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];</span><br><span class="line">        for (NSString *runLoopMode in self.runLoopModes) &#123;</span><br><span class="line">            //把connection和outputStream注册到当前线程runloop中去，只有这样，才能在这个线程中回调</span><br><span class="line">            [self.connection scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br><span class="line">            [self.outputStream scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br><span class="line">        &#125;</span><br><span class="line">        //打开输出流</span><br><span class="line">        [self.outputStream open];</span><br><span class="line">        //开启请求</span><br><span class="line">        [self.connection start];</span><br><span class="line">    &#125;</span><br><span class="line">    [self.lock unlock];</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingOperationDidStartNotification object:self];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法做了以下几件事：</p>
+<ol>
+<li>首先这个方法创建了一个<code>NSURLConnection</code>，设置代理为自己，startImmediately为NO，至于这个参数干什么用的，我们来看看官方文档：</li>
+</ol>
+<blockquote>
+<p>startImmediately<br>YES if the connection should begin loading data immediately, otherwise NO. If you pass NO, the connection is not scheduled with a run loop. You can then schedule the connection in the run loop and mode of your choice by calling scheduleInRunLoop:forMode: .</p>
+</blockquote>
+<p>大意是，这个值默认为YES，而且任务完成的结果会在主线程的runloop中回调。如果我们设置为NO，则需要调用我们下面看到的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.connection scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br></pre></td></tr></table></figure>
+<p>去注册一个runloop和mode，它会在我们指定的这个runloop所在的线程中回调结果。</p>
+<ol>
+<li>值得一提的是这里调用了:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.outputStream scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br></pre></td></tr></table></figure>
+<p>这个<code>outputStream</code>在get方法中被初始化了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> - (NSOutputStream *)outputStream &#123;</span><br><span class="line">    if (!_outputStream) &#123;</span><br><span class="line">        //一个写入到内存中的流，可以通过NSStreamDataWrittenToMemoryStreamKey拿到写入后的数据</span><br><span class="line">        self.outputStream = [NSOutputStream outputStreamToMemory];</span><br><span class="line">    &#125;</span><br><span class="line">    return _outputStream;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里数据请求和拼接并没有用<code>NSMutableData</code>，而是用了<code>outputStream</code>，而且把写入的数据，放到内存中。</p>
+<ul>
+<li>其实讲道理来说<code>outputStream</code>的优势在于下载大文件的时候，可以以流的形式，将文件直接保存到本地，<strong>这样可以为我们节省很多的内存</strong>，调用如下方法设置：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[NSOutputStream outputStreamToFileAtPath:@&quot;filePath&quot; append:YES];</span><br></pre></td></tr></table></figure>
+<ul>
+<li>但是这里是把流写入内存中，这样其实这个节省内存的意义已经不存在了。那为什么还要用呢？这里我猜测的是就是为了用它这个可以注册在某一个<code>runloop</code>的指定<code>mode</code>下。 虽然AF使用这个<code>outputStream</code>是肯定在这个常驻线程中的，不会有线程安全的问题。但是要注意它是被声明在.h中的：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSOutputStream *outputStream;</span><br></pre></td></tr></table></figure>
+<p>难保外部不会在其他线程对这个数据做什么操作，所以它相对于<code>NSMutableData</code>作用就体现出来了，就算我们在外部其它线程中去操作它，也不会有线程安全的问题。</p>
+<ol>
+<li>这个<code>connection</code>开始执行了。</li>
+<li>到主线程发送一个任务开始执行的通知。</li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-7b6d90f1e5106673.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>分割图.png</p>
+<h6 id="接下来网络请求开始执行了，就开始触发connection的代理方法了："><a href="#接下来网络请求开始执行了，就开始触发connection的代理方法了：" class="headerlink" title="接下来网络请求开始执行了，就开始触发connection的代理方法了："></a>接下来网络请求开始执行了，就开始触发<code>connection</code>的代理方法了：</h6><p><img src="https://upload-images.jianshu.io/upload_images/2702646-189b9c6e86564129.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>代理方法.png</p>
+<p>AF2.x一共实现了如上这么多代理方法，这些代理方法，作用大部分和我们之前讲的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSURLSession</span><br></pre></td></tr></table></figure>
+<p>的代理方法类似，我们只挑几个去讲，如果需要了解其他的方法作用，可以参考楼主之前的文章。</p>
+<h6 id="重点讲下面这四个代理："><a href="#重点讲下面这四个代理：" class="headerlink" title="重点讲下面这四个代理："></a>重点讲下面这四个代理：</h6><p>注意，有一点需要说明，我们之前是把connection注册在我们常驻线程的runloop中了，<strong>所以以下所有的代理方法，都是在这仅有的一条常驻线程中回调。</strong></p>
+<h6 id="第一个代理"><a href="#第一个代理" class="headerlink" title="第一个代理"></a>第一个代理</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//收到响应，响应头类似相关数据</span><br><span class="line">- (void)connection:(NSURLConnection __unused *)connection</span><br><span class="line">didReceiveResponse:(NSURLResponse *)response</span><br><span class="line">&#123;</span><br><span class="line">    self.response = response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没什么好说的，就是收到响应后，把response赋给自己的属性。</p>
+<h6 id="第二个代理"><a href="#第二个代理" class="headerlink" title="第二个代理"></a>第二个代理</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">//拼接获取到的数据</span><br><span class="line">- (void)connection:(NSURLConnection __unused *)connection</span><br><span class="line">    didReceiveData:(NSData *)data</span><br><span class="line">&#123;</span><br><span class="line">    NSUInteger length = [data length];</span><br><span class="line">    while (YES) &#123;</span><br><span class="line">        NSInteger totalNumberOfBytesWritten = 0;</span><br><span class="line">        //如果outputStream 还有空余空间</span><br><span class="line">        if ([self.outputStream hasSpaceAvailable]) &#123;</span><br><span class="line">           </span><br><span class="line">            //创建一个buffer流缓冲区，大小为data的字节数</span><br><span class="line">            const uint8_t *dataBuffer = (uint8_t *)[data bytes];</span><br><span class="line"></span><br><span class="line">            NSInteger numberOfBytesWritten = 0;</span><br><span class="line">           </span><br><span class="line">            //当写的长度小于数据的长度，在循环里</span><br><span class="line">            while (totalNumberOfBytesWritten &lt; (NSInteger)length) &#123;</span><br><span class="line">                //往outputStream写数据，系统的方法，一次就写一部分，得循环写</span><br><span class="line">                numberOfBytesWritten = [self.outputStream write:&amp;dataBuffer[(NSUInteger)totalNumberOfBytesWritten] maxLength:(length - (NSUInteger)totalNumberOfBytesWritten)];</span><br><span class="line">                //如果 numberOfBytesWritten写入失败了。跳出循环</span><br><span class="line">                if (numberOfBytesWritten == -1) &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                //加上每次写的长度</span><br><span class="line">                totalNumberOfBytesWritten += numberOfBytesWritten;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        //出错</span><br><span class="line">        if (self.outputStream.streamError) &#123;</span><br><span class="line">            //取消connection</span><br><span class="line">            [self.connection cancel];</span><br><span class="line">            //调用失败的方法</span><br><span class="line">            [self performSelector:@selector(connection:didFailWithError:) withObject:self.connection withObject:self.outputStream.streamError];</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //主线程回调下载数据大小</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        self.totalBytesRead += (long long)length;</span><br><span class="line"></span><br><span class="line">        if (self.downloadProgress) &#123;</span><br><span class="line">            self.downloadProgress(length, self.totalBytesRead, self.response.expectedContentLength);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法看起来长，其实容易理解而且简单，它只做了3件事：</p>
+<ol>
+<li>给<code>outputStream</code>拼接数据，具体如果拼接，大家可以读注释自行理解下。</li>
+<li>如果出错则调用：<code>connection:didFailWithError:</code>也就是网络请求失败的代理，我们一会下面就会讲。</li>
+<li>在主线程中回调下载进度。</li>
+</ol>
+<h6 id="第三个代理"><a href="#第三个代理" class="headerlink" title="第三个代理"></a>第三个代理</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//完成了调用</span><br><span class="line">- (void)connectionDidFinishLoading:(NSURLConnection __unused *)connection &#123;</span><br><span class="line"></span><br><span class="line">    //从outputStream中拿到数据 NSStreamDataWrittenToMemoryStreamKey写入到内存中的流</span><br><span class="line">    self.responseData = [self.outputStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];</span><br><span class="line"></span><br><span class="line">    //关闭outputStream</span><br><span class="line">    [self.outputStream close];</span><br><span class="line">    </span><br><span class="line">    //如果响应数据已经有了，则outputStream置为nil</span><br><span class="line">    if (self.responseData) &#123;</span><br><span class="line">       self.outputStream = nil;</span><br><span class="line">    &#125;</span><br><span class="line">    //清空connection</span><br><span class="line">    self.connection = nil;</span><br><span class="line">    [self finish];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这个代理是任务完成之后调用。我们从<code>outputStream</code>拿到了最后下载数据，然后关闭置空了<code>outputStream</code>。并且清空了<code>connection</code>。调用了<code>finish</code>:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> - (void)finish &#123;</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    //修改状态</span><br><span class="line">    self.state = AFOperationFinishedState;</span><br><span class="line">    [self.lock unlock];</span><br><span class="line"></span><br><span class="line">    //发送完成的通知</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingOperationDidFinishNotification object:self];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把当前任务状态改为已完成，并且到主线程发送任务完成的通知。，<strong>这里我们设置状态为已完成。其实调用了我们本类复写的set的方法</strong>（前面遗漏了，在这里补充）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> - (void)setState:(AFOperationState)state &#123;</span><br><span class="line">    </span><br><span class="line">    //判断从当前状态到另一个状态是不是合理，在加上现在是否取消。。大神的框架就是屌啊，这判断严谨的。。一层层</span><br><span class="line">    if (!AFStateTransitionIsValid(self.state, state, [self isCancelled])) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    [self.lock lock];</span><br><span class="line">    </span><br><span class="line">    //拿到对应的父类管理当前线程周期的key</span><br><span class="line">    NSString *oldStateKey = AFKeyPathFromOperationState(self.state);</span><br><span class="line">    NSString *newStateKey = AFKeyPathFromOperationState(state);</span><br><span class="line">    </span><br><span class="line">    //发出KVO</span><br><span class="line">    [self willChangeValueForKey:newStateKey];</span><br><span class="line">    [self willChangeValueForKey:oldStateKey];</span><br><span class="line">    _state = state;</span><br><span class="line">    [self didChangeValueForKey:oldStateKey];</span><br><span class="line">    [self didChangeValueForKey:newStateKey];</span><br><span class="line">    [self.lock unlock];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法改变<code>state</code>的时候，并且发送了<code>KVO</code>。大家了解<code>NSOperationQueue</code>就知道，如果对应的operation的属性<code>finnished</code>被设置为YES，则代表当前<code>operation</code>结束了，会把<code>operation</code>从队列中移除，并且调用<code>operation</code>的<code>completionBlock</code>。<strong>这点很重要，因为我们请求到的数据就是从这个completionBlock中传递回去的</strong>（下面接着讲这个完成Block，就能从这里对接上了）。</p>
+<h6 id="第四个代理"><a href="#第四个代理" class="headerlink" title="第四个代理"></a>第四个代理</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//请求失败的回调，在cancel connection的时候，自己也主动调用了</span><br><span class="line">- (void)connection:(NSURLConnection __unused *)connection</span><br><span class="line">  didFailWithError:(NSError *)error</span><br><span class="line">&#123;</span><br><span class="line">    //拿到error</span><br><span class="line">    self.error = error;</span><br><span class="line">    //关闭outputStream</span><br><span class="line">    [self.outputStream close];</span><br><span class="line">    //如果响应数据已经有了，则outputStream置为nil</span><br><span class="line">    if (self.responseData) &#123;</span><br><span class="line">        self.outputStream = nil;</span><br><span class="line">    &#125;</span><br><span class="line">    self.connection = nil;</span><br><span class="line">    [self finish];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>唯一需要说一下的就是这里给<code>self.error</code>赋值，之后完成Block会根据这个error，去判断这次请求是成功还是失败。</p>
+<p>至此我们把<code>AFURLConnectionOperation</code>的业务主线讲完了。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-814a8ae5225854f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>分割图.png</p>
+<p>我们此时数据请求完了，数据在<code>self.responseData</code>中，接下来我们来看它是怎么回到我们手里的。<br>我们回到<code>AFURLConnectionOperation</code>子类<code>AFHTTPRequestOperation</code>，有这么一个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">- (void)setCompletionBlockWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success</span><br><span class="line">                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure</span><br><span class="line">&#123;</span><br><span class="line">    // completionBlock is manually nilled out in AFURLConnectionOperation to break the retain cycle.</span><br><span class="line">#pragma clang diagnostic push</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Warc-retain-cycles&quot;</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Wgnu&quot;</span><br><span class="line">    self.completionBlock = ^&#123;</span><br><span class="line">        if (self.completionGroup) &#123;</span><br><span class="line">            dispatch_group_enter(self.completionGroup);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        dispatch_async(http_request_operation_processing_queue(), ^&#123;</span><br><span class="line">            if (self.error) &#123;</span><br><span class="line">                if (failure) &#123;</span><br><span class="line">                    dispatch_group_async(self.completionGroup ?: http_request_operation_completion_group(), self.completionQueue ?: dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                        failure(self, self.error);</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                id responseObject = self.responseObject;</span><br><span class="line">                if (self.error) &#123;</span><br><span class="line">                    if (failure) &#123;</span><br><span class="line">                        dispatch_group_async(self.completionGroup ?: http_request_operation_completion_group(), self.completionQueue ?: dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                            failure(self, self.error);</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    if (success) &#123;</span><br><span class="line">                        dispatch_group_async(self.completionGroup ?: http_request_operation_completion_group(), self.completionQueue ?: dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                            success(self, responseObject);</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (self.completionGroup) &#123;</span><br><span class="line">                dispatch_group_leave(self.completionGroup);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">#pragma clang diagnostic pop</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一开始我们在<code>AFHTTPRequestOperationManager</code>中是调用过这个方法的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[operation setCompletionBlockWithSuccess:success failure:failure];</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我们在把成功和失败的Block传给了这个方法。</li>
+<li>这个方法也很好理解，就是设置我们之前提到过得<code>completionBlock</code>，<strong>当自己数据请求完成，就会调用这个Block。然后我们在这个Block中调用传过来的成功或者失败的Block。</strong>如果error为空，说明请求成功，把数据传出去，否则为失败，把error信息传出。</li>
+<li>这里也类似AF3.x，可以自定义一个完成组和完成队列。数据可以在我们自定义的完成组和队列中回调出去。</li>
+<li>除此之外，还有一个有意思的地方：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#pragma clang diagnostic push</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Warc-retain-cycles&quot;</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Wgnu&quot;</span><br><span class="line">#pragma clang diagnostic pop</span><br></pre></td></tr></table></figure>
+<p>之前我们说过，这是在忽略编译器的一些警告。</p>
+<ul>
+<li><code>-Wgnu</code>就不说了，是忽略？：。</li>
+<li>值得提下的是<code>-Warc-retain-cycles</code>，这里忽略了循环引用的警告。我们仔细看看就知道<code>self</code>持有了<code>completionBlock</code>，而<code>completionBlock</code>内部持有<code>self</code>。这里确实循环引用了。那么AF是如何解决这个循环引用的呢？</li>
+</ul>
+<p>我们在回到<code>AFURLConnectionOperation</code>，还有一个方法我们之前没讲到，它复写了setCompletionBlock这个方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//复写setCompletionBlock</span><br><span class="line">- (void)setCompletionBlock:(void (^)(void))block &#123;</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    if (!block) &#123;</span><br><span class="line">        [super setCompletionBlock:nil];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        __weak __typeof(self)weakSelf = self;</span><br><span class="line">        [super setCompletionBlock:^ &#123;</span><br><span class="line">            __strong __typeof(weakSelf)strongSelf = weakSelf;</span><br><span class="line"></span><br><span class="line">#pragma clang diagnostic push</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Wgnu&quot;</span><br><span class="line">            //看有没有自定义的完成组，否则用AF的组</span><br><span class="line">            dispatch_group_t group = strongSelf.completionGroup ?: url_request_operation_completion_group();</span><br><span class="line">            //看有没有自定义的完成queue，否则用主队列</span><br><span class="line">            dispatch_queue_t queue = strongSelf.completionQueue ?: dispatch_get_main_queue();</span><br><span class="line">#pragma clang diagnostic pop</span><br><span class="line">            </span><br><span class="line">            //调用设置的Block,在这个组和队列中</span><br><span class="line">            dispatch_group_async(group, queue, ^&#123;</span><br><span class="line">                block();</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            //结束时候置nil，防止循环引用</span><br><span class="line">            dispatch_group_notify(group, url_request_operation_completion_queue(), ^&#123;</span><br><span class="line">                [strongSelf setCompletionBlock:nil];</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">    [self.lock unlock];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，它在我们设置的block调用结束的时候，主动的调用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[strongSelf setCompletionBlock:nil];</span><br></pre></td></tr></table></figure>
+<p>把Block置空，这样循环引用不复存在了。</p>
+<p>好像我们还遗漏了一个东西，就是返回的数据做类型的解析。其实还真不是楼主故意这样东一块西一块的，AF2.x有些代码确实是这样零散。。当然仅仅是相对3.x来说。AFNetworking整体代码质量，以及架构思想已经强过绝大多数开源项目太多了。。这一点毋庸置疑。</p>
+<h6 id="我们来接着看看数据解析在什么地方被调用的把："><a href="#我们来接着看看数据解析在什么地方被调用的把：" class="headerlink" title="我们来接着看看数据解析在什么地方被调用的把："></a>我们来接着看看数据解析在什么地方被调用的把：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (id)responseObject &#123;</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    if (!_responseObject &amp;&amp; [self isFinished] &amp;&amp; !self.error) &#123;</span><br><span class="line">        NSError *error = nil;</span><br><span class="line">        //做数据解析</span><br><span class="line">        self.responseObject = [self.responseSerializer responseObjectForResponse:self.response data:self.responseData error:&amp;error];</span><br><span class="line">        if (error) &#123;</span><br><span class="line">            self.responseSerializationError = error;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    [self.lock unlock];</span><br><span class="line">    return _responseObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>AFHTTPRequestOperation</code> 复写了 <code>responseObject</code> 的get方法，<br>并且把数据按照我们需要的类型（json、xml等等）进行解析。至于如何解析，可以参考楼主之前AF系列的文章，这里就不赘述了。</p>
+<p>有些小伙伴可能会说，楼主你是不是把<code>AFSecurityPolicy</code>给忘了啊，其实并没有，它被在 <code>AFURLConnectionOperation</code>中https认证的代理中被调用，我们之前系列的文章已经讲的非常详细了，感兴趣的朋友可以翻到前面的文章去看看。</p>
+<p>至此，AF2.x整个业务流程就结束了。</p>
+<p>接下来，我们来总结总结AF2.x整个业务请求的流程：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2702646-eb8527a94ca620f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>AF2.x请求流程图.png</p>
+<p>PS.图片是用page画的，第一次用，画了半个小时有没有…有没有感受到楼主很走心…最近发现写文图太少了，以后会多配图的。来加深大家的理解…</p>
+<h6 id="如上图，我们来梳理一下整个流程："><a href="#如上图，我们来梳理一下整个流程：" class="headerlink" title="如上图，我们来梳理一下整个流程："></a>如上图，我们来梳理一下整个流程：</h6><ul>
+<li>最上层的是<code>AFHTTPRequestOperationManager</code>,我们调用它进行get、post等等各种类型的网络请求</li>
+<li>然后它去调用<code>AFURLRequestSerialization</code>做request参数拼装。然后生成了一个<code>AFHTTPRequestOperation</code>实例，并把request交给它。然后把<code>AFHTTPRequestOperation</code>添加到一个<code>NSOperationQueue</code>中。</li>
+<li>接着<code>AFHTTPRequestOperation</code>拿到request后，会去调用它的父类<code>AFURLConnectionOperation</code>的初始化方法，并且把相关参数交给它，除此之外，当父类完成数据请求后，它调用了<code>AFURLResponseSerialization</code>把数据解析成我们需要的格式（json、XML等等）。</li>
+<li>最后就是我们AF最底层的类<code>AFURLConnectionOperation</code>，它去数据请求，并且如果是https请求，会在请求的相关代理中，调用<code>AFSecurityPolicy</code>做https认证。最后请求到的数据返回。</li>
+</ul>
+<p>这就是AF2.x整个做网络请求的业务流程。</p>
+<h6 id="我们来解决解决之前遗留下来的问题：为什么AF2-x需要一条常驻线程？"><a href="#我们来解决解决之前遗留下来的问题：为什么AF2-x需要一条常驻线程？" class="headerlink" title="我们来解决解决之前遗留下来的问题：为什么AF2.x需要一条常驻线程？"></a>我们来解决解决之前遗留下来的问题：为什么AF2.x需要一条常驻线程？</h6><p>首先如果我们用<code>NSURLConnection</code>，我们为了获取请求结果有以下三种选择：</p>
+<ol>
+<li>在主线程调异步接口</li>
+<li>每一个请求用一个线程，对应一个runloop，然后等待结果回调。</li>
+<li>只用一条线程，一个runloop，所有结果回调在这个线程上。</li>
+</ol>
+<p>很显然AF选择的是第3种方式，创建了一条常驻线程专门处理所有请求的回调事件，这个模型跟<code>nodejs</code>有点类似，我们来讨论讨论不选择另外两种方式的原因：</p>
+<ol>
+<li>试想如果我们所有的请求都在主线程中异步调用，好像没什么不可以？那为什么AF不这么做呢…在这里有两点原因（楼主个人总结的，有不同意见，欢迎讨论）：</li>
+</ol>
+<ul>
+<li>第一是，如果我们放到主线程去做，势必要这么写：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES]</span><br></pre></td></tr></table></figure>
+<p>这样NSURLConnection的回调会被放在主线程中<code>NSDefaultRunLoopMode</code>中，这样我们在其它类似<code>UITrackingRunLoopMode</code>模式下，我们是得不到网络请求的结果的，这显然不是我们想要的，那么我们势必需要调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];</span><br></pre></td></tr></table></figure>
+<p>把它加入<code>`NSRunLoopCommonModes</code>中，试想如果有大量的网络请求，同时回调回来，就会影响我们的UI体验了。</p>
+<ul>
+<li>另外一点原因是，如果我们请求数据返回，势必要进行数据解析，解析成我们需要的格式，那么这些解析都在主线程中做，给主线程增加额外的负担。<br>又或者我们回调回来开辟一个新的线程去做数据解析，那么我们有n个请求回来开辟n条线程带来的性能损耗，以及线程间切换带来的损耗，是不是一笔更大的开销。</li>
+</ul>
+<p>所以综述两点原因，我们并不适合在主线程中回调。</p>
+<ol>
+<li>我们一开始就开辟n条线程去做请求，然后设置runloop保活住线程，等待结果回调。</li>
+</ol>
+<ul>
+<li>其实看到这，大家想想都觉得这个方法很傻，为了等待不确定的请求结果，阻塞住线程，白白浪费n条线程的开销。</li>
+</ul>
+<p>综上所述，这就是<strong>AF2.x需要一条常驻线程的原因了</strong>。</p>
+<h6 id="至此我们把AF2-x核心流程分析完了。"><a href="#至此我们把AF2-x核心流程分析完了。" class="headerlink" title="至此我们把AF2.x核心流程分析完了。"></a>至此我们把AF2.x核心流程分析完了。</h6><p><img src="https://upload-images.jianshu.io/upload_images/2702646-1e041546f1129535.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>分割图.png</p>
+<p>接着到我们本系列一个最终总结了: <strong>AFNetworking到底做了什么？</strong></p>
+<ul>
+<li>相信如果从头看到尾的小伙伴，心里都有了一个属于自己的答案。其实在楼主心里，实在不想去总结它，因为<code>AFNetworking</code>中凝聚了太多大牛的思想，根本不是你看完几遍源码所能去议论的。但是想想也知道，如果我说不总结，估计有些看到这的朋友杀人的心都有…</li>
+<li>所以我还是赶鸭子上架，来总结总结它。</li>
+</ul>
+<h6 id="AFNetworking的作用总结："><a href="#AFNetworking的作用总结：" class="headerlink" title="AFNetworking的作用总结："></a>AFNetworking的作用总结：</h6><p>一. 首先我们需要明确一点的是：<br><strong>相对于AFNetworking2.x，AFNetworking3.x确实没那么有用了。</strong>AFNetworking之前的核心作用就是为了帮我们去调度所有的请求。但是最核心地方却被苹果的<code>NSURLSession</code>给借鉴过去了，嗯…是借鉴。这些请求的调度，现在完全由<code>NSURLSession</code>给做了，AFNetworking3.x的作用被大大的削弱了。<br>二. 但是除此之外，其实它还是很有用的：</p>
+<ol>
+<li><strong>首先它帮我们做了各种请求方式request的拼接。</strong>想想如果我们用<code>NSURLSession</code>，我们去做请求，是不是还得自己去考虑各种请求方式下，拼接参数的问题。</li>
+</ol>
+<ul>
+<li><strong>它还帮我们做了一些公用参数（session级别的），和一些私用参数（task级别的）的分离</strong>。它用Block的形式，支持我们自定义一些代理方法，如果没有实现的话，AF还帮我们做了一些默认的处理。而如果我们用<code>NSURLSession</code>的话，还得参照AF这么一套代理转发的架构模式去封装。</li>
+<li><strong>它帮我们做了自定义的https认证处理</strong>。看过楼主之前那篇<a href="https://www.jianshu.com/p/a84237b07611" target="_blank" rel="noopener">AFNetworking之于https认证</a>的朋友就知道，如果我们自己用<code>NSURLSession</code>实现那几种自定义认证，需要多写多少代码…</li>
+<li><strong>对于请求到的数据，AF帮我们做了各种格式的数据解析，并且支持我们设置自定义的code范围，自定义的数据方式</strong>。如果不在这些范围中，则直接调用失败block。如果用<code>NSURLSession</code>呢？这些都自己去写吧…（你要是做过各种除json外其他的数据解析,就会知道这里面坑有多少…）</li>
+<li><strong>对于成功和失败的回调处理。</strong>AF帮我们在数据请求到，到回调给用户之间，做了各种错误的判断，保证了成功和失败的回调，界限清晰。在这过程中，AF帮我们做了太多的容错处理，而<code>NSURLSession</code>呢？只给了一个完成的回调，我们得多做多少判断，才能拿到一个确定能正常显示的数据？</li>
+<li>……</li>
+<li>…</li>
+</ul>
+<p>光是这些网络请求的业务逻辑，AF帮我们做的就太多太多，当然还远不仅于此。它用凝聚着许多大牛的经验方式，帮我在有些处理中做了最优的选择，比如我们之前说到的，回调线程数设置为1的问题…帮我们绕开了很多的坑，比如系统内部并行创建<code>task</code>导致id不唯一等等…</p>
+<p>三. 而如果我们需要一些UIKit的扩展，AF则提供了最稳定，而且最优化实现方式：</p>
+<ul>
+<li>就比如之前说到过得那个状态栏小菊花，如果是我们自己去做，得多写多少代码，而且实现的还没有AF那样质量高。</li>
+<li>又或者<code>AFImageDownloader</code>，它对于组图片之间的下载协调，以及缓存使用的之间线程调度。对于线程，锁，以及性能各方面权衡，找出最优化的处理方式，试问小伙伴们自己基于<code>NSURLSession</code>去写，能到做几分…</li>
+</ul>
+<p>所以最后的结论是：<strong>AFNetworking虽然变弱了，但是它还是很有用的。</strong>用它真的不仅仅是习惯，而是因为它确实帮我们做了太多。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/17/AFNetworking（二）/" rel="next" title="AFNetworking（二）">
+                <i class="fa fa-chevron-left"></i> AFNetworking（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sun Lei</p>
+              <p class="site-description motion-element" itemprop="description">只有用心才能看清楚·真正重要的东西·用眼睛是看不见的</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#写在开头："><span class="nav-number">1.</span> <span class="nav-text">写在开头：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#开始正文"><span class="nav-number">2.</span> <span class="nav-text">开始正文</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#我们接下来按照网络请求的流程去看看AF2-x的实现："><span class="nav-number">3.</span> <span class="nav-text">我们接下来按照网络请求的流程去看看AF2.x的实现：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#首先，我们来写一个get或者post请求："><span class="nav-number">4.</span> <span class="nav-text">首先，我们来写一个get或者post请求：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#然后我们来看看get方法："><span class="nav-number">5.</span> <span class="nav-text">然后我们来看看get方法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#接着往里看："><span class="nav-number">6.</span> <span class="nav-text">接着往里看：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#接下来网络请求开始执行了，就开始触发connection的代理方法了："><span class="nav-number">7.</span> <span class="nav-text">接下来网络请求开始执行了，就开始触发connection的代理方法了：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#重点讲下面这四个代理："><span class="nav-number">8.</span> <span class="nav-text">重点讲下面这四个代理：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#第一个代理"><span class="nav-number">9.</span> <span class="nav-text">第一个代理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#第二个代理"><span class="nav-number">10.</span> <span class="nav-text">第二个代理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#第三个代理"><span class="nav-number">11.</span> <span class="nav-text">第三个代理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#第四个代理"><span class="nav-number">12.</span> <span class="nav-text">第四个代理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#我们来接着看看数据解析在什么地方被调用的把："><span class="nav-number">13.</span> <span class="nav-text">我们来接着看看数据解析在什么地方被调用的把：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#如上图，我们来梳理一下整个流程："><span class="nav-number">14.</span> <span class="nav-text">如上图，我们来梳理一下整个流程：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#我们来解决解决之前遗留下来的问题：为什么AF2-x需要一条常驻线程？"><span class="nav-number">15.</span> <span class="nav-text">我们来解决解决之前遗留下来的问题：为什么AF2.x需要一条常驻线程？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#至此我们把AF2-x核心流程分析完了。"><span class="nav-number">16.</span> <span class="nav-text">至此我们把AF2.x核心流程分析完了。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#AFNetworking的作用总结："><span class="nav-number">17.</span> <span class="nav-text">AFNetworking的作用总结：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sun Lei</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.4.4</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
