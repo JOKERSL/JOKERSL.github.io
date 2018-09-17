@@ -292,6 +292,475 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/14/深拷贝与浅拷贝/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/14/深拷贝与浅拷贝/" itemprop="url">
+                  深拷贝与浅拷贝
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-14 11:33:49 / 修改时间：11:41:05" itemprop="dateCreated datePublished" datetime="2018-09-14T11:33:49+08:00">2018-09-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Objective-C语言特性/" itemprop="url" rel="index"><span itemprop="name">Objective-C语言特性</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>对象拷贝有两种方式：浅复制和深复制。顾名思义，浅复制，并不拷贝对象本身，仅仅是拷贝指向对象的指针；深复制是直接拷贝整个对象内存到另一块内存中。</p>
+<p>一图以蔽之</p>
+<p><img src="http://7s1ssm.com1.z0.glb.clouddn.com/image_note50592_1.png" alt="图片"></p>
+<p>再简单些说：<strong>浅复制就是指针拷贝；深复制就是内容拷贝。</strong></p>
+<hr>
+<h2 id="集合的浅复制-shallow-copy"><a href="#集合的浅复制-shallow-copy" class="headerlink" title="集合的浅复制 (shallow copy)"></a>集合的浅复制 (shallow copy)</h2><p>集合的浅复制有非常多种方法。当你进行浅复制时，会向原始的集合发送retain消息，引用计数加1，同时指针被拷贝到新的集合。</p>
+<p>现在让我们看一些浅复制的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSArray *shallowCopyArray = [someArray copyWithZone:nil];NSSet *shallowCopySet = [NSSet mutableCopyWithZone:nil];NSDictionary *shallowCopyDict = [[NSDictionary alloc] initWithDictionary:someDictionary copyItems:NO];</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="集合的深复制-deep-copy"><a href="#集合的深复制-deep-copy" class="headerlink" title="集合的深复制 (deep copy)"></a>集合的深复制 (deep copy)</h2><p>集合的深复制有两种方法。可以用 initWithArray:copyItems: 将第二个参数设置为YES即可深复制，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSDictionary shallowCopyDict = [[NSDictionary alloc] initWithDictionary:someDictionary copyItems:YES];</span><br></pre></td></tr></table></figure>
+<p>如果你用这种方法深复制，集合里的每个对象都会收到 copyWithZone: 消息。如果集合里的对象遵循 NSCopying 协议，那么对象就会被深复制到新的集合。如果对象没有遵循 NSCopying 协议，而尝试用这种方法进行深复制，会在运行时出错。copyWithZone: 这种拷贝方式只能够提供一层内存拷贝(one-level-deep copy)，而非真正的深复制。</p>
+<p>第二个方法是将集合进行归档(archive)，然后解档(unarchive)，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSArray *trueDeepCopyArray = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:oldArray]];</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="集合的单层深复制-one-level-deep-copy"><a href="#集合的单层深复制-one-level-deep-copy" class="headerlink" title="集合的单层深复制 (one-level-deep copy)"></a>集合的单层深复制 (one-level-deep copy)</h2><p>看到这里，有同学会问：如果在多层数组中，对第一层进行内容拷贝，其它层进行指针拷贝，这种情况是属于深复制，还是浅复制？对此，<a href="https://developer.apple.com/library/mac/documentation/cocoa/conceptual/Collections/Articles/Copying.html#//apple_ref/doc/uid/TP40010162-SW3" target="_blank" rel="noopener">苹果官网文档</a>有这样一句话描述</p>
+<blockquote>
+<p>This kind of copy is only capable of producing a one-level-deep copy. If you only need a one-level-deep copy…</p>
+<p>If you need a true deep copy, such as when you have an array of arrays…</p>
+</blockquote>
+<p>从文中可以看出，苹果认为这种复制不是真正的深复制，而是将其称为<strong>单层深复制(one-level-deep copy)</strong>。因此，网上有人对浅复制、深复制、单层深复制做了概念区分。</p>
+<blockquote>
+<ul>
+<li>浅复制(shallow copy)：在浅复制操作时，对于被复制对象的每一层都是指针复制。</li>
+<li>深复制(one-level-deep copy)：在深复制操作时，对于被复制对象，至少有一层是深复制。</li>
+<li>完全复制(real-deep copy)：在完全复制操作时，对于被复制对象的每一层都是对象复制。</li>
+</ul>
+</blockquote>
+<p>当然，这些都是概念性的东西，没有必要纠结于此。只要知道进行拷贝操作时，被拷贝的是指针还是内容即可。</p>
+<hr>
+<h2 id="系统对象的copy与mutableCopy方法"><a href="#系统对象的copy与mutableCopy方法" class="headerlink" title="系统对象的copy与mutableCopy方法"></a>系统对象的copy与mutableCopy方法</h2><p>不管是集合类对象，还是非集合类对象，接收到copy和mutableCopy消息时，都遵循以下准则：</p>
+<ul>
+<li>copy返回imutable对象；所以，如果对copy返回值使用mutable对象接口就会crash；</li>
+<li>mutableCopy返回mutable对象；</li>
+</ul>
+<p>下面将针对非集合类对象和集合类对象的copy和mutableCopy方法进行具体的阐述</p>
+<h3 id="1、非集合类对象的copy与mutableCopy"><a href="#1、非集合类对象的copy与mutableCopy" class="headerlink" title="1、非集合类对象的copy与mutableCopy"></a>1、非集合类对象的copy与mutableCopy</h3><p>系统非集合类对象指的是 NSString, NSNumber … 之类的对象。下面先看个非集合类immutable对象拷贝的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSString *string = @&quot;origin&quot;;NSString *stringCopy = [string copy];NSMutableString *stringMCopy = [string mutableCopy];</span><br></pre></td></tr></table></figure>
+<p>通过查看内存，可以看到 stringCopy 和 string 的地址是一样，进行了指针拷贝；而 stringMCopy 的地址和 string 不一样，进行了内容拷贝；</p>
+<p>再看mutable对象拷贝例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *string = [NSMutableString stringWithString: @&quot;origin&quot;];//copyNSString *stringCopy = [string copy];NSMutableString *mStringCopy = [string copy];NSMutableString *stringMCopy = [string mutableCopy];//change value[mStringCopy appendString:@&quot;mm&quot;]; //crash[string appendString:@&quot; origion!&quot;];[stringMCopy appendString:@&quot;!!&quot;];</span><br></pre></td></tr></table></figure>
+<p>运行以上代码，会在第7行crash，原因就是 copy 返回的对象是 immutable 对象。注释第7行后再运行，查看内存，发现 string、stringCopy、mStringCopy、stringMCopy 四个对象的内存地址都不一样，说明此时都是做内容拷贝。</p>
+<p><strong>综上两个例子，我们可以得出结论：</strong></p>
+<blockquote>
+<p>在非集合类对象中：对immutable对象进行copy操作，是指针复制，mutableCopy操作时内容复制；对mutable对象进行copy和mutableCopy都是内容复制。用代码简单表示如下：</p>
+<ul>
+<li>[immutableObject copy] // 浅复制</li>
+<li>[immutableObject mutableCopy] //深复制</li>
+<li>[mutableObject copy] //深复制</li>
+<li>[mutableObject mutableCopy] //深复制</li>
+</ul>
+</blockquote>
+<h3 id="2、集合类对象的copy与mutableCopy"><a href="#2、集合类对象的copy与mutableCopy" class="headerlink" title="2、集合类对象的copy与mutableCopy"></a>2、集合类对象的copy与mutableCopy</h3><p>集合类对象是指NSArray、NSDictionary、NSSet … 之类的对象。下面先看集合类immutable对象使用copy和mutableCopy的一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSArray *array = @[@[@&quot;a&quot;, @&quot;b&quot;], @[@&quot;c&quot;, @&quot;d&quot;];NSArray *copyArray = [array copy];NSMutableArray *mCopyArray = [array mutableCopy];</span><br></pre></td></tr></table></figure>
+<p>查看内容，可以看到copyArray和array的地址是一样的，而mCopyArray和array的地址是不同的。说明copy操作进行了指针拷贝，mutableCopy进行了内容拷贝。但需要强调的是：此处的内容拷贝，仅仅是拷贝array这个对象，array集合内部的元素仍然是指针拷贝。这和上面的非集合immutable对象的拷贝还是挺相似的，那么mutable对象的拷贝会不会类似呢？我们继续往下，看mutable对象拷贝的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSMutableArray *array = [NSMutableArray arrayWithObjects:[NSMutableString stringWithString:@&quot;a&quot;],@&quot;b&quot;,@&quot;c&quot;,nil];NSArray *copyArray = [array copy];NSMutableArray *mCopyArray = [array mutableCopy];</span><br></pre></td></tr></table></figure>
+<p>查看内存，如我们所料，copyArray、mCopyArray和array的内存地址都不一样，说明copyArray、mCopyArray都对array进行了内容拷贝。同样，我们可以得出结论：</p>
+<blockquote>
+<p>在集合类对象中，对immutable对象进行copy，是指针复制，mutableCopy是内容复制；对mutable对象进行copy和mutableCopy都是内容复制。但是：集合对象的内容复制仅限于对象本身，对象元素仍然是指针复制。用代码简单表示如下：</p>
+<ul>
+<li>[immutableObject copy] // 浅复制</li>
+<li>[immutableObject mutableCopy] //单层深复制</li>
+<li>[mutableObject copy] //单层深复制</li>
+<li>[mutableObject mutableCopy] //单层深复制</li>
+</ul>
+</blockquote>
+<p>这个代码结论和非集合类的非常相似。</p>
+<p>这时候，是不是有人要问了，如果要对集合对象复制元素怎么办？有这疑问的同学不妨回头看看<strong>集合的深复制</strong>。</p>
+<p>好了，深复制与浅复制就讲到这里。</p>
+<hr>
+<p>最后说个题外的东西，在搜集资料的过程中，发现一个有可能犯错的点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSString *str = @&quot;string&quot;;str = @&quot;newString&quot;;</span><br></pre></td></tr></table></figure>
+<p>上面这段代码，在执行第二行代码后，内存地址发生了变化。乍一看，有点意外。按照 C 语言的经验，初始化一个字符串之后，字符串的首地址就被确定下来，不管之后如何修改字符串内容，这个地址都不会改变。但此处第二行并不是对 str 指向的内存地址重新赋值，因为赋值操作符左边的 str 是一个指针，也就是说此处修改的是内存地址。</p>
+<p>所以第二行应该这样理解：将@”newStirng”当做一个新的对象，将这段对象的内存地址赋值给str。</p>
+<p>我有如下的两个方法查看内存地址</p>
+<ul>
+<li><code>p str</code> 会打印对象本身的内存地址和对象内容</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lldb) p str(NSString *) $0 = 0x000000010c913680 @&quot;a&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>po &amp;str</code> 则打印的是引用对象的指针所在的地址</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lldb) po &amp;str0x00007fff532fb6c0</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.zybuluo.com/MicroCai/note/50592" target="_blank" rel="noopener">转自</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/13/KVO的底层实现原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun Lei">
+      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Man Tou Pu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/13/KVO的底层实现原理/" itemprop="url">
+                  KVO的底层实现原理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-13 18:07:43" itemprop="dateCreated datePublished" datetime="2018-09-13T18:07:43+08:00">2018-09-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-09-14 11:21:02" itemprop="dateModified" datetime="2018-09-14T11:21:02+08:00">2018-09-14</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Objective-C语言特性/" itemprop="url" rel="index"><span itemprop="name">Objective-C语言特性</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="addObserver-forKeyPath-options-context-各个参数的作用分别是什么-observer中需要实现哪个方法才能获得KVO回调？"><a href="#addObserver-forKeyPath-options-context-各个参数的作用分别是什么-observer中需要实现哪个方法才能获得KVO回调？" class="headerlink" title="addObserver:forKeyPath:options:context:各个参数的作用分别是什么, observer中需要实现哪个方法才能获得KVO回调？"></a>addObserver:forKeyPath:options:context:各个参数的作用分别是什么, observer中需要实现哪个方法才能获得KVO回调？</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 1. self.person：要监听的对象</span><br><span class="line"> 2. 参数说明：</span><br><span class="line">    * @param addObserver  观察者，负责处理监听事件的对象</span><br><span class="line">    * @param forKeyPath 要监听的属性</span><br><span class="line">    * @param  options 观察的选项（观察新、旧值，也可以都观察）</span><br><span class="line">    * @param context 上下文，用于传递数据，可以利用上下文区分不同的监听</span><br><span class="line"> */</span><br><span class="line">[self.person addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:@&quot;Person Name&quot;];</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> *  当监控的某个属性的值改变了就会调用</span><br><span class="line"> *</span><br><span class="line"> *  @param keyPath 监听的属性名</span><br><span class="line"> *  @param object  属性所属的对象</span><br><span class="line"> *  @param change  属性的修改情况（属性原来的值`oldValue`、属性最新的值`newValue`）</span><br><span class="line"> *  @param context 传递的上下文数据，与监听的时候传递的一致，可以利用上下文区分不同的监听</span><br><span class="line"> */</span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;%@对象的%@属性改变了：%@&quot;, object, keyPath, change);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="KVO-Key-Value-Observing"><a href="#KVO-Key-Value-Observing" class="headerlink" title="KVO (Key-Value Observing)"></a>KVO (Key-Value Observing)</h2><p>KVO 是 Objective-C 对观察者模式（Observer Pattern）的实现。也是 Cocoa Binding 的基础。当被观察对象的某个属性发生更改时，观察者对象会获得通知。</p>
+<p>有意思的是，你不需要给被观察的对象添加任何额外代码，就能使用 KVO 。这是怎么做到的？</p>
+<h1 id="KVO内部实现原理"><a href="#KVO内部实现原理" class="headerlink" title="KVO内部实现原理"></a>KVO内部实现原理</h1><ul>
+<li><p>KVO是基于runtime机制实现的</p>
+</li>
+<li><p>当某个类的属性对象<code>第一次被观察</code>时，系统就会在运行期<code>动态</code>地创建<code>该类的一个派生类</code>，在这个派生类中重写基类中任何被观察属性的setter 方法。派生类在被重写的setter方法内实现真正的<code>通知机制</code></p>
+</li>
+<li><p>如果原类为Person，那么生成的派生类名为<code>NSKVONotifying_Person</code></p>
+</li>
+<li><p>每个类对象中都有一个isa指针指向当前类，当一个类对象的第一次被观察，那么系统会偷偷将isa指针指向动态生成的派生类，从而在给被监控属性赋值时执行的是派生类的setter方法</p>
+</li>
+<li><p>键值观察通知依赖于NSObject 的两个方法: <code>willChangeValueForKey:</code>和 <code>didChangevlueForKey:</code>；在一个被观察属性发生改变之前， <code>willChangeValueForKey:</code>一定会被调用，这就 会记录旧的值。而当改变发生后，<code>didChangeValueForKey:</code>会被调用，继而 <code>observeValueForKey:ofObject:change:context:</code>也会被调用。</p>
+</li>
+<li><p>补充：KVO的这套实现机制中苹果还偷偷重写了class方法，让我们误认为还是使用的当前类，从而达到隐藏生成的派生类</p>
+<p>​</p>
+<p>​</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429890-b28e010d3a7dbdb8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/953" alt="img"></p>
+<p>KVO内部实现原理.png</p>
+<h1 id="如何手动触发一个value的KVO"><a href="#如何手动触发一个value的KVO" class="headerlink" title="如何手动触发一个value的KVO"></a>如何手动触发一个value的KVO</h1></li>
+</ul>
+<ul>
+<li>自动触发的场景：在注册KVO之前设置一个初始值，注册之后，设置一个不一样的值，就可以触发了</li>
+<li>想知道如何手动触发，必须知道自动触发 KVO 的原理，见上面的描述</li>
+<li>手动触发演示</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSDate *now;</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    // “手动触发self.now的KVO”，必写。</span><br><span class="line">    [self willChangeValueForKey:@&quot;now&quot;];</span><br><span class="line"></span><br><span class="line">    // “手动触发self.now的KVO”，必写。</span><br><span class="line">    [self didChangeValueForKey:@&quot;now&quot;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429890-41421e825e153835.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/521" alt="img"></p>
+<p>手动触发一个value的KVO.png    </p>
+<h1 id="补充：-如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）"><a href="#补充：-如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）" class="headerlink" title="补充： 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）"></a>补充： 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）</h1><ul>
+<li><a href="https://link.jianshu.com/?t=http://tech.glowing.com/cn/implement-kvo/" target="_blank" rel="noopener">如何自己动手实现 KVO</a></li>
+</ul>
+<h1 id="附注-KVC底层实现原理-如下"><a href="#附注-KVC底层实现原理-如下" class="headerlink" title="附注: KVC底层实现原理(如下)"></a>附注: KVC底层实现原理(如下)</h1><p>KVC运用了一个isa-swizzling技术. isa-swizzling就是类型混合指针机制, 将2个对象的isa指针互相调换, 就是俗称的黑魔法.<br>KVC主要通过isa-swizzling, 来实现其内部查找定位的. 默认的实现方法�由NSOject提供isa指针, 如其名称所指,(就是is a kind of的意思), 指向分发表对象的类. 该分发表实际上包含了指向实现类中的方法的指针, 和其它数据。</p>
+<blockquote>
+<ul>
+<li>具体主要分为三大步</li>
+</ul>
+</blockquote>
+<ul>
+<li>第一步：寻找该属性有没有setsetter方法？有，就直接赋值</li>
+<li>第二步：寻找有没有该属性带下划线的成员属性？有，就直接赋值</li>
+<li>第三步：寻找有没有该属性的成员属性？有，就直接赋值</li>
+</ul>
+<blockquote>
+<ul>
+<li>或者这么说</li>
+</ul>
+</blockquote>
+<ul>
+<li>1、首先搜索setKey:方法.(key指成员变量名, 首字母大写)</li>
+<li>2、上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES. 那么按 _key, _isKey，key, iskey的顺序搜索成员名.(NSKeyValueCodingCatogery中实现的类方法, 默认实现为返回YES)</li>
+<li>3、如果没有找到成员变量, 调用setValue:forUnderfinedKey:</li>
+</ul>
+<p>比如说如下的一行KVC的代码：</p>
+<h1 id="举个🌰e-g"><a href="#举个🌰e-g" class="headerlink" title="举个🌰e.g:"></a>举个🌰e.g:</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[object setValue:@&quot;13123&quot; forKey:@&quot;uuid&quot;];</span><br><span class="line"></span><br><span class="line">就会被编译器处理成:</span><br><span class="line">// 首先找到对应sel</span><br><span class="line">SEL sel = sel_get_ uuid(&quot;setValue:forKey:&quot;);</span><br><span class="line">// 根据object-&gt;isa找到sel对应的IMP实现指针</span><br><span class="line">IMP method = objc_msg_lookup (object-&gt;isa,sel);</span><br><span class="line">// 调用指针完成KVC赋值</span><br><span class="line">method(object, sel, @&quot;13123&quot;, @&quot;uuid&quot;);</span><br></pre></td></tr></table></figure>
+<p><a href="https://link.jianshu.com/?t=http://blog.csdn.net/iunion/article/details/46890809" target="_blank" rel="noopener"><strong>可供参考文章</strong></a></p>
+<p>下面这篇也不错</p>
+<p> <a href="https://www.jianshu.com/p/e59bb8f59302" target="_blank" rel="noopener">KVO的实现原理与具体应用</a></p>
+<p>[转自 <a href="https://www.jianshu.com/p/829864680648" target="_blank" rel="noopener">探究KVO的底层实现原理</a>]</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/13/通知/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2147,489 +2616,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/09/11/UITableView相关/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/11/UITableView相关/" itemprop="url">
-                  UITableView相关
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-09-11 17:11:06" itemprop="dateCreated datePublished" datetime="2018-09-11T17:11:06+08:00">2018-09-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-09-13 10:57:06" itemprop="dateModified" datetime="2018-09-13T10:57:06+08:00">2018-09-13</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UI视图/" itemprop="url" rel="index"><span itemprop="name">UI视图</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先来点概念性的东西，</p>
-<ul>
-<li><p>卡顿&amp;掉帧</p>
-</li>
-<li><ul>
-<li><p>概念：在规定的16.7ms之内，下一帧VSync信号到来之前，并没有CPU和GPU共同完成下一帧画面的合成，于是就会造成卡顿和掉帧</p>
-</li>
-<li><p>滑动优化方案</p>
-</li>
-<li><ul>
-<li><p>CPU</p>
-</li>
-<li><ul>
-<li>对象创建、调整、销毁</li>
-<li>预排版（布局计算、文本计算）</li>
-<li>预渲染（文本等异步绘制，图片编解码等）</li>
-</ul>
-</li>
-<li><p>GPU</p>
-</li>
-<li><ul>
-<li>纹理渲染</li>
-<li>视图混合  </li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>离屏渲染</p>
-</li>
-<li><ul>
-<li><p>概念：当我们处理图层的属性在被指定为未被预合成之前不能直接在屏幕上显示，就触发了离屏渲染。离屏渲染的概念起源与GPU层面，指的是GPU在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作</p>
-</li>
-<li><p>何时会触发</p>
-</li>
-<li><ul>
-<li>圆角（当和maskToBounds一起使用时）</li>
-<li>图层蒙版</li>
-<li>阴影</li>
-<li>光栅化</li>
-</ul>
-</li>
-<li><p>为何要避免</p>
-</li>
-<li><ul>
-<li>上下文切换，GPU额外的开销</li>
-<li>创建新的渲染缓冲区，内存损耗</li>
-<li>高级回答：触发离屏渲染会增加GPU的工作量，而增加了GPU的工作量很有可能导致CPU和GPU的工作总耗时超过了16.67ms，有可能导致UI的卡顿和掉帧</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="UITableView性能优化"><a href="#UITableView性能优化" class="headerlink" title="UITableView性能优化"></a>UITableView性能优化</h1><p>当获取到 API JSON 数据后，我会把每条 Cell 需要的数据都在后台线程计算并封装为一个布局对象 CellLayout。CellLayout 包含所有文本的 CoreText 排版结果、Cell 内部每个控件的高度、Cell 的整体高度。每个 CellLayout 的内存占用并不多，所以当生成后，可以全部缓存到内存，以供稍后使用。这样，TableView 在请求各个高度函数时，不会消耗任何多余计算量；当把 CellLayout 设置到 Cell 内部时，Cell 内部也不用再计算布局了。</p>
-<h2 id="缓存高度"><a href="#缓存高度" class="headerlink" title="缓存高度"></a>缓存高度</h2><p>对于通常的 TableView 来说，提前在后台计算好布局结果是非常重要的一个性能优化点。为了达到最高性能，你可能需要牺牲一些开发速度，不要用 Autolayout 等技术，少用 UILabel 等文本控件。但如果你对性能的要求并不那么高，可以尝试用 TableView 的预估高度的功能，并把每个 Cell 高度缓存下来。这里有个来自百度知道团队的开源项目可以很方便的帮你实现这一点：<a href="https://github.com/forkingdog/UITableView-FDTemplateLayoutCell/" target="_blank" rel="noopener">FDTemplateLayoutCell</a>。</p>
-<p><a href="https://www.jianshu.com/p/64f0e1557562" target="_blank" rel="noopener">tableviewcell高度缓存具体实现方式</a></p>
-<h2 id="预渲染"><a href="#预渲染" class="headerlink" title="预渲染"></a>预渲染</h2><p>微博的头像在某次改版中换成了圆形，所以我也跟进了一下。当头像下载下来后，我会在后台线程将头像预先渲染为圆形并单独保存到一个 ImageCache 中去。</p>
-<p>对于 TableView 来说，Cell 内容的离屏渲染会带来较大的 GPU 消耗。在 Twitter Demo 中，我为了图省事儿用到了不少 layer 的圆角属性，你可以在低性能的设备（比如 iPad 3）上快速滑动一下这个列表，能感受到虽然列表并没有较大的卡顿，但是整体的平均帧数降了下来。用 Instument 查看时能够看到 GPU 已经满负荷运转，而 CPU 却比较清闲。为了避免离屏渲染，你应当尽量避免使用 layer 的 border、corner、shadow、mask 等技术，而尽量在后台线程预先绘制好对应内容。</p>
-<h3 id="离屏渲染"><a href="#离屏渲染" class="headerlink" title="离屏渲染"></a>离屏渲染</h3><p>​    在使用圆角、阴影和遮罩等视图功能的时候，图层属性的混合体被指定为在未预合成之前不能直接在屏幕中绘制，所有就需要在屏幕外的上下文中渲染，即离屏渲染。</p>
-<h4 id="离屏渲染产生原因"><a href="#离屏渲染产生原因" class="headerlink" title="离屏渲染产生原因"></a>离屏渲染产生原因</h4><p>离屏渲染之所以会特别消耗性能，是因为要创建一个屏幕外的缓冲区，然后从当屏缓冲区切换到屏幕外的缓冲区，然后再完成渲染；其中，创建缓冲区和切换上下文最消耗性能，而绘制其实不是性能损耗的主要原因。</p>
-<p>设置了以下属性时，就会触发离屏绘制：</p>
-<ul>
-<li><p>shouldRasterize（光栅化）</p>
-</li>
-<li><p>masks（遮罩）</p>
-</li>
-<li><p>shadows（阴影）</p>
-</li>
-<li><p>edge antialiasing（抗锯齿）</p>
-</li>
-<li><p>group opacity（不透明）</p>
-</li>
-<li><p>复杂形状设置圆角等</p>
-</li>
-<li><p>渐变</p>
-<h4 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h4><p>光栅化概念:将图转化为一个个栅格组成的图象。 光栅化特点:每个元素对应帧缓冲区中的一像素。</p>
-<p>​</p>
-<p>shouldRasterize = YES在其他属性触发离屏渲染的同时,会将光栅化后的内容缓存起来,如果对应的layer及其sublayers没有发生改变,在下一帧的时候可以直接复用。shouldRasterize = YES,这将隐式的创建一个位图,各种阴影遮罩等效果也会保存到位图中并缓存起来,从而减少渲染的频度</p>
-<p>当你使用光栅化时,你可以开启“Color Hits Green and Misses Red”来检查该场景下光栅化操作是否是一个好的选择。绿色表示缓存被复用,红色表示缓存在被重复创建。</p>
-<p>如果光栅化的层变红得太频繁那么光栅化对优化可能没有多少用处。位图缓存从内存中删除又重新创建得太过频繁,红色表明缓存重建得太迟。可以针对性的选择某个较小而较深的层结构进行光栅化,来尝试减少渲染时间。</p>
-<p>我们经常的TableViewCell,因为TableViewCell的重绘是很频繁的(因为Cell的复用),如果Cell的内容不断变化,则Cell需要不断重绘,如果此时设置了cell.layer可光栅化。则会造成大量的离屏渲染,降低图形性能。 </p>
-<p>有时候我们可以把那些需要屏幕外绘制的图层开启光栅化以作为一个优化方式,前提是这些图层并不会被频繁地重绘。 </p>
-<p><strong>针对光栅化处理</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//离屏渲染 - 异步绘制  耗电</span><br><span class="line">self.layer.drawsAsynchronously = true</span><br><span class="line">   </span><br><span class="line">//栅格化 - 异步绘制之后 ，会生成一张独立的图片 cell 在屏幕上滚动的时候，本质上滚动的是这张图片 </span><br><span class="line">//cell 优化，要尽量减少图层的数量，想当于只有一层</span><br><span class="line">//停止滚动之后，可以接受监听</span><br><span class="line">self.layer.shouldRasterize = true</span><br><span class="line">   </span><br><span class="line">//使用 “栅格化” 必须指定分辨率</span><br><span class="line">self.layer.rasterizationScale = UIScreen.main.scale</span><br></pre></td></tr></table></figure>
-<p><strong>阴影处理</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 指定阴影曲线，防止阴影效果带来的离屏渲染</span><br><span class="line">        imageView.layer.shadowPath = UIBezierPath(rect: imageView.bounds).cgPath</span><br></pre></td></tr></table></figure>
-<p>​</p>
-<h4 id="遮罩"><a href="#遮罩" class="headerlink" title="遮罩"></a>遮罩</h4><p>masks(遮罩) </p>
-<p>mask是layer的一个属性.</p>
-<p>当透明度改变的时候,这个 mask 就是覆盖上去的那个阴影。该层的layer的alpha决定了多少层背景跟内容通过并显示,完全或者部分不透明的像素允许潜在的内容 通过并显示。 默认是nil,当配置一个遮罩的时候,记得设置遮罩的大小、位置。已确保跟盖图层对齐。如果你想给这个属性赋值,前提是必须没有 superLayer,如果有superLayer,这个行为则是无效的。</p>
-<h4 id="shadows-阴影"><a href="#shadows-阴影" class="headerlink" title="shadows(阴影)"></a>shadows(阴影)</h4><p>在项目中,当我们想要设置View的阴影效果时,可以通过shadow*相关方法实现,如:</p>
-<p>self.layer.shadowOffset = CGSizeMake(4, -2); </p>
-<p>self.layer.shadowOpacity = 0.5; </p>
-<p>self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor; </p>
-<p>shadows可以给视图周边添加阴影,当给一些滑动视图加阴影时,您可能会注意到在动画不是很流畅,有卡顿。这是因为计算阴影需要Core Animation做一个离屏渲染,以View准确的形状确定清楚如何呈现其阴影。</p>
-<p>####屏幕渲染有如下三种</p>
-<p><code>GPU</code>中的屏幕渲染：</p>
-<p>1、<code>On-Screen Rendering</code></p>
-<p>意为当前屏幕渲染，指的是<code>GPU</code>的渲染操作是在当前用于显示的屏幕缓冲区中进行</p>
-<p>2、<code>Off-Screen Rendering</code></p>
-<p>意为离屏渲染，指的是<code>GPU</code>在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作</p>
-<p>3、<code>CPU</code>中的离屏渲染（特殊离屏渲染，即不在<code>GPU</code>中的渲染）</p>
-<p>如果我们重写了<code>drawRect</code>方法，并且使用任何<code>Core Graphics</code>的技术进行了绘制操作，就涉及到了<code>CPU</code>渲染</p>
-<h4 id="切圆角优化"><a href="#切圆角优化" class="headerlink" title="切圆角优化"></a>切圆角优化</h4><p>切圆角是开发<code>app</code>过程中经常会用到的功能，但是使用不同的方式，性能损耗也会不同，下面会介绍<code>3</code>种切圆角的方法；其中，方法三的性能相对最好。</p>
-<h5 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h5><p>使用<code>cornerRadius</code>进行切圆角，在<code>iOS9</code>之前会产生离屏渲染，比较消耗性能，而之后系统做了优化，则不会产生离屏渲染，但是操作最简单</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iv.layer.cornerRadius = 30;</span><br><span class="line">iv.layer.masksToBounds = YES;</span><br></pre></td></tr></table></figure>
-<h5 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h5><p>利用<code>mask</code>设置圆角，利用的是<code>UIBezierPath</code>和<code>CAShapeLayer</code>来完成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CAShapeLayer *mask1 = [[CAShapeLayer alloc] init];</span><br><span class="line">mask1.opacity = 0.5;</span><br><span class="line">mask1.path = [UIBezierPath bezierPathWithOvalInRect:iv.bounds].CGPath;</span><br><span class="line">iv.layer.mask = mask1;</span><br></pre></td></tr></table></figure>
-<h5 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h5><p>利用<code>CoreGraphics</code>画一个圆形上下文，然后把图片绘制上去，得到一个圆形的图片，达到切圆角的目的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">- (UIImage *)drawCircleImage:(UIImage*)image</span><br><span class="line">&#123;</span><br><span class="line">    CGFloat side = MIN(image.size.width, image.size.height);</span><br><span class="line">    </span><br><span class="line">    UIGraphicsBeginImageContextWithOptions(CGSizeMake(side, side), false, [UIScreen mainScreen].scale);</span><br><span class="line">    CGContextAddPath(UIGraphicsGetCurrentContext(), [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, side, side)].CGPath);</span><br><span class="line">    CGContextClip(UIGraphicsGetCurrentContext());</span><br><span class="line">    </span><br><span class="line">    CGFloat marginX = -(image.size.width - side) * 0.5;</span><br><span class="line">    CGFloat marginY = -(image.size.height - side) * 0.5;</span><br><span class="line">    [image drawInRect:CGRectMake(marginX, marginY, image.size.width, image.size.height)];</span><br><span class="line">    </span><br><span class="line">    CGContextDrawPath(UIGraphicsGetCurrentContext(), kCGPathFillStroke);</span><br><span class="line">    </span><br><span class="line">    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">    UIGraphicsEndImageContext();</span><br><span class="line">    </span><br><span class="line">    return newImage;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="异步绘制"><a href="#异步绘制" class="headerlink" title="异步绘制"></a>异步绘制</h2><p>当想进一步优化tableview性能时可以考虑异步绘制cell及文本控件等。大神的<a href="https://github.com/ibireme/YYAsyncLayer" target="_blank" rel="noopener">YYAsyncLayer</a>实现了异步绘制的控件。</p>
-<h2 id="UITableView优化总结"><a href="#UITableView优化总结" class="headerlink" title="UITableView优化总结"></a>UITableView优化总结</h2><p>UITableView的优化主要从三个方面入手：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">提前计算并缓存好高度（布局），因为heightForRowAtIndexPath:是调用最频繁的方法；</span><br><span class="line">异步绘制，遇到复杂界面，遇到性能瓶颈时，可能就是突破口；</span><br><span class="line">滑动时按需加载，这个在大量图片展示，网络加载的时候很管用！（SDWebImage已经实现异步加载，配合这条性能杠杠的）。</span><br></pre></td></tr></table></figure>
-<p>除了上面最主要的三个方面外，还有很多几乎大伙都很熟知的优化点：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">正确使用reuseIdentifier来重用Cells</span><br><span class="line">尽量使所有的view opaque，包括Cell自身</span><br><span class="line">尽量少用或不用透明图层</span><br><span class="line">如果Cell内现实的内容来自web，使用异步加载，缓存请求结果</span><br><span class="line">减少subviews的数量</span><br><span class="line">在heightForRowAtIndexPath:中尽量不使用cellForRowAtIndexPath:，如果你需要用到它，只用一次然后缓存结果</span><br><span class="line">尽量少用addView给Cell动态添加View，可以初始化时就添加，然后通过hide来控制是否显示</span><br></pre></td></tr></table></figure>
-<p>参考:</p>
-<p><a href="https://blog.ibireme.com/author/ibireme/" target="_blank" rel="noopener">ibireme</a>iOS 保持界面流畅的技巧</p>
-<p><a href="https://blog.csdn.net/mo_xiao_mo" target="_blank" rel="noopener">mo_xiao_mo</a>UITableView的优化技巧－异步绘制Cell</p>
-<p><a href="https://www.jianshu.com/p/64f0e1557562" target="_blank" rel="noopener">iOS_小松哥</a>UITableView自动计算cell高度并缓存，再也不用管高度啦</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/iOS面试/2018/01/23/iOS-runtime应用：关联对象/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sun Lei">
-      <meta itemprop="description" content="只有用心才能看清楚·真正重要的东西·用眼睛是看不见的">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Man Tou Pu's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/23/iOS-runtime应用：关联对象/" itemprop="url">
-                  iOS runtime应用：关联对象
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-01-23 17:26:23" itemprop="dateCreated datePublished" datetime="2018-01-23T17:26:23+08:00">2018-01-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-09-13 11:08:46" itemprop="dateModified" datetime="2018-09-13T11:08:46+08:00">2018-09-13</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/runtime/" itemprop="url" rel="index"><span itemprop="name">runtime</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>给已有类添加方法使用Category就可以了，但如果向分类里添加一个或多个属性的话会报错，使用属性不能正确创建实例及存取方法。</p>
-<p>但是我们可以实现runtime的Associated Objects(关联对象)，它可以让对象在运行时关联任何值。</p>
-<h2 id="runtime中提供给我们的方法："><a href="#runtime中提供给我们的方法：" class="headerlink" title="runtime中提供给我们的方法："></a>runtime中提供给我们的方法：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//关联对象</span><br><span class="line">void objc_setAssociatedObject(id object,const void *key,id value,objc_AssociationPolicy policy);</span><br><span class="line">//获取关联的对象</span><br><span class="line">id objc_getAssociatedObject(id object,const void *key);</span><br><span class="line">//移除关联的对象</span><br><span class="line">void objc_removeAssociatedObjects(id object);</span><br></pre></td></tr></table></figure>
-<h2 id="变量说明："><a href="#变量说明：" class="headerlink" title="变量说明："></a>变量说明：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id object:被关联的对象</span><br><span class="line">const void *key:关联的key，要求唯一</span><br><span class="line">id value:关联的对象</span><br><span class="line">Objc_AssociationPolicy poliy:内存管理策略</span><br></pre></td></tr></table></figure>
-<h2 id="Objc-AssociationPolicy-policy的enum值有"><a href="#Objc-AssociationPolicy-policy的enum值有" class="headerlink" title="Objc_AssociationPolicy policy的enum值有:"></a>Objc_AssociationPolicy policy的enum值有:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef OBJC_ENUM(uintptr_t, objc_AssociationPolicy) &#123;</span><br><span class="line">    OBJC_ASSOCIATION_ASSIGN = 0,           /**&lt; Specifies a weak reference to the associated object. */</span><br><span class="line">    OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**&lt; Specifies a strong reference to the associated object. </span><br><span class="line">                                            *   The association is not made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**&lt; Specifies that the associated object is copied. </span><br><span class="line">                                            *   The association is not made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_RETAIN = 01401,       /**&lt; Specifies a strong reference to the associated object.</span><br><span class="line">                                            *   The association is made atomically. */</span><br><span class="line">    OBJC_ASSOCIATION_COPY = 01403          /**&lt; Specifies that the associated object is copied.</span><br><span class="line">                                            *   The association is made atomically. */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>不同的objc_AssociationPolicy对应了不同的属性修饰符。</p>
-<h2 id="Objc-AssociationPolicy应用"><a href="#Objc-AssociationPolicy应用" class="headerlink" title="Objc_AssociationPolicy应用:"></a>Objc_AssociationPolicy应用:</h2><h3 id="UIButton扩展之动态添加属性"><a href="#UIButton扩展之动态添加属性" class="headerlink" title="UIButton扩展之动态添加属性"></a>UIButton扩展之动态添加属性</h3><p>.h文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line">typedef void (^block)(void);</span><br><span class="line">@interface UIButton (Block)</span><br><span class="line"></span><br><span class="line">@property(nonatomic,assign) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">static const char myKey;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation UIButton (Block)</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name&#123;</span><br><span class="line">    //关联对象</span><br><span class="line">    objc_setAssociatedObject(self, &amp;myKey, name, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line">- (NSString *)name&#123;</span><br><span class="line">    //获取关联对象</span><br><span class="line">    return  objc_getAssociatedObject(self, &amp;myKey);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>Viewcontroller.m</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">    [self.view addSubview:btn];</span><br><span class="line">    btn.backgroundColor = [UIColor redColor];</span><br><span class="line">    btn.frame = CGRectMake(100, 100, 100, 50);</span><br><span class="line">    btn.name = @&quot;darling&quot;;</span><br><span class="line">    [btn addTarget:self action:@selector(message:) forControlEvents:UIControlEventTouchUpInside</span><br><span class="line">     ];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)message:(UIButton *)btn&#123;</span><br><span class="line">    NSLog(@&quot;name = %@&quot;,btn.name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="UIButton扩展之动态添加方法"><a href="#UIButton扩展之动态添加方法" class="headerlink" title="UIButton扩展之动态添加方法"></a>UIButton扩展之动态添加方法</h3><p>.h文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line">typedef void (^btnBlock)(void);</span><br><span class="line">@interface UIButton (Block)</span><br><span class="line">- (void)handelWithBlock:(btnBlock)block;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">static const char myKey;</span><br><span class="line">@implementation UIButton (Block)</span><br><span class="line">- (void)handelWithBlock:(block)block&#123;</span><br><span class="line">    if (block) &#123;</span><br><span class="line">        objc_setAssociatedObject(self, &amp;myKey, block, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    &#125;</span><br><span class="line">    [self addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];</span><br><span class="line">&#125;</span><br><span class="line">- (void)btnAction</span><br><span class="line">&#123;</span><br><span class="line">    block block = objc_getAssociatedObject(self, &amp;myKey);</span><br><span class="line">    block();</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>ViewController.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;UIButton+Block.h&quot;</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">    [self.view addSubview:btn];</span><br><span class="line">    btn.backgroundColor = [UIColor redColor];</span><br><span class="line">    btn.frame = CGRectMake(100, 100, 100, 50);</span><br><span class="line">    [btn handelWithBlock:^&#123;</span><br><span class="line">        NSLog(@&quot;darling&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>参考文献</p>
-<p><a href="https://www.jianshu.com/p/35df1ba1f107" target="_blank" rel="noopener">objc_setAssociatedObject与Block的简单使用</a></p>
-<p><a href="http://www.cnblogs.com/sunyanyan/p/5329451.html" target="_blank" rel="noopener"><a href="http://www.cnblogs.com/sunyanyan/p/5329451.html" target="_blank" rel="noopener">objc_setAssociatedObject/objc_getAssociatedObject</a></a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2677,7 +2663,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
